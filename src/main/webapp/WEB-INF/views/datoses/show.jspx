@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_dea_prototipo_domain_Datos" object="${datos}" path="/member/datoses" z="user-managed">
+        <field:display field="superficie" id="s_com_dea_prototipo_domain_Datos_superficie" object="${datos}" z="E4Hs5KzBY8ioOfc7+WKM+KLZrx4="/>
+        <field:display field="inversion" id="s_com_dea_prototipo_domain_Datos_inversion" object="${datos}" z="lEZNG6u2o3w3HJjk0yAVKSLjdYM="/>
+        <field:display field="horasDeTrabajoTotal" id="s_com_dea_prototipo_domain_Datos_horasDeTrabajoTotal" object="${datos}" z="KUA9E4aGICPpJm3LWI43LNjbO3k="/>
+        <field:display field="brokenCaseLines" id="s_com_dea_prototipo_domain_Datos_BrokenCaseLines" object="${datos}" z="WmQv2MbYwLKzQGMvWnHEJpaJ1W8="/>
+        <field:display field="fullCaseLines" id="s_com_dea_prototipo_domain_Datos_fullCaseLines" object="${datos}" z="KqwMozU7vHCFTqdchK8K/brv4H4="/>
+        <field:display field="palletLines" id="s_com_dea_prototipo_domain_Datos_PalletLines" object="${datos}" z="4KKI2Ce/q1txrRZB44CR0d7m5v8="/>
+        <field:display field="acumulacion" id="s_com_dea_prototipo_domain_Datos_acumulacion" object="${datos}" z="uk47JPH2t9KxIJLIPh70BSDW3xo="/>
+        <field:display field="almacenamiento" id="s_com_dea_prototipo_domain_Datos_almacenamiento" object="${datos}" z="yDVH06lNxZDmY2k8tsXwoYnHYrM="/>
+        <field:display field="bodega" id="s_com_dea_prototipo_domain_Datos_bodega" object="${datos}" z="GLO9dpelXTB0XgRO9BgSENl4gyc="/>
+        <field:display date="true" dateTimePattern="${datos_fechaderegistro_date_format}" field="fechaDeRegistro" id="s_com_dea_prototipo_domain_Datos_fechaDeRegistro" object="${datos}" z="XEQoVHiXIha0aITCtMTjYGoLE/k="/>
+    </page:show>
+</div>
