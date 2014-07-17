@@ -4,120 +4,120 @@
 package com.dea.prototipo.web;
 
 import com.dea.prototipo.domain.Bodega;
-import com.dea.prototipo.web.detalleForm;
+import com.dea.prototipo.web.DetalleForm;
 import java.util.Date;
 
-privileged aspect detalleForm_Roo_JavaBean {
+privileged aspect DetalleForm_Roo_JavaBean {
     
-    public double detalleForm.getSuperficie() {
+    public double DetalleForm.getSuperficie() {
         return this.superficie;
     }
     
-    public void detalleForm.setSuperficie(double superficie) {
+    public void DetalleForm.setSuperficie(double superficie) {
         this.superficie = superficie;
     }
     
-    public double detalleForm.getInversion() {
+    public double DetalleForm.getInversion() {
         return this.inversion;
     }
     
-    public void detalleForm.setInversion(double inversion) {
+    public void DetalleForm.setInversion(double inversion) {
         this.inversion = inversion;
     }
     
-    public double detalleForm.getHorasDeTrabajoTotal() {
+    public double DetalleForm.getHorasDeTrabajoTotal() {
         return this.horasDeTrabajoTotal;
     }
     
-    public void detalleForm.setHorasDeTrabajoTotal(double horasDeTrabajoTotal) {
+    public void DetalleForm.setHorasDeTrabajoTotal(double horasDeTrabajoTotal) {
         this.horasDeTrabajoTotal = horasDeTrabajoTotal;
     }
     
-    public int detalleForm.getBrokenCaseLines() {
+    public int DetalleForm.getBrokenCaseLines() {
         return this.BrokenCaseLines;
     }
     
-    public void detalleForm.setBrokenCaseLines(int BrokenCaseLines) {
+    public void DetalleForm.setBrokenCaseLines(int BrokenCaseLines) {
         this.BrokenCaseLines = BrokenCaseLines;
     }
     
-    public int detalleForm.getFullCaseLines() {
+    public int DetalleForm.getFullCaseLines() {
         return this.fullCaseLines;
     }
     
-    public void detalleForm.setFullCaseLines(int fullCaseLines) {
+    public void DetalleForm.setFullCaseLines(int fullCaseLines) {
         this.fullCaseLines = fullCaseLines;
     }
     
-    public int detalleForm.getPalletLines() {
+    public int DetalleForm.getPalletLines() {
         return this.PalletLines;
     }
     
-    public void detalleForm.setPalletLines(int PalletLines) {
+    public void DetalleForm.setPalletLines(int PalletLines) {
         this.PalletLines = PalletLines;
     }
     
-    public double detalleForm.getAcumulacion() {
+    public double DetalleForm.getAcumulacion() {
         return this.acumulacion;
     }
     
-    public void detalleForm.setAcumulacion(double acumulacion) {
+    public void DetalleForm.setAcumulacion(double acumulacion) {
         this.acumulacion = acumulacion;
     }
     
-    public double detalleForm.getAlmacenamiento() {
+    public double DetalleForm.getAlmacenamiento() {
         return this.almacenamiento;
     }
     
-    public void detalleForm.setAlmacenamiento(double almacenamiento) {
+    public void DetalleForm.setAlmacenamiento(double almacenamiento) {
         this.almacenamiento = almacenamiento;
     }
     
-    public Bodega detalleForm.getBodega() {
+    public Bodega DetalleForm.getBodega() {
         return this.bodega;
     }
     
-    public void detalleForm.setBodega(Bodega bodega) {
+    public void DetalleForm.setBodega(Bodega bodega) {
         this.bodega = bodega;
     }
     
-    public Date detalleForm.getFechaDeRegistro() {
+    public Date DetalleForm.getFechaDeRegistro() {
         return this.fechaDeRegistro;
     }
     
-    public void detalleForm.setFechaDeRegistro(Date fechaDeRegistro) {
+    public void DetalleForm.setFechaDeRegistro(Date fechaDeRegistro) {
         this.fechaDeRegistro = fechaDeRegistro;
     }
     
-    public boolean detalleForm.isDetalle() {
+    public boolean DetalleForm.isDetalle() {
         return this.detalle;
     }
     
-    public void detalleForm.setDetalle(boolean detalle) {
+    public void DetalleForm.setDetalle(boolean detalle) {
         this.detalle = detalle;
     }
     
-    public double detalleForm.getContraPesoSentado() {
+    public double DetalleForm.getContraPesoSentado() {
         return this.ContraPesoSentado;
     }
     
-    public void detalleForm.setContraPesoSentado(double ContraPesoSentado) {
+    public void DetalleForm.setContraPesoSentado(double ContraPesoSentado) {
         this.ContraPesoSentado = ContraPesoSentado;
     }
     
-    public double detalleForm.getTranspaletaElectrica() {
+    public double DetalleForm.getTranspaletaElectrica() {
         return this.TranspaletaElectrica;
     }
     
-    public void detalleForm.setTranspaletaElectrica(double TranspaletaElectrica) {
+    public void DetalleForm.setTranspaletaElectrica(double TranspaletaElectrica) {
         this.TranspaletaElectrica = TranspaletaElectrica;
     }
     
-    public double detalleForm.getContrapesoOperadorDePie() {
+    public double DetalleForm.getContrapesoOperadorDePie() {
         return this.ContrapesoOperadorDePie;
     }
     
-    public void detalleForm.setContrapesoOperadorDePie(double ContrapesoOperadorDePie) {
+    public void DetalleForm.setContrapesoOperadorDePie(double ContrapesoOperadorDePie) {
         this.ContrapesoOperadorDePie = ContrapesoOperadorDePie;
     }
     

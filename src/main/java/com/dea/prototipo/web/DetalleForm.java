@@ -14,7 +14,7 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import com.dea.prototipo.domain.Bodega;
 
 @RooJavaBean
-public class detalleForm {
+public class DetalleForm {
 	private double superficie;
 
     /**

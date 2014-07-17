@@ -23,13 +23,13 @@ import java.util.List;
 public class DatosController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String create(@Valid Datos dato, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+    public String create(@Valid DetalleForm detalleForm, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, dato);
             return "datoses/create";
         }
         uiModel.asMap().clear();
-        dato.persist();
+        //dato.persist();
         return "redirect:/member/datoses/" + encodeUrlPathSegment(dato.getId().toString(), httpServletRequest);
     }
     
@@ -41,6 +41,7 @@ public class DatosController {
             dependencies.add(new String[] { "bodega", "bodegas" });
         }
         uiModel.addAttribute("dependencies", dependencies);
+        uiModel.addAttribute("form", new DetalleForm());
         return "datoses/create";
     }
 }
