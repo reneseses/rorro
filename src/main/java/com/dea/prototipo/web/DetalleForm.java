@@ -70,5 +70,6 @@ public class DetalleForm {
     private double TranspaletaElectrica=0;
     
     private double ContrapesoOperadorDePie=0;
-
+    
+    
 }

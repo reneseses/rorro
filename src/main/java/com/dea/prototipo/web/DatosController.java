@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import com.dea.prototipo.domain.Bodega;
 import com.dea.prototipo.domain.Datos;
+import com.dea.prototipo.web.DetalleForm;
+
 
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,8 @@ public class DatosController {
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid DetalleForm detalleForm, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, dato);
+            populateEditForm(uiModel, new Datos() );
+            uiModel.addAttribute("form", new DetalleForm());
             return "datoses/create";
         }
         uiModel.asMap().clear();

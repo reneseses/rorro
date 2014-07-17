@@ -218,7 +218,8 @@ public class Benchmarking {
 			
           	else if(rendi.doubleValue()<1&&tester.getSlack(aux, 0)==0&&tester.getSlack(aux, 1)==0&&tester.getSlack(aux, 2)==0){
 				//INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA
-
+          		System.out.println("Entro en INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA"
+);
 				BigDecimal eficiencia = new BigDecimal(objectives[aux]);
 				BigDecimal ef=eficiencia.setScale(2, RoundingMode.HALF_UP);
 				double efp=objectives[aux]*100;
@@ -226,7 +227,7 @@ public class Benchmarking {
 				BigDecimal epr=efiporc.setScale(0, RoundingMode.HALF_UP);
 				rendimiento="Para la bodega ["+ bod+"] el valor  de su rendimiento equivale a "+ String.valueOf(ef)+ " o "+ String.valueOf(epr)+"%. ";
 								
-				proyeccion="Esto indica que ["+bod+"] podría reducir sus ENTRADAS en un "+epr.doubleValue()+"% en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS. ";
+				proyeccion="Esto indica que ["+bod+"] podría reducir sus ENTRADAS en un "+(100-epr.doubleValue())+"% en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS. ";
 				ranking="De un total de "+largo+" bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, ["+bod+"] ocupa la posición "+ranks[aux]+".";
 				System.out.println();
 				System.out.println("DMUs Max-slack Solution");
@@ -265,9 +266,10 @@ public class Benchmarking {
 				}*/
 
 			}
-				
-          	else if(rendi.doubleValue()<1&&(tester.getSlack(aux, 0)!=0||tester.getSlack(aux, 1)!=0||tester.getSlack(aux, 2)!=0)){
+			
+          	else if(tester.getObjective(aux)<1&&tester.getSlack(aux, 0)!=0||tester.getSlack(aux, 1)!=0||tester.getSlack(aux, 2)!=0){
               	//INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.
+          		System.out.println("entro en INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.");
 					BigDecimal eficiencia = new BigDecimal(objectives[aux]);
 	              	BigDecimal ef=eficiencia.setScale(2, RoundingMode.HALF_UP);
 	              	double efp=objectives[aux]*100;
@@ -281,17 +283,18 @@ public class Benchmarking {
 	    			BigDecimal inr=in.setScale(2, RoundingMode.HALF_UP);
 	    			BigDecimal hh=new BigDecimal(pp[aux][2]);
 	    			BigDecimal hhr=hh.setScale(2, RoundingMode.HALF_UP);
+	    			System.out.println("Valor eficiencia "+rendi.doubleValue());	
 	    			System.out.println("valor redondeado de mejora para superficie "+sur);
     								if(sur.doubleValue()!=0){
-    									sup = "SUPERFICIE = "+String.valueOf((100-sur.doubleValue()*-100))+"%";
+    									sup = "SUPERFICIE = "+String.valueOf(sur.doubleValue()*-100)+"%";
     								}
     								if
     								(inr.doubleValue()!=0){
-    									inv=" INVERSION = "+String.valueOf((100-inr.doubleValue()*-100))+"%";
+    									inv=" INVERSION = "+String.valueOf(inr.doubleValue()*-100)+"%";
     								}
     								if
     								(hhr.doubleValue()!=0){
-    									hr=" HORAS-HOMBRE = "+String.valueOf((100-hhr.doubleValue()*-100))+"%";
+    									hr=" HORAS-HOMBRE = "+String.valueOf(hhr.doubleValue()*-100)+"%";
     								}
     								
     								
@@ -334,7 +337,7 @@ public class Benchmarking {
 				    				}*/
 
 				}else {
-					
+					System.out.println("Ninguna de las anteriores");
 					BigDecimal eficiencia = new BigDecimal(objectives[aux]);
 	              	BigDecimal ef=eficiencia.setScale(2, RoundingMode.HALF_UP);
 	              	double efp=objectives[aux]*100;
@@ -350,19 +353,19 @@ public class Benchmarking {
 	    			BigDecimal hhr=hh.setScale(2, RoundingMode.HALF_UP);
 	    			System.out.println("valor redondeado de mejora para superficie"+sur);
     								if(sur.doubleValue()!=0){
-    									sup = "SUPERFICIE = "+String.valueOf((100-sur.doubleValue()*-100))+"%";
+    									sup = "SUPERFICIE = "+String.valueOf(sur.doubleValue()*-100)+"%";
     								}
     								if
     								(inr.doubleValue()!=0){
-    									inv=" INVERSION = "+String.valueOf((100-inr.doubleValue()*-100))+"%";
+    									inv=" INVERSION = "+String.valueOf(inr.doubleValue()*-100)+"%";
     								}
     								if
     								(hhr.doubleValue()!=0){
-    									hr=" HORAS-HOMBRE = "+String.valueOf((100-hhr.doubleValue()*-100))+"%";
+    									hr=" HORAS-HOMBRE = "+String.valueOf(hhr.doubleValue()*-100)+"%";
     								}
     								
     								
-							proyeccion="Si bien presenta eficiencia esta no es completa, puesto que al menos una(s) de su(s) ENTRADA(s) no está(n) siendo aprovechada(s) de modo que ["+bod+"] podría reducir la(s) siguiente(s) en: "+" "+sup+" "+" "+inv+" "+" "+hr+" "+", en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS.";
+							proyeccion="Si bien presenta eficiencia esta no es completa, puesto que al menos una(s) de su(s) ENTRADA(s) no está(n) siendo aprovechada(s) de modo que ["+bod+"] podría reducir la(s) siguiente(s) ENTRADA(S) en: "+" "+sup+" "+" "+inv+" "+" "+hr+" "+", en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS.";
 							ranking="De un total de "+largo+" bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, ["+bod+"] ocupa la posición "+ranks[aux]+".";
 								System.out.println();
 				    			System.out.println("DMUs Max-slack Solution");
@@ -425,10 +428,10 @@ public class Benchmarking {
 			
           	else if(rendiO.doubleValue()<1&&testerO.getSlack(aux, 3)==0&&testerO.getSlack(aux, 4)==0&&testerO.getSlack(aux, 5)==0&&testerO.getSlack(aux, 6)==0&&testerO.getSlack(aux, 7)==0){
 				//INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE AUMENTAR DE MANERA RADIAL SUS SALIDAS PARA ALCANZAR EFICIENCIA
-
-				BigDecimal eficienciaO = new BigDecimal(objectivesO[aux]);
+				double efo=1/objectivesO[aux];
+				BigDecimal eficienciaO = new BigDecimal(efo);
 				BigDecimal efO=eficienciaO.setScale(2, RoundingMode.HALF_UP);
-				double efpO=objectivesO[aux]*100;
+				double efpO=(1/objectivesO[aux])*100;
 				BigDecimal efiporcO= new BigDecimal (efpO);
 				BigDecimal eprO=efiporcO.setScale(0, RoundingMode.HALF_UP);
 				rendimientoO="Para la bodega ["+ bod+"] el valor  de su rendimiento equivale a "+ String.valueOf(efO)+ " o "+ String.valueOf(eprO)+"%. ";
@@ -473,43 +476,106 @@ public class Benchmarking {
 
 			}
 				
-          	else if(rendi.doubleValue()<1&&(testerO.getSlack(aux, 3)!=0||testerO.getSlack(aux, 4)!=0||testerO.getSlack(aux, 5)!=0||testerO.getSlack(aux, 6)!=0||testerO.getSlack(aux, 7)!=0)){
+          	else if(tester.getObjective(aux)<1&&(testerO.getSlack(aux, 3)!=0||testerO.getSlack(aux, 4)!=0||testerO.getSlack(aux, 5)!=0||testerO.getSlack(aux, 6)!=0||testerO.getSlack(aux, 7)!=0)){
               	//INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.
-					
-	          		BigDecimal eficienciaO = new BigDecimal(objectivesO[aux]);
+					double b=0;
+					double f=0;
+					double p=0;
+					double a=0;
+					double s=0;
+					double efo=1/objectivesO[aux];
+	          		BigDecimal eficienciaO = new BigDecimal(efo);
 					BigDecimal efO=eficienciaO.setScale(2, RoundingMode.HALF_UP);
-					double efpO=objectivesO[aux]*100;
+					double efpO=(1/objectivesO[aux])*100;					
 					BigDecimal efiporcO= new BigDecimal (efpO);
 					BigDecimal eprO=efiporcO.setScale(0, RoundingMode.HALF_UP);
 	          		rendimientoO="Para la bodega ["+ bod+"] el valor  de su rendimiento equivale a "+ String.valueOf(efO)+ " o "+ String.valueOf(eprO)+"%. ";
-	              	            	    			              	
-	              	BigDecimal bc=new BigDecimal(ppO[aux][3]);
-					BigDecimal bcr=bc.setScale(2, RoundingMode.HALF_UP);
-					BigDecimal fc=new BigDecimal(ppO[aux][4]);
-					BigDecimal fcr=fc.setScale(2, RoundingMode.HALF_UP);
-					BigDecimal pl=new BigDecimal(ppO[aux][5]);
-					BigDecimal plr=pl.setScale(2, RoundingMode.HALF_UP);
-					BigDecimal ac=new BigDecimal(ppO[aux][6]);
-					BigDecimal acr=ac.setScale(2, RoundingMode.HALF_UP);
-					BigDecimal alm=new BigDecimal(ppO[aux][7]);
-					BigDecimal almr=alm.setScale(2, RoundingMode.HALF_UP);
-					System.out.println("valor redondeado de mejora para Broken Case"+bc);
-					if(bcr.doubleValue()!=0){
-						broken = "BROKEN CASE LINES en "+String.valueOf(bcr.doubleValue()*100)+"%";
+	              	System.out.println("Porcentaje de proyección para "+ aux+ " es "+ppO[aux][3] );
+	              	
+	              	if(Double.isInfinite(ppO[aux][3]) || Double.isNaN(ppO[aux][3])){
+	              		System.out.println("Entro y Broken Case y su % de mejora es "+ppO[aux][3]);
+	              		b=0;
+	              	}else{
+	              		BigDecimal bc=new BigDecimal(ppO[aux][3]);
+						BigDecimal bcr=bc.setScale(2, RoundingMode.HALF_UP);
+						b=bcr.doubleValue();
+	              	}
+	              	if(Double.isInfinite(ppO[aux][4]) || Double.isNaN(ppO[aux][4])){
+	              		BigDecimal fc=new BigDecimal(0);
+	              		BigDecimal fcr=fc.setScale(0, RoundingMode.HALF_UP);
+	              		f=fcr.doubleValue();
+	              		
+	              	}else{
+	              		BigDecimal fc=new BigDecimal(ppO[aux][4]);
+						BigDecimal fcr=fc.setScale(2, RoundingMode.HALF_UP);
+	              		f=fcr.doubleValue();
+
+	              	}
+	            	if(Double.isInfinite(ppO[aux][5]) || Double.isNaN(ppO[aux][5])){
+	              		BigDecimal pl=new BigDecimal(0);
+						BigDecimal plr=pl.setScale(0, RoundingMode.HALF_UP);
+						p=plr.doubleValue();
+
+	              	}else{
+	              		BigDecimal pl=new BigDecimal(ppO[aux][5]);
+						BigDecimal plr=pl.setScale(2, RoundingMode.HALF_UP);
+						p=plr.doubleValue();
+						
+	              	}
+	            	if(Double.isInfinite(ppO[aux][6]) || Double.isNaN(ppO[aux][6])){
+	              		BigDecimal ac=new BigDecimal(0);
+						BigDecimal acr=ac.setScale(0, RoundingMode.HALF_UP);
+						a=acr.doubleValue();
+
+	              	}else{
+	              		BigDecimal ac=new BigDecimal(ppO[aux][6]);
+						BigDecimal acr=ac.setScale(2, RoundingMode.HALF_UP);
+						a=acr.doubleValue();
+	              	}
+	            	if(Double.isInfinite(ppO[aux][6]) || Double.isNaN(ppO[aux][6])){
+	              		BigDecimal alm=new BigDecimal(0);
+						BigDecimal almr=alm.setScale(0, RoundingMode.HALF_UP);
+						s=almr.doubleValue();
+
+	              	}else{
+	              		BigDecimal alm=new BigDecimal(ppO[aux][7]);
+						BigDecimal almr=alm.setScale(2, RoundingMode.HALF_UP);
+						s=almr.doubleValue();
+	              	}
+	              		
+					//System.out.println("valor redondeado de mejora para Broken Case"+bc);
+					if(b!=0){
+						broken = "BROKEN CASE LINES en "+String.valueOf(b*100)+"%";
+						System.out.println("entro al si tiene mejora");
+					}else{
+						broken= "BROKEN CASE LINES en 0%";
+						System.out.println("Entro al no tiene mejora");
 					}
-					if(fcr.doubleValue()!=0){
-						full=" FULL CASE LINES en "+String.valueOf(fcr.doubleValue()*100)+"%";
+					if(f!=0){
+						full=" FULL CASE LINES en "+String.valueOf(f*100)+"%";
 					}
-					if(plr.doubleValue()!=0){
-						pallet=" PALLET CASE LINES en "+String.valueOf(plr.doubleValue()*100)+"%";
+					else{
+						full=" FULL CASE LINES EN 0%";
 					}
-					if(acr.doubleValue()!=0){
-						acumu=" ACUMULACIÓN en "+String.valueOf(acr.doubleValue()*100)+"%";
+					if(p!=0){
+						pallet=" PALLET CASE LINES en "+String.valueOf(p*100)+"%";
 					}
-					if(almr.doubleValue()!=0){
-						almac=" ALMACENAMIENTO en "+String.valueOf(almr.doubleValue()*100)+"%";
+					else{
+						pallet=" PALLET CASE LINES en 0%";
 					}
-    								
+					if(a!=0){
+						acumu=" ACUMULACIÓN en "+String.valueOf(a*100)+"%";
+					}else{
+						acumu=" ACUMULAIÓN en 0%";
+					}
+					if(s!=0){
+						almac=" ALMACENAMIENTO en "+String.valueOf(s*100)+"%";
+					}else{
+						almac=" ALMACENAMIENTO en 0%";
+					}
+	    						
+	              	
+	              				
     								
 					proyeccionO="Esto indica que ["+bod+"] podría AUMENTAR la(s) siguiente(s) SALIDAS en: "+" "+broken+" "+" "+full+" "+" "+pallet+" "+acumu+" "+almac+" , en relación a sus valores actuales manteniendo al menos el mismo nivel de ENTRADAS.";
 					rankingO="De un total de "+largo+" bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, ["+bod+"] ocupa la posición "+ranksO[aux]+".";
@@ -551,9 +617,10 @@ public class Benchmarking {
 
 				}else {
 					
-					BigDecimal eficienciaO = new BigDecimal(objectivesO[aux]);
+					double efo=1/objectivesO[aux];
+					BigDecimal eficienciaO = new BigDecimal(efo);
 	              	BigDecimal efO=eficienciaO.setScale(2, RoundingMode.HALF_UP);
-	              	double efpO=objectivesO[aux]*100;
+					double efpO=(1/objectivesO[aux])*100;
 	              	BigDecimal efiporcO= new BigDecimal (efpO);
 	              	BigDecimal eprO=efiporcO.setScale(0, RoundingMode.HALF_UP);
 	              	rendimientoO="Para la bodega ["+ bod+"] el valor  de su rendimiento equivale a "+ String.valueOf(efO)+ " o "+ String.valueOf(eprO)+"%. ";         	
