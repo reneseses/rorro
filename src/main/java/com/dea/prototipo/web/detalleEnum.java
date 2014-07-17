@@ -1,9 +1,9 @@
 package com.dea.prototipo.web;
 
 public enum detalleEnum {
-ContraPesoSentado("30000"), MOTIVO2("Motivo 2"), Motivo3("Motivo 3");
+ContraPesoSentado(30000d), TranspaletaElectrica(10000d), ContrapesoOperadorDePie(30000d);
     
-    private String reason;
+    private double detalle;
 	private detalleEnum(double detalle){
 		this.detalle= detalle;
 	}
