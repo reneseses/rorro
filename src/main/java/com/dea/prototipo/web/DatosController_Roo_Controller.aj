@@ -7,8 +7,6 @@ import com.dea.prototipo.domain.Bodega;
 import com.dea.prototipo.domain.Datos;
 import com.dea.prototipo.web.DatosController;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
@@ -23,17 +21,6 @@ import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
 privileged aspect DatosController_Roo_Controller {
-    
-    @RequestMapping(params = "form", produces = "text/html")
-    public String DatosController.createForm(Model uiModel) {
-        populateEditForm(uiModel, new Datos());
-        List<String[]> dependencies = new ArrayList<String[]>();
-        if (Bodega.countBodegas() == 0) {
-            dependencies.add(new String[] { "bodega", "bodegas" });
-        }
-        uiModel.addAttribute("dependencies", dependencies);
-        return "datoses/create";
-    }
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String DatosController.show(@PathVariable("id") Long id, Model uiModel) {
