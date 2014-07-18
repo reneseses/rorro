@@ -1,5 +1,5 @@
 package com.dea.prototipo.web;
-
+//de nuevoo
 public enum DetalleEnum {
 contraPesoSentado(30000d),
 transpaletaElectrica(10000d),
