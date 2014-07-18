@@ -217,4 +217,100 @@ privileged aspect DetalleForm_Roo_JavaBean {
         this.montaCargasHibrido = montaCargasHibrido;
     }
     
+    public double DetalleForm.getPersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida() {
+        return this.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida;
+    }
+    
+    public void DetalleForm.setPersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida(double personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida) {
+        this.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida = personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida;
+    }
+    
+    public double DetalleForm.getCarruselHorizontal() {
+        return this.carruselHorizontal;
+    }
+    
+    public void DetalleForm.setCarruselHorizontal(double carruselHorizontal) {
+        this.carruselHorizontal = carruselHorizontal;
+    }
+    
+    public double DetalleForm.getCarruselVertical() {
+        return this.carruselVertical;
+    }
+    
+    public void DetalleForm.setCarruselVertical(double carruselVertical) {
+        this.carruselVertical = carruselVertical;
+    }
+    
+    public double DetalleForm.getMaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas() {
+        return this.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas;
+    }
+    
+    public void DetalleForm.setMaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas(double maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas) {
+        this.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas = maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas;
+    }
+    
+    public double DetalleForm.getModuloDispensadorAFrame() {
+        return this.moduloDispensadorAFrame;
+    }
+    
+    public void DetalleForm.setModuloDispensadorAFrame(double moduloDispensadorAFrame) {
+        this.moduloDispensadorAFrame = moduloDispensadorAFrame;
+    }
+    
+    public double DetalleForm.getTransportadorDeRodillo() {
+        return this.transportadorDeRodillo;
+    }
+    
+    public void DetalleForm.setTransportadorDeRodillo(double transportadorDeRodillo) {
+        this.transportadorDeRodillo = transportadorDeRodillo;
+    }
+    
+    public double DetalleForm.getTransportadorDeRodilloAccionadoOMotorizado() {
+        return this.transportadorDeRodilloAccionadoOMotorizado;
+    }
+    
+    public void DetalleForm.setTransportadorDeRodilloAccionadoOMotorizado(double transportadorDeRodilloAccionadoOMotorizado) {
+        this.transportadorDeRodilloAccionadoOMotorizado = transportadorDeRodilloAccionadoOMotorizado;
+    }
+    
+    public double DetalleForm.getTransportadorDeCinta() {
+        return this.transportadorDeCinta;
+    }
+    
+    public void DetalleForm.setTransportadorDeCinta(double transportadorDeCinta) {
+        this.transportadorDeCinta = transportadorDeCinta;
+    }
+    
+    public double DetalleForm.getTransportadorDeRuedas() {
+        return this.transportadorDeRuedas;
+    }
+    
+    public void DetalleForm.setTransportadorDeRuedas(double transportadorDeRuedas) {
+        this.transportadorDeRuedas = transportadorDeRuedas;
+    }
+    
+    public double DetalleForm.getTransportadorDeLineaDeRemolque() {
+        return this.transportadorDeLineaDeRemolque;
+    }
+    
+    public void DetalleForm.setTransportadorDeLineaDeRemolque(double transportadorDeLineaDeRemolque) {
+        this.transportadorDeLineaDeRemolque = transportadorDeLineaDeRemolque;
+    }
+    
+    public double DetalleForm.getClasificadorBandejaMovible() {
+        return this.clasificadorBandejaMovible;
+    }
+    
+    public void DetalleForm.setClasificadorBandejaMovible(double clasificadorBandejaMovible) {
+        this.clasificadorBandejaMovible = clasificadorBandejaMovible;
+    }
+    
+    public double DetalleForm.getTransportadorDePallet() {
+        return this.transportadorDePallet;
+    }
+    
+    public void DetalleForm.setTransportadorDePallet(double transportadorDePallet) {
+        this.transportadorDePallet = transportadorDePallet;
+    }
+    
 }

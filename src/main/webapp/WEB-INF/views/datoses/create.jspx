@@ -33,9 +33,11 @@
         	<field:input field="montaCargasHibrido" id="c_com_dea_prototipo_domain_Datos_montacargashibrido" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
         	<field:input field="montaCargasHibrido" id="c_com_dea_prototipo_domain_Datos_montacargashibrido" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
         	<field:input field="personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida" id="c_com_dea_prototipo_domain_Datos_personaabordodelamaquinaautomatizadadealmacenamientoyrecogida" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<br clear="all"/>
         	<field:input field="carruselHorizontal" id="c_com_dea_prototipo_domain_Datos_carruselhorizontal" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
         	<field:input field="carruselVertical" id="c_com_dea_prototipo_domain_Datos_carruselvertical" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
         	<field:input field="maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas" id="c_com_dea_prototipo_domain_Datos_maquinaautomatizadadealmacenamientoyrecogidaparaminicargas" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<br clear="all"/>
         	<field:input field="moduloDispensadorAFrame" id="c_com_dea_prototipo_domain_Datos_modulodispensadoraframe" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
         	<field:input field="transportadorDeRodillo" id="c_com_dea_prototipo_domain_Datos_transportadorderodillo" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
         	<field:input field="transportadorDeRodilloAccionadoOMotorizado" id="c_com_dea_prototipo_domain_Datos_transportadorderodilloaccionadoomotorizado" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
