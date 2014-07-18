@@ -135,33 +135,35 @@ public class DetalleForm {
     	
     	Double inversion=0d;
     	if(this.detalle){
-    		inversion= this.contrapesoOperadorDePie * DetalleEnum.contrapesoOperadorDePie.getDetalle() +
-    			this.transpaletaElectrica* DetalleEnum.transpaletaElectrica.getDetalle() +
-    			this.contrapesoOperadorDePie * DetalleEnum.contrapesoOperadorDePie.getDetalle() +
-    			this.medioLevante * DetalleEnum.medioLevante.getDetalle() +
-    			this.piernasAHorcagajadas * DetalleEnum.piernasAhorcagajadas.getDetalle() +
-    			this.piernasAhorcajadasYPantografo * DetalleEnum.piernasAhorcajadasYPantografo.getDetalle() +
-    			this.cargaLateral * DetalleEnum.cargaLateral.getDetalle() + 
-    			this.conTorreta * DetalleEnum.conTorreta.getDetalle() +
-    			this.vehiculoAlmacenamientoYRecuperacion * DetalleEnum.vehiculoAlmacenamientoYRecuperacion.getDetalle() +
-    			this.maquinaRegedoraGuiadaPorRiel * DetalleEnum.maquinaRegedoraGuiadaPorRiel.getDetalle() +
-    			this.maquinaRecogedoraGuiadaPorCable * DetalleEnum.maquinaRecogedoraGuiadaPorCable.getDetalle() +
-    			this.vehiculoGuiadoAutomaticamente * DetalleEnum.vehiculoGuiadoAutomaticamente.getDetalle() +
-    			this.carretilla * DetalleEnum.carretilla.getDetalle() +
-    			this.transpaletaManual * DetalleEnum.transpaletaManual.getDetalle() +
-    			this.montaCargasHibrido * DetalleEnum.montaCargasHibrido.getDetalle()+
-	    		this.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida * DetalleEnum.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida.getDetalle()+
-	    		this.carruselHorizontal * DetalleEnum.carruselHorizontal.getDetalle()+
-	    		this.carruselVertical * DetalleEnum.carruselHorizontal.getDetalle()+
-	    		this.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas * DetalleEnum.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas.getDetalle()+
-	    		this.moduloDispensadorAFrame* DetalleEnum.moduloDispensadorAFrame.getDetalle()+
-	    		this.transportadorDeRodillo* DetalleEnum.transportadorDeRodillo.getDetalle()+
-	    		this.transportadorDeRodilloAccionadoOMotorizado* DetalleEnum.transportadorDeRodilloAccionadoOMotorizado.getDetalle()+
-	    		this.transportadorDeCinta* DetalleEnum.transportadorDeCinta.getDetalle()+
-	    		this.transportadorDeRuedas* DetalleEnum.transportadorDeRuedas.getDetalle()+
-	    		this.transportadorDeLineaDeRemolque* DetalleEnum.transportadorDeRodillo.getDetalle()+
-	    		this.clasificadorBandejaMovible* DetalleEnum.clasificadorBandejaMovible.getDetalle()+
-	    		this.transportadorDePallet* DetalleEnum.transportadorDePallet.getDetalle();
+    		inversion= this.contrapesoOperadorDePie * DetalleEnum.ContrapesoOperadorDePie.getDetalle() +
+    			this.transpaletaElectrica* DetalleEnum.TranspaletaElectrica.getDetalle() +
+    			this.contrapesoOperadorDePie * DetalleEnum.ContrapesoOperadorDePie.getDetalle() +
+    			this.medioLevante * DetalleEnum.MedioLevante.getDetalle() +
+    			this.piernasAHorcagajadas * DetalleEnum.PiernasAhorcagajadas.getDetalle() +
+    			this.piernasAhorcajadasYPantografo * DetalleEnum.PiernasAhorcajadasYPantografo.getDetalle() +
+    			this.cargaLateral * DetalleEnum.CargaLateral.getDetalle() + 
+    			this.conTorreta * DetalleEnum.ConTorreta.getDetalle() +
+    			this.vehiculoAlmacenamientoYRecuperacion * DetalleEnum.VehiculoAlmacenamientoYRecuperacion.getDetalle() +
+    			this.maquinaRegedoraGuiadaPorRiel * DetalleEnum.MaquinaRegedoraGuiadaPorRiel.getDetalle() +
+    			this.maquinaRecogedoraGuiadaPorCable * DetalleEnum.MaquinaRecogedoraGuiadaPorCable.getDetalle() +
+    			this.vehiculoGuiadoAutomaticamente * DetalleEnum.VehiculoGuiadoAutomaticamente.getDetalle() +
+    			this.carretilla * DetalleEnum.Carretilla.getDetalle() +
+    			this.transpaletaManual * DetalleEnum.TranspaletaManual.getDetalle() +
+    			this.montaCargasHibrido * DetalleEnum.MontaCargasHibrido.getDetalle()+
+
+	    		this.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida * DetalleEnum.PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida.getDetalle()+
+	    		this.carruselHorizontal * DetalleEnum.CarruselHorizontal.getDetalle()+
+	    		this.carruselVertical * DetalleEnum.CarruselHorizontal.getDetalle()+
+	    		this.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas * DetalleEnum.MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas.getDetalle()+
+	    		this.moduloDispensadorAFrame* DetalleEnum.ModuloDispensadorAFrame.getDetalle()+
+	    		this.transportadorDeRodillo* DetalleEnum.TransportadorDeRodillo.getDetalle()+
+	    		this.transportadorDeRodilloAccionadoOMotorizado* DetalleEnum.TransportadorDeRodilloAccionadoOMotorizado.getDetalle()+
+	    		this.transportadorDeCinta* DetalleEnum.TransportadorDeCinta.getDetalle()+
+	    		this.transportadorDeRuedas* DetalleEnum.TransportadorDeRuedas.getDetalle()+
+	    		this.transportadorDeLineaDeRemolque* DetalleEnum.TransportadorDeRodillo.getDetalle()+
+	    		this.clasificadorBandejaMovible* DetalleEnum.ClasificadorBandejaMovible.getDetalle()+
+	    		this.transportadorDePallet* DetalleEnum.TransportadorDePallet.getDetalle();
+
     	}else{
     		inversion= this.inversion;
     	}

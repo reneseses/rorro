@@ -1,36 +1,36 @@
 package com.dea.prototipo.web;
 //de nuevoo
 public enum DetalleEnum {
-contraPesoSentado(30000d),
-transpaletaElectrica(10000d),
-contrapesoOperadorDePie(30000d),
-medioLevante(8000d),
-piernasAhorcagajadas(35000d),
-piernasAhorcajadasYPantografo(45000d),
-cargaLateral(65000d),
-conTorreta(80000d),
-vehiculoAlmacenamientoYRecuperacion(150000d),
-maquinaRegedoraGuiadaPorRiel(30000d),
-maquinaRecogedoraGuiadaPorCable(35000d),
-vehiculoGuiadoAutomaticamente(80000d),
-carretilla(644d),
-transpaletaManual(3000d),
-montaCargasHibrido(100000d),
-personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida(110000d),
-carruselHorizontal(40000d),
-carruselVertical(65000d),
-maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas(125000d),
-moduloDispensadorAFrame(750d),
-transportadorDeRodillo(50d),
-transportadorDeRodilloAccionadoOMotorizado(200d),
-transportadorDeCinta(100d),
-transportadorDeRuedas(25d),
-transportadorDeLineaDeRemolque(100d),
-clasificadorBandejaMovible(1000d),
-transportadorDePallet(1000d);
+	ContraPesoSentado(30000d),
+	TranspaletaElectrica(10000d),
+	ContrapesoOperadorDePie(30000d),
+	MedioLevante(8000d),
+	PiernasAhorcagajadas(35000d),
+	PiernasAhorcajadasYPantografo(45000d),
+	CargaLateral(65000d),
+	ConTorreta(80000d),
+	VehiculoAlmacenamientoYRecuperacion(150000d),
+	MaquinaRegedoraGuiadaPorRiel(30000d),
+	MaquinaRecogedoraGuiadaPorCable(35000d),
+	VehiculoGuiadoAutomaticamente(80000d),
+	Carretilla(644d),
+	TranspaletaManual(3000d),
+	MontaCargasHibrido(100000d),
+	PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida(110000d),
+	CarruselHorizontal(40000d),
+	CarruselVertical(65000d),
+	MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas(125000d),
+	ModuloDispensadorAFrame(750d),
+	TransportadorDeRodillo(50d),
+	TransportadorDeRodilloAccionadoOMotorizado(200d),
+	TransportadorDeCinta(100d),
+	TransportadorDeRuedas(25d),
+	TransportadorDeLineaDeRemolque(100d),
+	ClasificadorBandejaMovible(1000d),
+	TransportadorDePallet(1000d);
 
-    
-    private double detalle;
+
+	private double detalle;
 	private DetalleEnum(double detalle){
 		this.detalle= detalle;
 	}
