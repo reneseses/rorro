@@ -2,7 +2,7 @@
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:create id="fc_com_dea_prototipo_domain_Datos" modelAttribute="datos" path="/member/datoses" render="${empty dependencies}" z="user-managed">
+    <form:create id="fc_com_dea_prototipo_domain_Datos" modelAttribute="form" path="/member/datoses" render="${empty dependencies}" z="user-managed">
         <field:select field="bodega" id="c_com_dea_prototipo_domain_Datos_bodega" itemValue="id" items="${bodegas}" path="/bodegas" required="true" z="EDNzo5V7XYOyMMDLVmu3nZakx1I="/>
         <HR/>
         <p>
@@ -10,12 +10,28 @@
         </p>
         <field:input field="superficie" id="c_com_dea_prototipo_domain_Datos_superficie" z="zCA6UnmbCTzZbzsuf72Eg7wXnao="/>
         <field:input field="horasDeTrabajoTotal" id="c_com_dea_prototipo_domain_Datos_horasDeTrabajoTotal" min="0" required="true" z="Hr1rQ2Bl8I/aF1JAajV6xI4wo/M="/>
+        <field:checkbox field="detalle" id="c_com_dea_prototipo_domain_Datos_detalle" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        <div id="inversion">
         <field:input field="inversion" id="c_com_dea_prototipo_domain_Datos_inversion" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
-        <a href="#detalle">
-            <b>
-                <SUP> INGRESAR DETALLE INVERSION</SUP>
-            </b>
-        </a>
+        </div>
+        
+        <div id="detalle" style="display:none">
+        	<field:input field="contraPesoSentado" id="c_com_dea_prototipo_domain_Datos_contrapesosentado" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="transpaletaElectrica" id="c_com_dea_prototipo_domain_Datos_transpaletaelectrica" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="contrapesoOperadorDePie" id="c_com_dea_prototipo_domain_Datos_contrapesooperadordepie" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="medioLevante" id="c_com_dea_prototipo_domain_Datos_mediolevante" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="piernasAHorcagajadas" id="c_com_dea_prototipo_domain_Datos_piernasahorcagajadas" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="piernasAhorcajadasYPantografo" id="c_com_dea_prototipo_domain_Datos_piernasahorcajadasypantografo" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="cargaLateral" id="c_com_dea_prototipo_domain_Datos_cargalateral" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="conTorreta" id="c_com_dea_prototipo_domain_Datos_contorreta" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="vehiculoAlmacenamientoYRecuperacion" id="c_com_dea_prototipo_domain_Datos_vehiculoalmacenamientoyrecuperacion" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="maquinaRegedoraGuiadaPorRiel" id="c_com_dea_prototipo_domain_Datos_maquinaregedoraguiadaporriel" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="maquinaRecogedoraGuiadaPorCable" id="c_com_dea_prototipo_domain_Datos_maquinarecogedoraguiadaporcable" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="vehiculoGuiadoAutomaticamente" id="c_com_dea_prototipo_domain_Datos_vehiculoguiadoautomaticamente" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="carretilla" id="c_com_dea_prototipo_domain_Datos_carretilla" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="transpaletaManual" id="c_com_dea_prototipo_domain_Datos_transpaletamanual" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        	<field:input field="montaCargasHibrido" id="c_com_dea_prototipo_domain_Datos_montacargashibrido" z="Tb9aCcq8f64Mwf0yx0hrkcOWs+U="/>
+        </div>
         <HR/>
         <p>
             <STRONG>SALIDAS</STRONG>
@@ -29,4 +45,19 @@
         <field:datetime dateTimePattern="${datos_fechaderegistro_date_format}" field="fechaDeRegistro" id="c_com_dea_prototipo_domain_Datos_fechaDeRegistro" z="eelUJSvnHpMiti+OlSTdta2RjDA="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_dea_prototipo_domain_Datos" render="${not empty dependencies}" z="C321Q4RfXd/A3Y9yZl3DndKgtLA="/>
+	<script type="text/javascript">
+		$(function(){
+			$("#_detalle_id").change(function(){
+				console.log($(this).is(':checked'));
+				if($(this).is(':checked')){
+					$("#inversion").hide();
+					$("#detalle").show();
+				}else{
+					$("#inversion").show();
+					$("#detalle").hide();
+				}
+			});
+		});
+	</script>
+
 </div>

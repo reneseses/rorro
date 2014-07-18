@@ -27,13 +27,15 @@ public class DatosController {
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid DetalleForm detalleForm, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, new Datos() );
-            uiModel.addAttribute("form", new DetalleForm());
+            populateEditForm(uiModel, new Datos());
+            uiModel.addAttribute("form", detalleForm);
             return "datoses/create";
         }
         uiModel.asMap().clear();
+        Datos dato= detalleForm.getDatos();
         //dato.persist();
-        return "redirect:/member/datoses/" + encodeUrlPathSegment(dato.getId().toString(), httpServletRequest);
+        System.out.println(dato);
+        return "redirect:/member/datoses/"; //+ encodeUrlPathSegment(dato.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", produces = "text/html")
