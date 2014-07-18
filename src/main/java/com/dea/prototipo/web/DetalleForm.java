@@ -85,7 +85,7 @@ public class DetalleForm {
     private double vehiculoAlmacenamientoYRecuperacion=0;
     
     private double maquinaRegedoraGuiadaPorRiel=0;
-    
+    //cambio
     private double maquinaRecogedoraGuiadaPorCable=0;
     
     private double vehiculoGuiadoAutomaticamente=0;
