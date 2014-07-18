@@ -96,6 +96,30 @@ public class DetalleForm {
     
     private double montaCargasHibrido=0;
     
+    private double PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida=0;
+    
+    private double CarruselHorizontal=0;
+    
+    private double CarruselVertical=0;
+    
+    private double MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas=0;
+    
+    private double ModuloDispensadorAFrame=0;
+    
+    private double TransportadorDeRodillo=0;
+    
+    private double TransportadorDeRodilloAccionadoOMotorizado=0;
+    
+    private double TransportadorDeCinta=0;
+    
+    private double TransportadorDeRuedas=0;
+    
+    private double TransportadorDeLineaDeRemolque=0;
+    
+    private double ClasificadorBandejaMovible=0;
+    
+    private double TransportadorDePallet=0;
+    
     public Datos getDatos(){
     	Datos dato= new Datos();
     	dato.setAcumulacion(this.acumulacion);
@@ -107,6 +131,7 @@ public class DetalleForm {
     	dato.setHorasDeTrabajoTotal(this.horasDeTrabajoTotal);
     	dato.setPalletLines(this.PalletLines);
     	dato.setSuperficie(this.superficie);
+    	
     	
     	Double inversion=0d;
     	if(this.detalle){
@@ -124,7 +149,19 @@ public class DetalleForm {
     			this.vehiculoGuiadoAutomaticamente * DetalleEnum.VehiculoGuiadoAutomaticamente.getDetalle() +
     			this.carretilla * DetalleEnum.Carretilla.getDetalle() +
     			this.transpaletaManual * DetalleEnum.TranspaletaManual.getDetalle() +
-    			this.montaCargasHibrido * DetalleEnum.MontaCargasHibrido.getDetalle();
+    			this.montaCargasHibrido * DetalleEnum.MontaCargasHibrido.getDetalle()+
+	    		this.PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida * DetalleEnum.PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida.getDetalle()+
+	    		this.CarruselHorizontal * DetalleEnum.CarruselHorizontal.getDetalle()+
+	    		this.CarruselVertical * DetalleEnum.CarruselHorizontal.getDetalle()+
+	    		this.MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas * DetalleEnum.MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas.getDetalle()+
+	    		this.ModuloDispensadorAFrame* DetalleEnum.ModuloDispensadorAFrame.getDetalle()+
+	    		this.TransportadorDeRodillo* DetalleEnum.TransportadorDeRodillo.getDetalle()+
+	    		this.TransportadorDeRodilloAccionadoOMotorizado* DetalleEnum.TransportadorDeRodilloAccionadoOMotorizado.getDetalle()+
+	    		this.TransportadorDeCinta* DetalleEnum.TransportadorDeCinta.getDetalle()+
+	    		this.TransportadorDeRuedas* DetalleEnum.TransportadorDeRuedas.getDetalle()+
+	    		this.TransportadorDeLineaDeRemolque* DetalleEnum.TransportadorDeRodillo.getDetalle()+
+	    		this.ClasificadorBandejaMovible* DetalleEnum.ClasificadorBandejaMovible.getDetalle()+
+	    		this.TransportadorDePallet* DetalleEnum.TransportadorDePallet.getDetalle();
     	}else{
     		inversion= this.inversion;
     	}
