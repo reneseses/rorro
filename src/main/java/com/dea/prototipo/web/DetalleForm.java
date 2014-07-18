@@ -96,29 +96,29 @@ public class DetalleForm {
     
     private double montaCargasHibrido=0;
     
-    private double PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida=0;
+    private double personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida=0;
     
-    private double CarruselHorizontal=0;
+    private double carruselHorizontal=0;
     
-    private double CarruselVertical=0;
+    private double carruselVertical=0;
     
-    private double MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas=0;
+    private double maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas=0;
     
-    private double ModuloDispensadorAFrame=0;
+    private double moduloDispensadorAFrame=0;
     
-    private double TransportadorDeRodillo=0;
+    private double transportadorDeRodillo=0;
     
-    private double TransportadorDeRodilloAccionadoOMotorizado=0;
+    private double transportadorDeRodilloAccionadoOMotorizado=0;
     
-    private double TransportadorDeCinta=0;
+    private double transportadorDeCinta=0;
     
-    private double TransportadorDeRuedas=0;
+    private double transportadorDeRuedas=0;
     
-    private double TransportadorDeLineaDeRemolque=0;
+    private double transportadorDeLineaDeRemolque=0;
     
-    private double ClasificadorBandejaMovible=0;
+    private double clasificadorBandejaMovible=0;
     
-    private double TransportadorDePallet=0;
+    private double transportadorDePallet=0;
     
     public Datos getDatos(){
     	Datos dato= new Datos();
@@ -150,18 +150,18 @@ public class DetalleForm {
     			this.carretilla * DetalleEnum.carretilla.getDetalle() +
     			this.transpaletaManual * DetalleEnum.transpaletaManual.getDetalle() +
     			this.montaCargasHibrido * DetalleEnum.montaCargasHibrido.getDetalle()+
-	    		this.PersonaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida * DetalleEnum.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida.getDetalle()+
-	    		this.CarruselHorizontal * DetalleEnum.carruselHorizontal.getDetalle()+
-	    		this.CarruselVertical * DetalleEnum.carruselHorizontal.getDetalle()+
-	    		this.MaquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas * DetalleEnum.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas.getDetalle()+
-	    		this.ModuloDispensadorAFrame* DetalleEnum.moduloDispensadorAFrame.getDetalle()+
-	    		this.TransportadorDeRodillo* DetalleEnum.transportadorDeRodillo.getDetalle()+
-	    		this.TransportadorDeRodilloAccionadoOMotorizado* DetalleEnum.transportadorDeRodilloAccionadoOMotorizado.getDetalle()+
-	    		this.TransportadorDeCinta* DetalleEnum.transportadorDeCinta.getDetalle()+
-	    		this.TransportadorDeRuedas* DetalleEnum.transportadorDeRuedas.getDetalle()+
-	    		this.TransportadorDeLineaDeRemolque* DetalleEnum.transportadorDeRodillo.getDetalle()+
-	    		this.ClasificadorBandejaMovible* DetalleEnum.clasificadorBandejaMovible.getDetalle()+
-	    		this.TransportadorDePallet* DetalleEnum.transportadorDePallet.getDetalle();
+	    		this.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida * DetalleEnum.personaABordoDeLaMaquinaAutomatizadaDeAlmacenamientoYRecogida.getDetalle()+
+	    		this.carruselHorizontal * DetalleEnum.carruselHorizontal.getDetalle()+
+	    		this.carruselVertical * DetalleEnum.carruselHorizontal.getDetalle()+
+	    		this.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas * DetalleEnum.maquinaAutomatizadaDeAlmacenamientoYRecogidaParaMinicargas.getDetalle()+
+	    		this.moduloDispensadorAFrame* DetalleEnum.moduloDispensadorAFrame.getDetalle()+
+	    		this.transportadorDeRodillo* DetalleEnum.transportadorDeRodillo.getDetalle()+
+	    		this.transportadorDeRodilloAccionadoOMotorizado* DetalleEnum.transportadorDeRodilloAccionadoOMotorizado.getDetalle()+
+	    		this.transportadorDeCinta* DetalleEnum.transportadorDeCinta.getDetalle()+
+	    		this.transportadorDeRuedas* DetalleEnum.transportadorDeRuedas.getDetalle()+
+	    		this.transportadorDeLineaDeRemolque* DetalleEnum.transportadorDeRodillo.getDetalle()+
+	    		this.clasificadorBandejaMovible* DetalleEnum.clasificadorBandejaMovible.getDetalle()+
+	    		this.transportadorDePallet* DetalleEnum.transportadorDePallet.getDetalle();
     	}else{
     		inversion= this.inversion;
     	}
