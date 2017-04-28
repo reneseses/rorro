@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-@RequestMapping("/member/datoses")
+@RequestMapping("/member/datos")
 @Controller
-@RooWebScaffold(path = "datoses", formBackingObject = Datos.class)
+@RooWebScaffold(path = "datos", formBackingObject = Datos.class)
 public class DatosController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
@@ -29,13 +29,13 @@ public class DatosController {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, new Datos());
             uiModel.addAttribute("form", detalleForm);
-            return "datoses/create";
+            return "datos/create";
         }
         uiModel.asMap().clear();
         Datos dato= detalleForm.getDatos();
         //dato.persist();
         System.out.println(dato);
-        return "redirect:/member/datoses/"; //+ encodeUrlPathSegment(dato.getId().toString(), httpServletRequest);
+        return "redirect:/member/datos/"; //+ encodeUrlPathSegment(dato.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", produces = "text/html")
@@ -47,6 +47,6 @@ public class DatosController {
         }
         uiModel.addAttribute("dependencies", dependencies);
         uiModel.addAttribute("form", new DetalleForm());
-        return "datoses/create";
+        return "datos/create";
     }
 }

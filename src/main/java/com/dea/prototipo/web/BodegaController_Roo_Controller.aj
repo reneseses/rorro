@@ -58,7 +58,7 @@ privileged aspect BodegaController_Roo_Controller {
         }
         uiModel.asMap().clear();
         bodega.merge();
-        return "redirect:/bodegas/" + encodeUrlPathSegment(bodega.getId().toString(), httpServletRequest);
+        return "redirect:/member/bodegas/" + encodeUrlPathSegment(bodega.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
@@ -74,7 +74,7 @@ privileged aspect BodegaController_Roo_Controller {
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/bodegas";
+        return "redirect:/member/bodegas";
     }
     
     void BodegaController.populateEditForm(Model uiModel, Bodega bodega) {

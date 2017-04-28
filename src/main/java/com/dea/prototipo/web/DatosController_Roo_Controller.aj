@@ -27,7 +27,7 @@ privileged aspect DatosController_Roo_Controller {
         addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("datos", Datos.findDatos(id));
         uiModel.addAttribute("itemId", id);
-        return "datoses/show";
+        return "datos/show";
     }
     
     @RequestMapping(produces = "text/html")
@@ -35,31 +35,31 @@ privileged aspect DatosController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("datoses", Datos.findDatosEntries(firstResult, sizeNo, sortFieldName, sortOrder));
+            uiModel.addAttribute("datos", Datos.findDatosEntries(firstResult, sizeNo, sortFieldName, sortOrder));
             float nrOfPages = (float) Datos.countDatoses() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("datoses", Datos.findAllDatoses(sortFieldName, sortOrder));
+            uiModel.addAttribute("datos", Datos.findAllDatoses(sortFieldName, sortOrder));
         }
         addDateTimeFormatPatterns(uiModel);
-        return "datoses/list";
+        return "datos/list";
     }
     
     @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
     public String DatosController.update(@Valid Datos datos, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, datos);
-            return "datoses/update";
+            return "datos/update";
         }
         uiModel.asMap().clear();
         datos.merge();
-        return "redirect:/datoses/" + encodeUrlPathSegment(datos.getId().toString(), httpServletRequest);
+        return "redirect:/member/datos/" + encodeUrlPathSegment(datos.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String DatosController.updateForm(@PathVariable("id") Long id, Model uiModel) {
         populateEditForm(uiModel, Datos.findDatos(id));
-        return "datoses/update";
+        return "datos/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
@@ -69,7 +69,7 @@ privileged aspect DatosController_Roo_Controller {
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/datoses";
+        return "redirect:/member/datos";
     }
     
     void DatosController.addDateTimeFormatPatterns(Model uiModel) {

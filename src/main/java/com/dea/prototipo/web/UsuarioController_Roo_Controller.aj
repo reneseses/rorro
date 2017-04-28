@@ -65,7 +65,7 @@ privileged aspect UsuarioController_Roo_Controller {
         }
         uiModel.asMap().clear();
         usuario.merge();
-        return "redirect:/usuarios/" + encodeUrlPathSegment(usuario.getId().toString(), httpServletRequest);
+        return "redirect:/member/usuarios/" + encodeUrlPathSegment(usuario.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
@@ -81,7 +81,7 @@ privileged aspect UsuarioController_Roo_Controller {
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/usuarios";
+        return "redirect:/member/usuarios";
     }
     
     void UsuarioController.populateEditForm(Model uiModel, Usuario usuario) {
