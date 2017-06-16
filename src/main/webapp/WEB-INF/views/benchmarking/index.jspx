@@ -16,7 +16,7 @@
                     </c:forEach>
                 </select>
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button">Generar</button>
+                    <button class="btn btn-primary" id="genBenchmark" type="button">Generar</button>
                 </span>
             </div>
         </form>
@@ -45,7 +45,7 @@
     <spring:url value="/member/benchmarking/solver" var="bench_url"/>
     <script type="text/javascript">
         $(function () {
-            $("#button").click(function () {
+            $("#genBenchmark").click(function () {
                 $.ajax({
                     url: "${bench_url}",
                     type: "GET",

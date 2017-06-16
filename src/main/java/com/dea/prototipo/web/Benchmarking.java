@@ -10,10 +10,7 @@ import java.math.RoundingMode;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -86,8 +83,7 @@ public class Benchmarking {
 
 		//Set up the DMU Names
 		for(int i=0;i<datos.size();i++){
-			testDMUNames[i] = datos.get(i).getBodega().getNombreBodega(); 
-
+			testDMUNames[i] = datos.get(i).getBodega().getNombreBodega();
 		}
 		//Set up the Variable Names
 
@@ -175,9 +171,8 @@ public class Benchmarking {
 
 			double[] [] weights = tester.getWeight();
 
-			int[] ranks = tester.getRanks(true, RankingType.STANDARD, 5);
-			int[] ranksO = testerO.getRanks(true, RankingType.STANDARD, 5);
-
+			int[] ranks = tester.getRanks(false, RankingType.STANDARD, 5);
+			int[] ranksO = testerO.getRanks(false, RankingType.STANDARD, 5);
 
 			//Busca la bodega en el arreglo que se está consultando por el usuario.
 			for (int k = 0; k < largo; k++) {
@@ -424,6 +419,9 @@ public class Benchmarking {
 				rendimientoO="Para la bodega ["+ bod+"] el valor  de su rendimiento equivale a "+ String.valueOf(efO)+ " o "+ String.valueOf(efO.intValue()*100)+"%. ";
 				proyeccionO= "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.";
 				rankingO="Esta bodega ocupa el ranking "+ranksO[aux]+" junto a "+cont+" bodegas más que trabajan eficientemente";
+
+				System.out.println(Arrays.toString(ranksO));
+				System.out.println(aux);
 			}
 			
           	else if(rendiO.doubleValue()<1&&testerO.getSlack(aux, 3)==0&&testerO.getSlack(aux, 4)==0&&testerO.getSlack(aux, 5)==0&&testerO.getSlack(aux, 6)==0&&testerO.getSlack(aux, 7)==0){

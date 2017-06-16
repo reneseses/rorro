@@ -367,6 +367,13 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>dea</groupId>
+                <artifactId>org.opensource</artifactId>
+                <configuration>
+                    <argLine>-Djava.library.path=${project.basedir}/OSDEASolver-v0.287/lpsolve-v5.5.2.0/win64/</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.2</version>
