@@ -4,6 +4,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 
+import com.dea.prototipo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,8 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import com.dea.prototipo.domain.Usuario;
 
 @Service("databaseAuthenticationProvider")
 public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
@@ -47,39 +46,39 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
 
 	    String encryptedPassword = messageDigestPasswordEncoder.encodePassword(password, null);
 	    String expectedPassword = null;
-	    Usuario usuario= new Usuario();
+	    User user = new User();
 	    if (adminUser.equals(username)) {
-	    	usuario.setNombre(username);
-	    	usuario.setHabilitado(true);
+	    	user.setName(username);
+	    	user.setEnabled(true);
 	    	expectedPassword = adminPassword;
     		if (! encryptedPassword.equals(expectedPassword))
     			throw new BadCredentialsException("Invalid password");
-    		usuario.setPassword(expectedPassword);
+    		user.setPassword(expectedPassword);
 	    } 
 	    else {
 	    	try {
-	    		TypedQuery<Usuario> query= Usuario.findUsuariosByEmailEquals(username);
-	    		usuario = query.getSingleResult();
-    			if(usuario != null){
-			        expectedPassword = usuario.getPassword();
+	    		TypedQuery<User> query= User.findUsersByEmailEquals(username);
+	    		user = query.getSingleResult();
+    			if(user != null){
+			        expectedPassword = user.getPassword();
 			        if (! StringUtils.hasText(expectedPassword)) {
 			          throw new BadCredentialsException("No password for " + username + " set in database, contact administrator");
 			        }
 			        if (! encryptedPassword.equals(expectedPassword)) {
-			          throw new BadCredentialsException("Usuario o password incorrento");
+			          throw new BadCredentialsException("User o password incorrento");
 			        }
     			}
     			else
-    				throw new BadCredentialsException("Usuario o password incorrento");
+    				throw new BadCredentialsException("User o password incorrento");
     		} catch (EmptyResultDataAccessException e) {
-		        throw new BadCredentialsException("Usuario o password incorrento");
+		        throw new BadCredentialsException("User o password incorrento");
     		} catch (EntityNotFoundException e) {
-    			throw new BadCredentialsException("Usuario o password incorrento");
+    			throw new BadCredentialsException("User o password incorrento");
     		} catch (NonUniqueResultException e) {
     			throw new BadCredentialsException("Non-unique user, contact administrator");
     		}
 	    }
 
-	    return usuario;
+	    return user;
 	}
 }

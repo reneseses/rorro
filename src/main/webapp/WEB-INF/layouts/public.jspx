@@ -20,10 +20,23 @@
 
 
 <body>
-<tiles:insertAttribute name="menu" ignore="true"/>
-<div class="container marginT15">
-    <tiles:insertAttribute name="body"/>
-</div>
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="nav-header">
+            <spring:url value="/" var="index"/>
+            <a href="${index}" class="navbar-brand">Warehouse Performance Measurement</a>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <li>
+                <spring:url value="/login" var="login"/>
+                <a href="${login}" title="Login">
+                    <i class="fa fa-sign-in"><!-- --></i> Login
+                </a>
+            </li>
+        </div>
+    </div>
+</nav>
+<tiles:insertAttribute name="body"/>
 <tiles:insertAttribute name="footer" ignore="true"/>
 </body>
 </html>

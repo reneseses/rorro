@@ -1,14 +1,27 @@
-<div xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-  <jsp:directive.page contentType="text/html;charset=UTF-8" />
-  <jsp:output omit-xml-declaration="yes" />
-  <spring:message var="app_name" code="application_name" htmlEscape="false" />
-  <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false" />
-  <util:panel id="title" title="${title}">
-    <h3>
-      <spring:message code="welcome_h3" arguments="${app_name}" />
-    </h3>
-    <p>
-      <spring:message code="welcome_text" />
-    </p>
-  </util:panel>
+<div xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+     xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+     xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+     xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <spring:message var="app_name" code="application_name" htmlEscape="false"/>
+    <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <!-- -->
+                </div>
+                <div class="col-sm-4">
+                    <form:create id="fc_com_dea_prototipo_domain_User" buttonLabel="Registrarme" modelAttribute="signupForm" path="/signup" render="${empty dependencies}" z="iCvxfbmrkaNtaT2/fLFlJVk645s=">
+                        <field:input field="name" id="c_com_dea_prototipo_domain_User_name" required="true" z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
+                        <field:input field="email" id="c_com_dea_prototipo_domain_User_email" required="true" z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
+                        <field:input type="password" field="password" id="c_com_dea_prototipo_domain_User_password" required="true" z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
+                    </form:create>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

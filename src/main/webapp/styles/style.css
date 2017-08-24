@@ -18,10 +18,66 @@ html, body {
     position: absolute;
     width: 100%;
     left: 50%;
-    top: 40%;
+    top: 35%;
     transform: translate(-50%, -50%);
 }
 
 .panel-body .panel-footer {
     margin: 0 -15px -15px;
+}
+
+.marginB15 {
+    margin-bottom: 15px;
+}
+
+.marginT15 {
+    margin-top: 15px;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.well {
+    background: #fff;
+}
+
+.well .well-title {
+    margin: -15px -15px 0;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.navbar-inverse {
+    background: #2b3137;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #eeeeee;
+}
+
+.jumbotron {
+    background: #333a41;
+}
+
+label {
+    font-weight: normal;
 }

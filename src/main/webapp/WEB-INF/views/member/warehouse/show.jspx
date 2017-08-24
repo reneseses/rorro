@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <spring:url value="/images/no-image.png" var="no_image_url"/>
+                <img src="${no_image_url}" />
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="well">
+                <h3 class="pull-left no-margin">${warehouse.name}</h3>
+                <spring:url value="/member/warehouse/${warehouse.id}?form" var="update_url"/>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-warning" href="${update_url}">Editar</a>
+                    <button class="btn btn-danger">Quitar</button>
+                </div>
+                <div class="clearfix"><!-- --></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="well">
+        <div class="marginB15">
+            <h4 class="pull-left no-margin">Datos de bodega</h4>
+            <spring:url value="/member/warehouse/${warehouse.id}/data?form" var="create_url"/>
+            <a class="btn btn-primary pull-right" href="${create_url}">Agregar</a>
+            <div class="clearfix"><!-- --></div>
+        </div>
+    </div>
+</div>

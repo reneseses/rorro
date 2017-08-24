@@ -14,29 +14,17 @@
                              description="Used for checking if element has been modified (to recalculate simply provide empty string value)"/>
 
     <c:if test="${empty render or render}">
-        <c:if test="${empty openPane}">
-            <c:set value="true" var="openPane"/>
-        </c:if>
-
         <c:set var="sec_id">
             <spring:escapeBody javaScriptEscape="true">${id}</spring:escapeBody>
-        </c:set>
-
-        <c:set var="sec_openPane">
-            <spring:escapeBody javaScriptEscape="true">${openPane}</spring:escapeBody>
         </c:set>
 
         <c:set var="sec_title">
             <spring:escapeBody javaScriptEscape="true">${title}</spring:escapeBody>
         </c:set>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="panel-title">${sec_title}</div>
-            </div>
-            <div class="panel-body">
-                <jsp:doBody/>
-            </div>
+        <div class="well">
+            <div class="well-title">${sec_title}</div>
+            <jsp:doBody/>
         </div>
     </c:if>
 </jsp:root>

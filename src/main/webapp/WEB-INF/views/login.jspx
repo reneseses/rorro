@@ -8,38 +8,41 @@
     <spring:message code="security_login_title" var="title" htmlEscape="false"/>
     <spring:url value="/resources/j_spring_security_check" var="form_url"/>
     <form class="login-form" name="f" action="${fn:escapeXml(form_url)}" method="POST">
-        <div class="form-group">
-            <label for="j_username">
-                <spring:message code="security_login_form_name"/>
-            </label>
-            <input class="form-control input-lg" id="j_username" type='text' name='j_username'/>
-            <spring:message code="security_login_form_name_message" var="name_msg" htmlEscape="false"/>
-            <c:set var="sec_name_msg">
-                <spring:escapeBody javaScriptEscape="true">${name_msg}</spring:escapeBody>
-            </c:set>
-        </div>
-        <div class="form-group">
-            <label for="j_password">
-                <spring:message code="security_login_form_password"/>
-            </label>
-            <input class="form-control  input-lg" id="j_password" type='password' name='j_password'/>
-            <spring:message code="security_login_form_password_message" var="pwd_msg" htmlEscape="false"/>
-            <c:set var="sec_pwd_msg">
-                <spring:escapeBody javaScriptEscape="true">${pwd_msg}</spring:escapeBody>
-            </c:set>
-        </div>
-        <spring:message code="button_submit" var="submit_label" htmlEscape="false"/>
-        <button id="proceed" class="btn btn-block btn-primary btn-lg">${fn:escapeXml(submit_label)}</button>
-
-        <c:if test="${not empty param.login_error}">
-            <div class="errors">
-                <p>
-                    <spring:message code="security_login_unsuccessful"/>
-                    <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
-                    .
-                </p>
+        <div class="well">
+            <h4 class="text-center">Bienvenido</h4>
+            <div class="form-group">
+                <label for="j_username">
+                    <spring:message code="security_login_form_name"/>
+                </label>
+                <input class="form-control input-lg" id="j_username" type='text' name='j_username'/>
+                <spring:message code="security_login_form_name_message" var="name_msg" htmlEscape="false"/>
+                <c:set var="sec_name_msg">
+                    <spring:escapeBody javaScriptEscape="true">${name_msg}</spring:escapeBody>
+                </c:set>
             </div>
-        </c:if>
+            <div class="form-group">
+                <label for="j_password">
+                    <spring:message code="security_login_form_password"/>
+                </label>
+                <input class="form-control  input-lg" id="j_password" type='password' name='j_password'/>
+                <spring:message code="security_login_form_password_message" var="pwd_msg" htmlEscape="false"/>
+                <c:set var="sec_pwd_msg">
+                    <spring:escapeBody javaScriptEscape="true">${pwd_msg}</spring:escapeBody>
+                </c:set>
+            </div>
+            <spring:message code="button_submit" var="submit_label" htmlEscape="false"/>
+            <button id="proceed" class="btn btn-block btn-primary btn-lg">${fn:escapeXml(submit_label)}</button>
+
+            <c:if test="${not empty param.login_error}">
+                <div class="errors">
+                    <p>
+                        <spring:message code="security_login_unsuccessful"/>
+                        <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
+                        .
+                    </p>
+                </div>
+            </c:if>
+        </div>
     </form>
 </div>
 

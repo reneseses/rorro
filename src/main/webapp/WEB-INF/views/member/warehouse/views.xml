@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="member/warehouse/show">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/show.jspx"/>
+    </definition>
+    <definition extends="default" name="member/warehouse/create">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/create.jspx"/>
+    </definition>
+    <definition extends="default" name="member/warehouse/update">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/update.jspx"/>
+    </definition>
+    <definition extends="default" name="member/warehouse/data/list">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/data/list.jspx"/>
+    </definition>
+    <definition extends="default" name="member/warehouse/data/show">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/data/show.jspx"/>
+    </definition>
+    <definition extends="default" name="member/warehouse/data/create">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/data/create.jspx"/>
+    </definition>
+    <definition extends="default" name="member/warehouse/data/update">
+        <put-attribute name="body" value="/WEB-INF/views/member/warehouse/data/update.jspx"/>
+    </definition>
+</tiles-definitions>
+

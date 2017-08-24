@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+     xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_dea_prototipo_domain_Warehouse" modelAttribute="warehouse" path="/member/warehouses"
+                 versionField="Version" z="user-managed">
+        <field:input field="name" id="c_com_dea_prototipo_domain_Warehouse_name" required="true"
+                     z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
+        <field:select field="operationType" id="c_com_dea_prototipo_domain_Warehouse_operationType"
+                      items="${operationTypes}" path="operationType" required="true" z="igHn5temVyGDrO/oe2p/R8uYDUE="/>
+    </form:update>
+</div>
