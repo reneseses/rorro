@@ -18,6 +18,9 @@ import java.util.Set;
 @RooToString
 @Configurable
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "user"})
+)
 public class Warehouse {
 
     @Id
@@ -27,7 +30,6 @@ public class Warehouse {
     /**
      */
     @NotNull
-    @Column(unique = true)
     private String name;
     
     
@@ -204,6 +206,7 @@ public class Warehouse {
 
     public String toString() {
         JSONSerializer serializer = new JSONSerializer();
+        serializer.exclude("entityManager");
         return serializer.serialize(this);
     }
 }

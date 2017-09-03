@@ -22,7 +22,7 @@
             <spring:escapeBody javaScriptEscape="true">${title}</spring:escapeBody>
         </c:set>
 
-        <div class="well">
+        <div class="well no-margin">
             <div class="well-title">${sec_title}</div>
             <jsp:doBody/>
         </div>

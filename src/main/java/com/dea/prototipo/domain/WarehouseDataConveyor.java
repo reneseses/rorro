@@ -4,12 +4,11 @@ import flexjson.JSONSerializer;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Configurable
 @Entity
@@ -135,8 +134,41 @@ public class WarehouseDataConveyor {
                 this.palletConveyor * InputWeightEnum.PalletConveyor.getWeight();
     }
 
+    @PersistenceContext
+    private transient EntityManager entityManager;
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    private static EntityManager entityManager() {
+        EntityManager em = new WarehouseDataConveyor().entityManager;
+        if (em == null)
+            throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
+    @Transactional
+    public void persist() {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        this.entityManager.persist(this);
+    }
+
+    @Transactional
+    public WarehouseDataConveyor merge() {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        WarehouseDataConveyor merged = this.entityManager.merge(this);
+        this.entityManager.flush();
+        return merged;
+    }
+
     public String toString() {
         JSONSerializer serializer = new JSONSerializer();
+        serializer.exclude("entityManager");
         return serializer.serialize(this);
     }
 }

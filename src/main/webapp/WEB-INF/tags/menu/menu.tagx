@@ -11,9 +11,9 @@
                              description="Used for checking if element has been modified (to recalculate simply provide empty string value)"/>
 
     <c:if test="${empty render or render}">
-        <nav class="navbar navbar-inverse navbar-static-top">
+        <nav class="navbar navbar-member">
             <div class="container">
-                <div class="nav-header">
+                <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                             aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -21,26 +21,25 @@
                         <span class="icon-bar"><!-- --></span>
                         <span class="icon-bar"><!-- --></span>
                     </button>
-                    <a class="navbar-brand" href="/">Warehouse Performance Measurement</a>
+                    <spring:url value="/" var="index"/>
+                    <a href="${index}" class="navbar-brand">
+                        <span class="icon-wpm"><!-- --></span>
+                    </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <jsp:doBody/>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <c:if test="${pageContext['request'].userPrincipal != null}">
-                            <li>
-                                <spring:url value="/resources/j_spring_security_logout" var="logout"/>
-                                <a href="${logout}" title="Logout">
-                                    <i class="fa fa-sign-out"><!-- --></i>
-                                </a>
-                            </li>
-                        </c:if>
+                        <li>
+                            <spring:url value="/resources/j_spring_security_logout" var="logout"/>
+                            <a href="${logout}" title="Logout">
+                                Salir
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
-
     </c:if>
 </jsp:root>

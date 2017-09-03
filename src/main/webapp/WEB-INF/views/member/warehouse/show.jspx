@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+<div xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     xmlns:form="http://www.springframework.org/tags/form"
      xmlns:spring="http://www.springframework.org/tags"
      xmlns:jsp="http://java.sun.com/JSP/Page"
-     xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+     xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
-    <div class="row">
-        <div class="col-md-2">
-            <div class="thumbnail">
-                <spring:url value="/images/no-image.png" var="no_image_url"/>
-                <img src="${no_image_url}" />
-            </div>
+    <div style="position: relative">
+        <div class="thumbnail warehouse-thumb">
+            <spring:url value="/images/${warehouse.id}" var="no_image_url"/>
+            <img src="${no_image_url}" alt="${warehouse.name}"/>
         </div>
-        <div class="col-md-10">
-            <div class="well">
+        <div class="well">
+            <div>
                 <h3 class="pull-left no-margin">${warehouse.name}</h3>
                 <spring:url value="/member/warehouse/${warehouse.id}?form" var="update_url"/>
-                <div class="btn-group pull-right">
+
+                <div class="pull-right">
                     <a class="btn btn-warning" href="${update_url}">Editar</a>
-                    <button class="btn btn-danger">Quitar</button>
+                    <spring:url value="/member/warehouse//${warehouse.id}" var="delete_form_url"/>
+                    <form:form action="${delete_form_url}" method="DELETE"
+                               cssStyle="display: inline-block; margin-left: 10px">
+                        <button onclick="return confirm('Esta operación no puede ser deshecha. \n ¿Está seguro?}');"
+                                class="btn btn-danger">
+                            Quitar
+                        </button>
+                    </form:form>
                 </div>
                 <div class="clearfix"><!-- --></div>
             </div>
-
+            <div class="row">
+                <div class="col-md-3">Tipo de Operación</div>
+                <div class="col-md-9" style="text-transform: capitalize">
+                    : <strong>${fn:toLowerCase(warehouse.operationType)}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Sector Productivo</div>
+                <div class="col-md-9" style="text-transform: capitalize">
+                    : <strong>${fn:toLowerCase(warehouse.operationType)}</strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -31,8 +49,63 @@
         <div class="marginB15">
             <h4 class="pull-left no-margin">Datos de bodega</h4>
             <spring:url value="/member/warehouse/${warehouse.id}/data?form" var="create_url"/>
-            <a class="btn btn-primary pull-right" href="${create_url}">Agregar</a>
+            <a class="btn pull-right text-muted" href="${create_url}">
+                <i class="fa fa-plus"><!-- --></i>
+                Agregar
+            </a>
             <div class="clearfix"><!-- --></div>
         </div>
+
+        <div>
+            <c:if test="${fn:length(warehouseData) > 0}">
+                <table class="table table-hover no-margin">
+                    <thead>
+                    <tr>
+                        <th>Periodo</th>
+                        <th>Equipos (Millones)</th>
+                        <th>Acumulación</th>
+                        <th>Función de almacenamiento</th>
+                        <th style="width: 61px"><!-- --></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${warehouseData}" var="data">
+                        <spring:url value="/member/warehouse/${warehouse.id}/data/${data.id}?form" var="show_url"/>
+                        <tr class="clickable row-link" data-href="${show_url}">
+                            <td>${data.period}</td>
+                            <td>${data.inputTotalInvestment / 1000000}</td>
+                            <td>${data.outputAccumulation}</td>
+                            <td>${data.outputStorage}</td>
+                            <td style="padding: 5px 8px">
+                                <button class="btn btn-default btn-xs">
+                                    <i class="fa fa-arrow-right"><!-- --></i> Ver
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${fn:length(warehouseData) == 0}">
+                <div class="text-center">
+                    Esta Bodega no tiene datos.
+                    <a href="${create_url}">
+                        Agregar
+                    </a>
+                </div>
+
+            </c:if>
+        </div>
     </div>
+    <script type="text/javascript">
+        $('.row-link').click(function () {
+            var url = $(this).data('href');
+
+            console.log(url);
+            if (url) {
+                window.location = url
+            }
+        })
+    </script>
 </div>

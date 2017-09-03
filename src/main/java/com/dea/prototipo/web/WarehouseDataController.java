@@ -13,6 +13,7 @@ import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,20 +32,32 @@ public class WarehouseDataController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@PathVariable("warehouseId") Long warehouseId, @Valid WarehouseData warehouseData, BindingResult bindingResult, Model uiModel) {
-        if (bindingResult.hasErrors()) {
+        Warehouse warehouse = Warehouse.findWarehouse(warehouseId);
+        warehouseData.setWarehouse(warehouse);
+
+        if (bindingResult.hasErrors() && !(bindingResult.getAllErrors().size() == 1 && bindingResult.hasFieldErrors("warehouse"))) {
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                System.out.println(error);
+            }
+
             populateEditForm(uiModel, warehouseData);
+            uiModel.addAttribute("warehouse", warehouse);
             return "member/warehouse/data/create";
         }
         uiModel.asMap().clear();
+        warehouseData.getOutput().persist();
+        warehouseData.getVehicles().persist();
+        warehouseData.getStorage().persist();
+        warehouseData.getConveyor().persist();
         warehouseData.persist();
-        System.out.println(warehouseData.toString());
         return "redirect:/member/warehouse/" + warehouseId;
     }
 
     //-Djava.library.path=D:\Documentos\git\rorro\OSDEASolver-v0.287\
     @RequestMapping(params = "form", produces = "text/html")
-    public String createForm(Model uiModel) {
+    public String createForm(@PathVariable("warehouseId") Long warehouseId, Model uiModel) {
         populateEditForm(uiModel, new WarehouseData());
+        uiModel.addAttribute("warehouse", Warehouse.findWarehouse(warehouseId));
         return "member/warehouse/data/create";
     }
 
@@ -55,21 +68,31 @@ public class WarehouseDataController {
         return "member/warehouse/data/show";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-    public String update(@PathVariable("warehouseId") Long warehouseId, @Valid WarehouseData warehouseData, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST, produces = "text/html")
+    public String update(@PathVariable("warehouseId") Long warehouseId, @PathVariable("id") Long id, @Valid WarehouseData warehouseData, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+        Warehouse warehouse = Warehouse.findWarehouse(warehouseId);
+        warehouseData.setWarehouse(warehouse);
+
+        if (bindingResult.hasErrors() && !(bindingResult.getAllErrors().size() == 1 && bindingResult.hasFieldErrors("warehouse"))) {
             populateEditForm(uiModel, warehouseData);
-            return "member/warehouse/data/update";
+            return "member/warehouse/data/create";
         }
+
         uiModel.asMap().clear();
-        warehouseData.merge();
+        warehouseData.getStorage().merge();
+        warehouseData.getVehicles().merge();
+        warehouseData.getConveyor().merge();
+        warehouseData.getOutput().merge();
+
+        warehouseData.update();
         return "redirect:/member/warehouse/" + warehouseId;
     }
 
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
-    public String updateForm(@PathVariable("id") Long id, Model uiModel) {
+    public String updateForm(@PathVariable("warehouseId") Long warehouseId, @PathVariable("id") Long id, Model uiModel) {
         populateEditForm(uiModel, WarehouseData.findWarehouseData(id));
-        return "member/warehouse/data/update";
+        uiModel.addAttribute("warehouse", Warehouse.findWarehouse(warehouseId));
+        return "member/warehouse/data/create";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")

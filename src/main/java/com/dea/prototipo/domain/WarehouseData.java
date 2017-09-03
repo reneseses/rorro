@@ -1,8 +1,6 @@
 package com.dea.prototipo.domain;
 
 import flexjson.JSONSerializer;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.persistence.*;
@@ -14,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"warehouse", "period"})
+)
 public class WarehouseData {
 
     @Id
@@ -168,18 +169,32 @@ public class WarehouseData {
         return brokenCaseLines + fullCaseLines + palletLines - totalOrders;
     }
 
-    public double getOutputStorage() {
-        int brokenCaseLines = this.output.getBrokenCaseLines();
+    public Double getOutputStorage() {
+        double brokenCaseLines = (double) this.output.getBrokenCaseLines();
         int fullCaseLines = this.output.getFullCaseLines();
         int palletLines = this.output.getPalletLines();
         int squareMeters = this.squareMeters;
         int brokenCasePickSlots = this.output.getBrokenCasePickSlots();
         int palletRackLocations = this.output.getPalletRackLocations();
-        int flootStackin = this.output.getFloorStacking();
+        int floorStacking = this.output.getFloorStacking();
+
+        if (brokenCaseLines + fullCaseLines + palletLines == 0) {
+            return null;
+        }
 
         double p = brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines);
 
-        return p * Math.sqrt(brokenCasePickSlots + (1 - p) * (1.55 * Math.sqrt(palletRackLocations)) + Math.sqrt(squareMeters * flootStackin));
+        System.out.println(brokenCaseLines);
+        System.out.println(fullCaseLines);
+        System.out.println(brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines));
+
+        System.out.println(p);
+        System.out.println(1.55 * Math.sqrt(palletRackLocations));
+        System.out.println(Math.sqrt(squareMeters * floorStacking));
+
+        double result = p * Math.sqrt(brokenCasePickSlots + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(squareMeters * floorStacking)));
+
+        return Math.round(result * 1000) / 1000d;
     }
 
     public EntityManager getEntityManager() {
@@ -246,6 +261,21 @@ public class WarehouseData {
         return merged;
     }
 
+    @Transactional
+    public void update() {
+        if (this.id == null) throw new IllegalArgumentException("The warehouse argument is required");
+        EntityManager em = entityManager();
+        Query q = em.createQuery("UPDATE WarehouseData SET period= :period, squareMeters= :squareMeters, directWorkforce= :directWorkforce, indirectWorkforce= :indirectWorkforce WHERE id = :id");
+        q.setParameter("period", this.period);
+        q.setParameter("squareMeters", this.squareMeters);
+        q.setParameter("directWorkforce", this.directWorkforce);
+        q.setParameter("indirectWorkforce", this.indirectWorkforce);
+        q.setParameter("id", this.id);
+
+        q.executeUpdate();
+
+    }
+
     public static List<WarehouseData> findWarehouseDataByWarehouse(Warehouse warehouse) {
         if (warehouse == null) throw new IllegalArgumentException("The warehouse argument is required");
         EntityManager em = entityManager();
@@ -255,9 +285,9 @@ public class WarehouseData {
         return q.getResultList();
     }
 
-
     public String toString() {
         JSONSerializer serializer = new JSONSerializer();
+        serializer.exclude("entityManager");
         return serializer.serialize(this);
     }
 }

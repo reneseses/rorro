@@ -19,7 +19,7 @@
 </head>
 
 
-<body>
+<body class="member">
 <tiles:insertAttribute name="menu" ignore="true"/>
 <div class="container marginT15">
     <tiles:insertAttribute name="body"/>

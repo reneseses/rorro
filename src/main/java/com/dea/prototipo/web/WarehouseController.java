@@ -3,20 +3,19 @@ package com.dea.prototipo.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.dea.prototipo.domain.WarehouseData;
-import com.dea.prototipo.domain.OperationType;
-import com.dea.prototipo.domain.User;
-import com.dea.prototipo.domain.Warehouse;
+import com.dea.prototipo.domain.*;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
@@ -28,9 +27,17 @@ import java.util.Arrays;
 public class WarehouseController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String create(@Valid Warehouse warehouse, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+    public String create(
+            @Valid Warehouse warehouse,
+            BindingResult bindingResult,
+            Model uiModel,
+            HttpServletRequest httpServletRequest) {
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (bindingResult.hasErrors()) {
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                System.out.println(error);
+            }
             populateEditForm(uiModel, warehouse);
             return "member/warehouse/create";
         }
@@ -48,27 +55,23 @@ public class WarehouseController {
 
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("warehouse", Warehouse.findWarehouse(id));
+        Warehouse warehouse = Warehouse.findWarehouse(id);
+        uiModel.addAttribute("warehouse", warehouse);
+        uiModel.addAttribute("warehouseData", WarehouseData.findWarehouseDataByWarehouse(warehouse));
         uiModel.addAttribute("itemId", id);
         return "member/warehouse/show";
     }
 
-    @RequestMapping(produces = "text/html")
-    public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, @RequestParam(value = "sortFieldName", required = false) String sortFieldName, @RequestParam(value = "sortOrder", required = false) String sortOrder, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("warehouses", Warehouse.findWarehouseEntries(firstResult, sizeNo, sortFieldName, sortOrder));
-            float nrOfPages = (float) Warehouse.countWarehouses() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("warehouses", Warehouse.findAllWarehouses(sortFieldName, sortOrder));
-        }
-        return "member/warehouse/list";
-    }
-
     @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-    public String update(@Valid Warehouse warehouse, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+    public String update(
+            @Valid Warehouse warehouse,
+            BindingResult bindingResult,
+            Model uiModel,
+            HttpServletRequest httpServletRequest) {
+
+        System.out.println("update");
+        System.out.println(warehouse);
+
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, warehouse);
             return "member/warehouse/update";
@@ -76,6 +79,24 @@ public class WarehouseController {
         uiModel.asMap().clear();
         warehouse.merge();
         return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
+    }
+
+    @RequestMapping(value = "/{id}/image", method = RequestMethod.POST, produces = "text/html")
+    @ResponseBody
+    public ResponseEntity<String> saveImage(
+            @PathVariable("id") Long id,
+            @RequestParam(value = "image") MultipartFile file,
+            @RequestParam(required = false) Integer x,
+            @RequestParam(required = false) Integer y,
+            @RequestParam(required = false) Integer w,
+            @RequestParam(required = false) Integer h) {
+
+        Warehouse warehouse = Warehouse.findWarehouse(id);
+        saveImage(warehouse, file, x, y, w, h);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<>("", headers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
@@ -89,9 +110,7 @@ public class WarehouseController {
         Warehouse warehouse = Warehouse.findWarehouse(id);
         warehouse.remove();
         uiModel.asMap().clear();
-        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/member/warehouse";
+        return "redirect:/member";
     }
 
     void populateEditForm(Model uiModel, Warehouse warehouse) {
@@ -109,5 +128,21 @@ public class WarehouseController {
         } catch (UnsupportedEncodingException uee) {
         }
         return pathSegment;
+    }
+
+    private void saveImage(Warehouse warehouse, MultipartFile file, Integer x, Integer y, Integer w, Integer h) {
+        try {
+            WarehouseImage warehouseImage = new WarehouseImage();
+            if (x == null || y == null || w == null || h == null) {
+                warehouseImage.setContent(file.getBytes());
+            } else {
+                warehouseImage.setContent(file.getBytes(), x, y, w, h);
+            }
+
+            warehouseImage.setId(warehouse.getId());
+            warehouseImage.merge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

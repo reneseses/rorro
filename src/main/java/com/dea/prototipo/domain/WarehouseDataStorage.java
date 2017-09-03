@@ -2,6 +2,7 @@ package com.dea.prototipo.domain;
 
 import flexjson.JSONSerializer;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -99,8 +100,41 @@ public class WarehouseDataStorage {
                 this.aFrameDispenser * InputWeightEnum.AFrameDispenser.getWeight();
     }
 
+    @PersistenceContext
+    private transient EntityManager entityManager;
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    private static EntityManager entityManager() {
+        EntityManager em = new WarehouseDataStorage().entityManager;
+        if (em == null)
+            throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
+    @Transactional
+    public void persist() {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        this.entityManager.persist(this);
+    }
+
+    @Transactional
+    public WarehouseDataStorage merge() {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        WarehouseDataStorage merged = this.entityManager.merge(this);
+        this.entityManager.flush();
+        return merged;
+    }
+
     public String toString() {
         JSONSerializer serializer = new JSONSerializer();
+        serializer.exclude("entityManager");
         return serializer.serialize(this);
     }
 }

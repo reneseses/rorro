@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
-     xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:create id="fc_com_dea_prototipo_domain_Warehouse" modelAttribute="warehouse" path="/member/warehouse"
-                 render="${empty dependencies}" z="user-managed">
-        <field:input field="name" id="c_com_dea_prototipo_domain_Warehouse_name" required="true"
-                     z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
-        <field:select field="operationType" id="c_com_dea_prototipo_domain_Warehouse_operationType"
-                      items="${operationTypes}" path="operationType" required="true" z="igHn5temVyGDrO/oe2p/R8uYDUE="/>
-    </form:create>
-    <form:dependency dependencies="${dependencies}" id="d_com_dea_prototipo_domain_Warehouse"
-                     render="${not empty dependencies}" z="GiZv721Eq1OEQsF7y90dVlSLzXQ="/>
+
+    <spring:url value="/member/warehouse" var="form_url" />
+
+    <form class="well" method="POST" action="${form_url}" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input class="form-control" id="name" name="name" value="${warehouse.name}"/>
+        </div>
+        <div class="form-group">
+            <label for="operationType">Tipo Operación</label>
+            <select id="operationType"
+                    name="operationType" class="form-control" style="text-transform: capitalize">
+                <c:forEach items="${operationTypes}" var="operationType">
+                    <option value="${operationType}">${fn:toLowerCase(operationType)}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
 </div>

@@ -7,21 +7,10 @@
     <spring:message var="app_name" code="application_name" htmlEscape="false"/>
     <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
 
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <!-- -->
-                </div>
-                <div class="col-sm-4">
-                    <form:create id="fc_com_dea_prototipo_domain_User" buttonLabel="Registrarme" modelAttribute="signupForm" path="/signup" render="${empty dependencies}" z="iCvxfbmrkaNtaT2/fLFlJVk645s=">
-                        <field:input field="name" id="c_com_dea_prototipo_domain_User_name" required="true" z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
-                        <field:input field="email" id="c_com_dea_prototipo_domain_User_email" required="true" z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
-                        <field:input type="password" field="password" id="c_com_dea_prototipo_domain_User_password" required="true" z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
-                    </form:create>
-                </div>
-            </div>
+    <div class="main-banner">
+        <div class="container text-center">
+            <h1>Titulo</h1>
+            <h3>Titulo 2</h3>
         </div>
-
     </div>
 </div>
