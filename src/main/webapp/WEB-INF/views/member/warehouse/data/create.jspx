@@ -6,7 +6,7 @@
     <jsp:output omit-xml-declaration="yes"/>
 
     <c:if test="${not empty warehouseData.id}">
-    <spring:url var="form_url" value="/member/warehouse/${warehouseId}/data/${warehouseData.id}"/>
+        <spring:url var="form_url" value="/member/warehouse/${warehouseId}/data/${warehouseData.id}"/>
     </c:if>
     <c:if test="${empty warehouseData.id}">
         <spring:url var="form_url" value="/member/warehouse/${warehouseId}/data"/>
@@ -385,7 +385,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="tab3">3</div>
+                <div class="tab-pane" id="tab3">
+                    <div class="table-responsive">
+                        <div style="max-width: 500px; margin: auto">
+                            <table class="table table-bordered table-condensed">
+                                <tr class="active">
+                                    <th colspan="2" class="text-center">Entradas</th>
+                                </tr>
+                                <tr>
+                                    <th>Equipos</th>
+                                    <td class="text-right" id="equipment-row">[Aun no calculado]</td>
+                                </tr>
+                                <tr>
+                                    <th>Mano de Obra</th>
+                                    <td class="text-right" id="work-force-row"><!-- --></td>
+                                </tr>
+                                <tr>
+                                    <th>Metros Cuadrados</th>
+                                    <td class="text-right" id="area-row"><!-- --></td>
+                                </tr>
+                                <tr class="active">
+                                    <th colspan="2" class="text-center">Salidas</th>
+                                </tr>
+                                <tr>
+                                    <th>Acumulación</th>
+                                    <td class="text-right">??</td>
+                                </tr>
+                                <tr>
+                                    <th>Almacenamiento</th>
+                                    <td class="text-right">[Aun no calculado]</td>
+                                </tr>
+                                <tr>
+                                    <th>Total de ordenes despachadas</th>
+                                    <td class="text-right">??</td>
+                                </tr>
+                                <tr>
+                                    <th>Lineas caja abierta despachadas</th>
+                                    <td class="text-right" id="brokenCaseLines-row"><!-- --></td>
+                                </tr>
+                                <tr>
+                                    <th>Lineas caja completa despachadas</th>
+                                    <td class="text-right" id="fullCaseLines-row"><!-- --></td>
+                                </tr>
+                                <tr>
+                                    <th>Lineas pallet despachadas</th>
+                                    <td class="text-right" id="palletLines-row"><!-- --></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
             <ul class="pager wizard">
                 <li class="previous"><a href="javascript:;">Previous</a></li>
@@ -403,6 +452,10 @@
             rootWizard.bootstrapWizard({
 
                 onTabShow: function (tab, navigation, index) {
+                    if (index === 2) {
+                        makeSummary()
+                    }
+
                     var total = navigation.find('li').length;
                     var current = index + 1;
                     if (total === current) {
@@ -424,6 +477,33 @@
                 format: 'yyyy',
                 endDate: new Date()
             });
+
+            function makeSummary() {
+                var equipment = 0;
+
+                $.each($("#vehicles").find('input'), function () {
+                    var input = $(this);
+                    equipment += parseFloat(input.val())
+                });
+                $.each($("#storageSystem").find('input'), function () {
+                    var input = $(this);
+                    equipment += parseFloat(input.val())
+                });
+                $.each($("#conveyorSystem").find('input'), function () {
+                    var input = $(this);
+                    equipment += parseFloat(input.val())
+                });
+                // $("#equipment-row").text(equipment);
+
+                var directWorkforce = parseFloat($("#directWorkforce").val());
+                var indirectWorkforce = parseFloat($("#indirectWorkforce").val());
+                $("#work-force-row").text(directWorkforce + indirectWorkforce);
+
+                $("#area-row").text(parseFloat($("#squareMeters").val()));
+                $("#brokenCaseLines-row").text(parseFloat($("#brokenCaseLines").val()));
+                $("#fullCaseLines-row").text(parseFloat($("#fullCaseLines").val()));
+                $("#palletLines-row").text(parseFloat($("#palletLines").val()));
+            }
         })
     </script>
 

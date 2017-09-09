@@ -29,7 +29,7 @@
                     <spring:url value="/member/warehouse/${warehouse.id}" var="show_url"/>
                     <tr class="clickable row-link" data-href="${show_url}">
                         <td class="thumbnail" style="width: 70px">
-                            <img src="/images/${warehouse.id}" class="" alt="${warehouse.name}"
+                            <img src="/member/warehouse/${warehouse.id}/image" class="" alt="${warehouse.name}"
                                  style="width: 50px; height: 50px"/>
                         </td>
                         <td style="vertical-align: middle">

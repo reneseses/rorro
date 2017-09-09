@@ -184,13 +184,13 @@ public class WarehouseData {
 
         double p = brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines);
 
-        System.out.println(brokenCaseLines);
+/*        System.out.println(brokenCaseLines);
         System.out.println(fullCaseLines);
         System.out.println(brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines));
 
         System.out.println(p);
         System.out.println(1.55 * Math.sqrt(palletRackLocations));
-        System.out.println(Math.sqrt(squareMeters * floorStacking));
+        System.out.println(Math.sqrt(squareMeters * floorStacking));*/
 
         double result = p * Math.sqrt(brokenCasePickSlots + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(squareMeters * floorStacking)));
 

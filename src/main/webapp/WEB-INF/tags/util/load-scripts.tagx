@@ -12,7 +12,9 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
+          rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.0.0/cropper.min.css" rel="stylesheet"/>
     <link href="${style_url}" rel="stylesheet"/>
     <link rel="SHORTCUT ICON" href="${favicon}"/>
 
@@ -24,4 +26,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"><!-- --></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"><!-- --></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.0.0/cropper.min.js"><!-- --></script>
 </jsp:root>

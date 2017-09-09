@@ -1,12 +1,14 @@
 package com.dea.prototipo.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.dea.prototipo.domain.*;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,7 @@ import org.springframework.web.util.WebUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.List;
 
 @RequestMapping("/member/warehouse")
 @Controller
@@ -81,7 +84,7 @@ public class WarehouseController {
         return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
     }
 
-    @RequestMapping(value = "/{id}/image", method = RequestMethod.POST, produces = "text/html")
+    @RequestMapping(value = "/{id}/image", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> saveImage(
             @PathVariable("id") Long id,
@@ -99,15 +102,38 @@ public class WarehouseController {
         return new ResponseEntity<>("", headers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/image", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody
+    byte[] getImage(@PathVariable("id") Long id, HttpServletResponse httpServletResponse) {
+        WarehouseImage warehouseImage = WarehouseImage.findWarehouseImage(id);
+
+        if (warehouseImage == null) {
+            httpServletResponse.setStatus(404);
+            return null;
+        }
+
+        return warehouseImage.getContent();
+    }
+
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String updateForm(@PathVariable("id") Long id, Model uiModel) {
         populateEditForm(uiModel, Warehouse.findWarehouse(id));
         return "member/warehouse/update";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
-    public String delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST, produces = "text/html")
+    public String delete(@PathVariable("id") Long id, Model uiModel) {
         Warehouse warehouse = Warehouse.findWarehouse(id);
+        WarehouseImage warehouseImage = WarehouseImage.findWarehouseImage(id);
+        List<WarehouseData> warehouseDataList = WarehouseData.findWarehouseDataByWarehouse(warehouse);
+        if (warehouseImage != null) {
+            warehouseImage.remove();
+        }
+
+        for (WarehouseData warehouseData : warehouseDataList) {
+            warehouseData.remove();
+        }
+
         warehouse.remove();
         uiModel.asMap().clear();
         return "redirect:/member";

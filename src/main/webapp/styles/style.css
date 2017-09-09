@@ -135,6 +135,7 @@ body.member {
     background: #fff;
     border: none;
     box-shadow: 0 1px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .well .well-title {
@@ -172,6 +173,17 @@ body.member {
     width: 100%;
     background: transparent url(/images/no-image.png) center no-repeat;
     background-size: 100%;
+}
+
+.thumbnail .btn-hover {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.thumbnail:hover .btn-hover {
+    display: block;
 }
 
 td.thumbnail {

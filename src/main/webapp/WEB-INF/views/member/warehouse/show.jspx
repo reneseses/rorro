@@ -9,8 +9,11 @@
 
     <div style="position: relative">
         <div class="thumbnail warehouse-thumb">
-            <spring:url value="/images/${warehouse.id}" var="no_image_url"/>
-            <img src="${no_image_url}" alt="${warehouse.name}"/>
+            <spring:url value="/member/warehouse/${warehouse.id}/image" var="image_url"/>
+            <img src="${image_url}" alt="${warehouse.name}" />
+            <button class="btn btn-xs btn-hover" data-target="#imageModal" data-toggle="modal" title="Cambiar">
+                <i class="fa fa-edit"><!-- --></i>
+            </button>
         </div>
         <div class="well">
             <div>
@@ -19,8 +22,8 @@
 
                 <div class="pull-right">
                     <a class="btn btn-warning" href="${update_url}">Editar</a>
-                    <spring:url value="/member/warehouse//${warehouse.id}" var="delete_form_url"/>
-                    <form:form action="${delete_form_url}" method="DELETE"
+                    <spring:url value="/member/warehouse/delete/${warehouse.id}" var="delete_form_url"/>
+                    <form:form action="${delete_form_url}" method="POST"
                                cssStyle="display: inline-block; margin-left: 10px">
                         <button onclick="return confirm('Esta operación no puede ser deshecha. \n ¿Está seguro?}');"
                                 class="btn btn-danger">
@@ -98,14 +101,144 @@
             </c:if>
         </div>
     </div>
-    <script type="text/javascript">
-        $('.row-link').click(function () {
-            var url = $(this).data('href');
+    <div id="imageModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"><!-- --></i>
+                    </button>
+                    <div class="modal-title">Cambiar imagen de Bodega</div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Seleccione una imagen
+                            <small>(png, jpg)</small>
+                        </label>
+                        <input class="form-control" type="file" accept=".jpg, .png"/>
+                    </div>
+                    <div>
+                        <div class="well">
+                            <div class="thumb text-center">
+                                <!-- -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="fileBtn" class="btn btn-primary disabled">Subir
+                    </button>
+                </div>
+            </div>
 
-            console.log(url);
-            if (url) {
-                window.location = url
+        </div>
+    </div>
+    <script type="text/javascript">
+        // <![CDATA[
+        $(function () {
+            var saveBtn = $("#fileBtn");
+            var image = null;
+            var file = null;
+            $('.row-link').click(function () {
+                var url = $(this).data('href');
+
+                if (url) {
+                    window.location = url
+                }
+            });
+
+            saveBtn.click(function () {
+                if (!image) {
+                    return
+                }
+
+                var data = $(image).cropper('getData');
+                var fd = new FormData();
+                fd.append('image', file);
+                fd.append('x', Math.round(data.x));
+                fd.append('y', Math.round(data.y));
+                fd.append('w', Math.floor(data.width));
+                fd.append('h', Math.floor(data.height));
+
+                $.ajax({
+                    url: '/member/warehouse/${warehouse.id}/image',
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    data: fd,
+                    dataType: "text"
+                })
+                    .done(function (response) {
+                        location.reload()
+                    })
+                    .fail(function (err) {
+                        console.log(err)
+                    });
+
+                console.log(data)
+            });
+
+            $("#imageModal")
+                .find("input")
+                .change(function () {
+                    if (this.files && this.files.length) {
+                        file = this.files[0]
+                    }
+
+                    if (file) {
+                        saveBtn.removeClass('disabled');
+                        previewImage(file)
+                    } else {
+                        saveBtn.addClass('disabled')
+                    }
+                });
+
+            function previewImage(file) {
+                if (!file) {
+                    return
+                }
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    onLoadImage(e.target.result)
+                };
+                reader.readAsDataURL(file)
+            }
+
+            var croppedImage = null;
+
+            function onLoadImage(url) {
+                var container = $("#imageModal").find('.thumb');
+                image = $('<img>');
+
+                if (croppedImage) {
+                    croppedImage.cropper('destroy')
+                }
+
+                container.height(container.width() * 4 / 7);
+                image.attr('src', url);
+                image.load(function () {
+                    container.empty();
+                    container.append(image);
+                    image.hide();
+
+                    var contWidth = container.width();
+                    var contHeight = container.height();
+
+                    image.show();
+                    image.width(contWidth);
+
+                    if (image.height() > contHeight) {
+                        image.height(contHeight);
+                        image.css({'width': 'auto'})
+                    }
+
+                    image.cropper({
+                        aspectRatio: 1,
+                        viewMode: 1
+                    });
+                })
             }
         })
+        // ]]>
     </script>
 </div>

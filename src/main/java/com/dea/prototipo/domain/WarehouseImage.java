@@ -1,6 +1,7 @@
 package com.dea.prototipo.domain;
 
 import org.imgscalr.Scalr;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @Entity
+@Configurable
 public class WarehouseImage {
 
     /**
