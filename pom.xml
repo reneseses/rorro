@@ -358,10 +358,10 @@
 
         <dependency>
             <groupId>dea</groupId>
-            <artifactId>org.opensource</artifactId>
-            <version>1.0</version>
+            <artifactId>project</artifactId>
+            <version>0.287</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/OSDEASolver-v0.287/OSDEASolver-v0.287-f.jar</systemPath>
+            <systemPath>${basedir}/solver/OSDEASolver-0.287.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.imgscalr</groupId>
@@ -376,13 +376,14 @@
     </dependencies>
     <build>
         <plugins>
+        	<!--
             <plugin>
                 <groupId>dea</groupId>
-                <artifactId>org.opensource</artifactId>
+                <artifactId>project</artifactId>
                 <configuration>
-                    <argLine>-Djava.library.path=${project.basedir}/OSDEASolver-v0.287/lpsolve-v5.5.2.0/win64/</argLine>
+                    <argLine>-Djava.library.path=${project.basedir}/OSDEASolver-v0.287/lpsolve-v5.5.2.0/ux64/</argLine>
                 </configuration>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
