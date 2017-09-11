@@ -151,12 +151,6 @@ body.member {
     box-shadow: 0 1px rgba(0, 0, 0, 0.1);
 }
 
-.warehouse-thumb {
-    position: absolute;
-    left: 0;
-    width: 138px;
-}
-
 .thumbnail img {
     position: relative;
     width: 130px;
@@ -193,11 +187,6 @@ td.thumbnail {
     margin: 0;
     padding: 4px 8px !important;
     display: table-cell;
-}
-
-.warehouse-thumb + div {
-    margin-left: 153px;
-    min-height: 138px;
 }
 
 .navbar {
@@ -340,6 +329,17 @@ td.thumbnail {
 
     #rootwizard .form-group label.text-right span {
         right: 15px;
+    }
+
+    .warehouse-thumb {
+        position: absolute;
+        left: 0;
+        width: 138px;
+    }
+
+    .warehouse-thumb + div {
+        margin-left: 153px;
+        min-height: 138px;
     }
 }
 
