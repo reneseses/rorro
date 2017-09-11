@@ -161,7 +161,7 @@ body.member {
     position: relative;
     width: 130px;
     height: 130px;
-    text-indent:-9999px
+    text-indent: -9999px
 }
 
 .thumbnail img:after {
@@ -249,10 +249,8 @@ td.thumbnail {
     margin-bottom: 15px;
 }
 
-#rootwizard .form-group label {
-    font-size: 13px;
-    line-height: 29px;
-    margin-bottom: 0;
+.text-normal {
+    font-weight: normal;
 }
 
 .pager .finish a, .pager .finish a:hover {
@@ -321,6 +319,27 @@ td.thumbnail {
 
     .navbar.navbar-member .navbar-nav > li > a {
         line-height: 40px;
+    }
+
+    #rootwizard .form-group label {
+        font-size: 12px;
+        margin-bottom: 0;
+        position: relative;
+        height: 34px;
+    }
+
+    #rootwizard .form-group label span {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+
+    #rootwizard .form-group label.text-right {
+        text-align: left;
+    }
+
+    #rootwizard .form-group label.text-right span {
+        right: 15px;
     }
 }
 

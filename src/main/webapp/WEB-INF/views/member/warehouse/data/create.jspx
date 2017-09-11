@@ -25,10 +25,25 @@
 
         </c:if>
 
+        <div>
+            <div class="form-group">
+                <label for="period" class="col-md-4"><span>Bodega</span></label>
+                <div class="col-md-8">
+                    <a href="/member/warehouse/${warehouse.id}"><strong>${warehouse.name}</strong></a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="period" class="col-md-4"><span>Periodo</span></label>
+                <div class="col-md-8">
+                    <input id="period" name="period" class="form-control" value="${warehouseData.period}"/>
+                </div>
+            </div>
+        </div>
+        <hr/>
         <div id="rootwizard">
             <div class="navbar wizard-setup">
                 <div class="navbar-inner">
-                    <ul>
+                    <ul style="width: 365px;margin: auto;">
                         <li><a href="#tab1" data-toggle="tab">1.- Entradas</a></li>
                         <li><a href="#tab2" data-toggle="tab">2.- Salidas</a></li>
                         <li><a href="#tab3" data-toggle="tab">3.- Resumen</a></li>
@@ -39,14 +54,8 @@
             <div class="tab-content">
                 <div class="tab-pane" id="tab1">
                     <div class="form-group">
-                        <label for="period" class="col-md-4">Periodo</label>
-                        <div class="col-md-8">
-                            <input id="period" name="period" class="form-control" value="${warehouseData.period}"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="squareMeters" class="col-md-4">Area Total
-                            <small>(m <sup>2</sup>)</small>
+                        <label for="squareMeters" class="col-md-4">
+                            <span>Area Total <small>(m <sup>2</sup>)</small></span>
                         </label>
                         <div class="col-md-8">
                             <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="0"
@@ -56,7 +65,9 @@
                     <h4>Mano de Obra</h4>
                     <div>
                         <div class="form-group">
-                            <label for="directWorkforce" class="col-md-4">Directa</label>
+                            <label for="directWorkforce" class="col-md-4">
+                                <span>Directa</span>
+                            </label>
                             <div class="col-md-8">
                                 <input id="directWorkforce" name="directWorkforce" class="form-control"
                                        type="number"
@@ -64,7 +75,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="indirectWorkforce" class="col-md-4">Indirecta</label>
+                            <label for="indirectWorkforce" class="col-md-4"><span>Indirecta</span></label>
                             <div class="col-md-8">
                                 <input id="indirectWorkforce" name="indirectWorkforce" class="form-control"
                                        type="number" min="0" value="${warehouseData.indirectWorkforce}"/>
@@ -85,18 +96,36 @@
                             </div>
                             <div id="vehicles" class="panel-collapse collapse">
                                 <div class="panel-body ">
+                                    <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
+                                        <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
+                                        <div class="col-md-5 text-center">Unidades</div>
+                                    </div>
                                     <div class="form-group">
-                                        <label for="palletTruck" class="col-md-4">Carretillas</label>
-                                        <div class="col-md-8">
+                                        <label for="palletTruck" class="col-md-4"><span>Carretillas</span></label>
+                                        <label for="palletTruck"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="palletTruck" name="vehicles.palletTruck" class="form-control"
                                                    type="number" min="0"
                                                    value="${warehouseData.vehicles.palletTruck}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="walkieStacker" class="col-md-4"><span>Carretillas Apiladoras</span></label>
+                                        <label for="walkieStacker"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
+                                            <input id="walkieStacker" name="vehicles.walkieStacker" class="form-control"
+                                                   type="number" min="0"
+                                                   value="${warehouseData.vehicles.walkieStacker}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="sitDownCounterBalance"
-                                               class="col-md-4">Carretillas Contrabalanceadas hombre sentado</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Carretillas Contrabalanceadas hombre sentado</span></label>
+                                        <label for="sitDownCounterBalance"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="sitDownCounterBalance" name="vehicles.sitDownCounterBalance"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.vehicles.sitDownCounterBalance}"/>
@@ -104,16 +133,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="standUpCounterBalance"
-                                               class="col-md-4">Carretillas Cotrabalanceadas hombre parado</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Carretillas Cotrabalanceadas hombre parado</span></label>
+                                        <label for="standUpCounterBalance"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="standUpCounterBalance" name="vehicles.standUpCounterBalance"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.vehicles.standUpCounterBalance}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="straddleTruck" class="col-md-4">Carretillas Retráctiles</label>
-                                        <div class="col-md-8">
+                                        <label for="straddleTruck" class="col-md-4"><span>Carretillas Retráctiles</span></label>
+                                        <label for="straddleTruck"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="straddleTruck" name="vehicles.straddleTruck" class="form-control"
                                                    type="number" min="0"
                                                    value="${warehouseData.vehicles.straddleTruck}"/>
@@ -121,16 +154,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="straddleReachTruck"
-                                               class="col-md-4">Carretillas Retráctiles Pantógrafo</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Carretillas Retráctiles Pantógrafo</span></label>
+                                        <label for="straddleReachTruck"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="straddleReachTruck" name="vehicles.straddleReachTruck"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.vehicles.straddleReachTruck}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sideLoaderTruck" class="col-md-4">Cargadores Laterales</label>
-                                        <div class="col-md-8">
+                                        <label for="sideLoaderTruck" class="col-md-4"><span>Cargadores Laterales</span></label>
+                                        <label for="sideLoaderTruck"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="sideLoaderTruck" name="vehicles.sideLoaderTruck"
                                                    class="form-control"
                                                    type="number" min="0"
@@ -138,8 +175,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="turretTruck" class="col-md-4">Carretillas Trilaterales</label>
-                                        <div class="col-md-8">
+                                        <label for="turretTruck" class="col-md-4"><span>Carretillas Trilaterales</span></label>
+                                        <label for="turretTruck"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="turretTruck" name="vehicles.turretTruck" class="form-control"
                                                    type="number" min="0"
                                                    value="${warehouseData.vehicles.turretTruck}"/>
@@ -147,16 +186,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="hybridTruck"
-                                               class="col-md-4">Transelevador hombre a bordo (Transtacker)</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Transelevador hombre a bordo (Transtacker)</span></label>
+                                        <label for="hybridTruck"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="hybridTruck" name="vehicles.hybridTruck" class="form-control"
                                                    type="number" min="0"
                                                    value="${warehouseData.vehicles.hybridTruck}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="palletASRSMachine" class="col-md-4">Transelevadores (ASRS)</label>
-                                        <div class="col-md-8">
+                                        <label for="palletASRSMachine"
+                                               class="col-md-4"><span>Transelevadores (ASRS)</span></label>
+                                        <label for="palletASRSMachine"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="palletASRSMachine" name="vehicles.palletASRSMachine"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.vehicles.palletASRSMachine}"/>
@@ -164,8 +208,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="railGuidedOrderPicker"
-                                               class="col-md-4">Carretillas Preparadoras de Pedido guiado por riel</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Carretillas Preparadoras de Pedido guiado por riel</span></label>
+                                        <label for="railGuidedOrderPicker"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="railGuidedOrderPicker" name="vehicles.railGuidedOrderPicker"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.vehicles.railGuidedOrderPicker}"/>
@@ -173,17 +219,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="wireGuidedOrderPicker"
-                                               class="col-md-4">Carretillas Preparadoras de Pedido giado por cable</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Carretillas Preparadoras de Pedido giado por cable</span></label>
+                                        <label for="wireGuidedOrderPicker"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="wireGuidedOrderPicker" name="vehicles.wireGuidedOrderPicker"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.vehicles.wireGuidedOrderPicker}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="agv" class="col-md-4">Vehículos autoguiados (AVG)</label>
-                                        <div class="col-md-8">
-                                            <input id="agv" name="vehicles.agv" class="form-control" type="number"
+                                        <label for="AGV"
+                                               class="col-md-4"><span>Vehículos autoguiados (AVG)</span></label>
+                                        <label for="AGV"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
+                                            <input id="AGV" name="vehicles.agv" class="form-control" type="number"
                                                    min="0"
                                                    value="${warehouseData.vehicles.agv}"/>
                                         </div>
@@ -202,42 +253,59 @@
                             </div>
                             <div id="storageSystem" class="panel-collapse collapse">
                                 <div class="panel-body ">
+                                    <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
+                                        <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
+                                        <div class="col-md-5 text-center">Unidades</div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="personAboardASRSAisles"
-                                               class="col-md-4">Transelevador (ASRS) hombre a bordo</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Transelevador (ASRS) hombre a bordo</span></label>
+                                        <label for="personAboardASRSAisles"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="personAboardASRSAisles" name="storage.personAboardASRSAisles"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.storage.personAboardASRSAisles}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="horizontalCarousel" class="col-md-4">Carrusel Horizontal</label>
-                                        <div class="col-md-8">
+                                        <label for="horizontalCarousel"
+                                               class="col-md-4"><span>Carrusel Horizontal</span></label>
+                                        <label for="horizontalCarousel"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="horizontalCarousel" name="storage.horizontalCarousel"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.storage.horizontalCarousel}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="verticalCarousel" class="col-md-4">Carrusel Vertical</label>
-                                        <div class="col-md-8">
+                                        <label for="verticalCarousel"
+                                               class="col-md-4"><span>Carrusel Vertical</span></label>
+                                        <label for="verticalCarousel"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="verticalCarousel" name="storage.verticalCarousel"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.storage.verticalCarousel}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="miniloadASRSAisles" class="col-md-4">ASRS de Minicarga</label>
-                                        <div class="col-md-8">
+                                        <label for="miniloadASRSAisles" class="col-md-4"><span>ASRS de Minicarga</span></label>
+                                        <label for="miniloadASRSAisles"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="miniloadASRSAisles" name="storage.miniloadASRSAisles"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.storage.miniloadASRSAisles}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="aFrameDispenser" class="col-md-4">Dispensador A-Frame</label>
-                                        <div class="col-md-8">
+                                        <label for="aFrameDispenser"
+                                               class="col-md-4"><span>Dispensador A-Frame</span></label>
+                                        <label for="aFrameDispenser"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="aFrameDispenser" name="storage.aFrameDispenser"
                                                    class="form-control"
                                                    type="number" min="0"
@@ -259,9 +327,16 @@
                             </div>
                             <div id="conveyorSystem" class="panel-collapse collapse">
                                 <div class="panel-body ">
+                                    <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
+                                        <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
+                                        <div class="col-md-5 text-center">Unidades</div>
+                                    </div>
                                     <div class="form-group">
-                                        <label for="nonPoweredRoller" class="col-md-4">Cinta de Rodillos</label>
-                                        <div class="col-md-8">
+                                        <label for="nonPoweredRoller"
+                                               class="col-md-4"><span>Cinta de Rodillos</span></label>
+                                        <label for="nonPoweredRoller"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="nonPoweredRoller" name="conveyor.nonPoweredRoller"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.nonPoweredRoller}"/>
@@ -269,24 +344,31 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="poweredRollerConveyor"
-                                               class="col-md-4">Cinta de Rodillos Motorizada</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Cinta de Rodillos Motorizada</span></label>
+                                        <label for="poweredRollerConveyor"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="poweredRollerConveyor" name="conveyor.poweredRollerConveyor"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.poweredRollerConveyor}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="powerBelt" class="col-md-4">Cinta de Banda Motorizada</label>
-                                        <div class="col-md-8">
+                                        <label for="powerBelt"
+                                               class="col-md-4"><span>Cinta de Banda Motorizada</span></label>
+                                        <label for="powerBelt"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="powerBelt" name="conveyor.powerBelt"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.powerBelt}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="skateWheel" class="col-md-4">Cinta de Ruedas</label>
-                                        <div class="col-md-8">
+                                        <label for="skateWheel" class="col-md-4"><span>Cinta de Ruedas</span></label>
+                                        <label for="skateWheel"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="skateWheel" name="conveyor.skateWheel"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.skateWheel}"/>
@@ -294,16 +376,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="towLine"
-                                               class="col-md-4">Tow Line (Cinta por cable enterrado)</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Tow Line (Cinta por cable enterrado)</span></label>
+                                        <label for="towLine"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="towLine" name="conveyor.towLine"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.towLine}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tiltTraySorter" class="col-md-4">Clasificador Tilt Tray</label>
-                                        <div class="col-md-8">
+                                        <label for="tiltTraySorter" class="col-md-4"><span>Clasificador Tilt Tray</span></label>
+                                        <label for="tiltTraySorter"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="tiltTraySorter" name="conveyor.tiltTraySorter"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.tiltTraySorter}"/>
@@ -311,8 +397,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="palletConveyor"
-                                               class="col-md-4">Cinta Transportadora de Pallet</label>
-                                        <div class="col-md-8">
+                                               class="col-md-4"><span>Cinta Transportadora de Pallet</span></label>
+                                        <label for="palletConveyor"
+                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                        <div class="col-md-5">
                                             <input id="palletConveyor" name="conveyor.palletConveyor"
                                                    class="form-control" type="number" min="0"
                                                    value="${warehouseData.conveyor.palletConveyor}"/>
@@ -326,7 +414,7 @@
                 </div>
                 <div class="tab-pane" id="tab2">
                     <div class="form-group">
-                        <label for="totalOrders" class="col-md-4">Ordenes Totales</label>
+                        <label for="totalOrders" class="col-md-4"><span>Ordenes Totales</span></label>
                         <div class="col-md-8">
                             <input id="totalOrders" name="output.totalOrders" class="form-control"
                                    value="${warehouseData.output.totalOrders}"/>
@@ -337,21 +425,23 @@
                         Lineas Entregadas
                     </h4>
                     <div class="form-group">
-                        <label for="brokenCaseLines" class="col-md-4">Lineas caja abierta despachadas</label>
+                        <label for="brokenCaseLines"
+                               class="col-md-4"><span>Lineas caja abierta despachadas</span></label>
                         <div class="col-md-8">
                             <input id="brokenCaseLines" name="output.brokenCaseLines" class="form-control" type="number"
                                    min="0" value="${warehouseData.output.brokenCaseLines}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fullCaseLines" class="col-md-4">Lineas caja completa despachadas</label>
+                        <label for="fullCaseLines"
+                               class="col-md-4"><span>Lineas caja completa despachadas</span></label>
                         <div class="col-md-8">
                             <input id="fullCaseLines" name="output.fullCaseLines" class="form-control" type="number"
                                    min="0" value="${warehouseData.output.brokenCaseLines}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="palletLines" class="col-md-4">Lineas pallet despachadas</label>
+                        <label for="palletLines" class="col-md-4"><span>Lineas pallet despachadas</span></label>
                         <div class="col-md-8">
                             <input id="palletLines" name="output.palletLines" class="form-control" type="number"
                                    min="0" value="${warehouseData.output.palletLines}"/>
@@ -362,7 +452,7 @@
                         Distrubución Física
                     </h4>
                     <div class="form-group">
-                        <label for="brokenCasePickSlots" class="col-md-4">SKU Caja abierta</label>
+                        <label for="brokenCasePickSlots" class="col-md-4"><span>SKU Caja abierta</span></label>
                         <div class="col-md-8">
                             <input id="brokenCasePickSlots" name="output.brokenCasePickSlots" class="form-control"
                                    type="number"
@@ -370,14 +460,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="floorStacking" class="col-md-4">Almacenamiento en el suelo</label>
+                        <label for="floorStacking" class="col-md-4"><span>Almacenamiento en el suelo</span></label>
                         <div class="col-md-8">
                             <input id="floorStacking" name="output.floorStacking" class="form-control" type="number"
                                    min="0" value="${warehouseData.output.floorStacking}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="palletRackLocations" class="col-md-4">Ubicaciones pallet</label>
+                        <label for="palletRackLocations" class="col-md-4"><span>Ubicaciones pallet</span></label>
                         <div class="col-md-8">
                             <input id="palletRackLocations" name="output.palletRackLocations" class="form-control"
                                    type="number"
@@ -394,7 +484,7 @@
                                 </tr>
                                 <tr>
                                     <th>Equipos</th>
-                                    <td class="text-right" id="equipment-row">[Aun no calculado]</td>
+                                    <td class="text-right" id="equipment-row"><!-- --></td>
                                 </tr>
                                 <tr>
                                     <th>Mano de Obra</th>
@@ -409,15 +499,11 @@
                                 </tr>
                                 <tr>
                                     <th>Acumulación</th>
-                                    <td class="text-right">??</td>
+                                    <td class="text-right" id="accumulation-row"><!-- --></td>
                                 </tr>
                                 <tr>
                                     <th>Almacenamiento</th>
-                                    <td class="text-right">[Aun no calculado]</td>
-                                </tr>
-                                <tr>
-                                    <th>Total de ordenes despachadas</th>
-                                    <td class="text-right">??</td>
+                                    <td class="text-right" id="storage-row"><!-- --></td>
                                 </tr>
                                 <tr>
                                     <th>Lineas caja abierta despachadas</th>
@@ -444,11 +530,20 @@
         </div>
     </form>
 
+    <script type="text/javascript">
+        var inputWeight = { <c:forEach items = "${inputWeight}" var="input" > "${input.name()}": ${input.getWeight()},</c:forEach>};
 
-    <script>
         $(function () {
             var rootWizard = $('#rootwizard');
-            var progressBar = rootWizard.find('.progress-bar');
+
+            $(".input-wight").each(function () {
+                var label = $(this);
+                var prop = label.attr('for');
+                prop = prop.charAt(0).toUpperCase() + prop.slice(1);
+
+                label.find('span').text(inputWeight[prop].toLocaleString())
+            });
+
             rootWizard.bootstrapWizard({
 
                 onTabShow: function (tab, navigation, index) {
@@ -483,26 +578,60 @@
 
                 $.each($("#vehicles").find('input'), function () {
                     var input = $(this);
-                    equipment += parseFloat(input.val())
+                    var amount = input.val() || 0;
+                    var prop = input.attr('id');
+                    prop = prop.charAt(0).toUpperCase() + prop.slice(1);
+
+                    equipment += parseFloat(amount * inputWeight[prop])
                 });
                 $.each($("#storageSystem").find('input'), function () {
                     var input = $(this);
-                    equipment += parseFloat(input.val())
+                    var amount = input.val() || 0;
+                    var prop = input.attr('id');
+                    prop = prop.charAt(0).toUpperCase() + prop.slice(1);
+
+                    equipment += parseFloat(amount * inputWeight[prop])
                 });
                 $.each($("#conveyorSystem").find('input'), function () {
                     var input = $(this);
-                    equipment += parseFloat(input.val())
-                });
-                // $("#equipment-row").text(equipment);
+                    var amount = input.val() || 0;
+                    var prop = input.attr('id');
+                    prop = prop.charAt(0).toUpperCase() + prop.slice(1);
 
-                var directWorkforce = parseFloat($("#directWorkforce").val());
-                var indirectWorkforce = parseFloat($("#indirectWorkforce").val());
+                    equipment += parseFloat(amount * inputWeight[prop])
+                });
+                $("#equipment-row").text(equipment.toLocaleString());
+
+                var directWorkforce = parseFloat($("#directWorkforce").val() || 0);
+                var indirectWorkforce = parseFloat($("#indirectWorkforce").val() || 0);
                 $("#work-force-row").text(directWorkforce + indirectWorkforce);
 
-                $("#area-row").text(parseFloat($("#squareMeters").val()));
-                $("#brokenCaseLines-row").text(parseFloat($("#brokenCaseLines").val()));
-                $("#fullCaseLines-row").text(parseFloat($("#fullCaseLines").val()));
-                $("#palletLines-row").text(parseFloat($("#palletLines").val()));
+                var brokenCaseLines = parseFloat($("#brokenCaseLines").val() || 0);
+                var fullCaseLines = parseFloat($("#fullCaseLines").val() || 0);
+                var palletLines = parseFloat($("#palletLines").val() || 0);
+                var linesSum = fullCaseLines + palletLines + brokenCaseLines;
+
+                var brokenCasePickSlots = parseFloat($("#brokenCasePickSlots").val() || 0);
+                var palletRackLocations = parseFloat($("#palletRackLocations").val() || 0);
+                var floorStacking = parseFloat($("#floorStacking").val() || 0);
+                var squareMeters = parseFloat($("#squareMeters").val() || 0);
+
+                var totalOrders = parseFloat($("#totalOrders").val() || 0);
+                var accumulation = linesSum - totalOrders;
+
+                if (linesSum > 0) {
+                    var p = brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines);
+                    var storage = p * Math.sqrt(brokenCasePickSlots + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(squareMeters * floorStacking)))
+
+                    $("#storage-row").text(storage.toLocaleString())
+                }
+
+                $("#area-row").text(squareMeters.toLocaleString());
+
+                $("#brokenCaseLines-row").text(brokenCaseLines.toLocaleString());
+                $("#fullCaseLines-row").text(parseFloat(fullCaseLines.toLocaleString()));
+                $("#palletLines-row").text(parseFloat(palletLines.toLocaleString()));
+                $("#accumulation-row").text(accumulation.toLocaleString())
             }
         })
     </script>

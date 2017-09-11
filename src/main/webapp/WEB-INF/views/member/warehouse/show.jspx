@@ -3,6 +3,7 @@
      xmlns:form="http://www.springframework.org/tags/form"
      xmlns:spring="http://www.springframework.org/tags"
      xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
      xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
@@ -61,24 +62,29 @@
 
         <div>
             <c:if test="${fn:length(warehouseData) > 0}">
-                <table class="table table-hover no-margin">
+                <table class="table table-hover no-margin" style="font-size: 13px">
                     <thead>
                     <tr>
-                        <th>Periodo</th>
-                        <th>Equipos (Millones)</th>
-                        <th>Acumulación</th>
-                        <th>Función de almacenamiento</th>
+                        <th class="text-center">Periodo</th>
+                        <th class="text-center">Equipos ($ Millones)</th>
+                        <th class="text-center">Area (m2)</th>
+                        <th class="text-center">M. de obra (horas)</th>
+                        <th class="text-center">Acumulación</th>
+                        <th class="text-center">Almacenamiento</th>
                         <th style="width: 61px"><!-- --></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${warehouseData}" var="data">
                         <spring:url value="/member/warehouse/${warehouse.id}/data/${data.id}?form" var="show_url"/>
+                        <fmt:setLocale value="es_CL"/>
                         <tr class="clickable row-link" data-href="${show_url}">
-                            <td>${data.period}</td>
-                            <td>${data.inputTotalInvestment / 1000000}</td>
-                            <td>${data.outputAccumulation}</td>
-                            <td>${data.outputStorage}</td>
+                            <td class="text-center">${data.period}</td>
+                            <td class="text-center"><fmt:formatNumber value="${data.inputTotalInvestment / 1000000}" /></td>
+                            <td class="text-center"><fmt:formatNumber value="${data.squareMeters}"/></td>
+                            <td class="text-center"><fmt:formatNumber value="${data.directWorkforce + data.indirectWorkforce}"/></td>
+                            <td class="text-center"><fmt:formatNumber value="${data.outputAccumulation}"/></td>
+                            <td class="text-center"><fmt:formatNumber value="${data.outputStorage}"/></td>
                             <td style="padding: 5px 8px">
                                 <button class="btn btn-default btn-xs">
                                     <i class="fa fa-arrow-right"><!-- --></i> Ver

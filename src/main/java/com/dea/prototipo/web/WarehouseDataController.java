@@ -3,6 +3,7 @@ package com.dea.prototipo.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.dea.prototipo.domain.InputWeightEnum;
 import com.dea.prototipo.domain.Warehouse;
 import com.dea.prototipo.domain.WarehouseData;
 
@@ -23,6 +24,7 @@ import org.springframework.web.util.WebUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -75,6 +77,7 @@ public class WarehouseDataController {
 
         if (bindingResult.hasErrors() && !(bindingResult.getAllErrors().size() == 1 && bindingResult.hasFieldErrors("warehouse"))) {
             populateEditForm(uiModel, warehouseData);
+            uiModel.addAttribute("warehouse", warehouse);
             return "member/warehouse/data/create";
         }
 
@@ -107,6 +110,7 @@ public class WarehouseDataController {
 
     private void populateEditForm(Model uiModel, WarehouseData warehouseData) {
         uiModel.addAttribute("warehouseData", warehouseData);
+        uiModel.addAttribute("inputWeight", Arrays.asList(InputWeightEnum.values()));
     }
 
     private String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
