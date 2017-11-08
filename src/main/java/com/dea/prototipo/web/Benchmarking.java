@@ -90,7 +90,7 @@ public class Benchmarking {
 
             System.out.println(current.getWarehouse().getName());
             try {
-                System.out.println(current.toString());
+                System.out.println(current.getOutputStorage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
