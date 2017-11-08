@@ -54,7 +54,6 @@
         $('.row-link').click(function () {
             var url = $(this).data('href');
 
-            console.log(url);
             if (url) {
                 window.location = url
             }

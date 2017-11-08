@@ -92,7 +92,7 @@ public class Benchmarking {
             testDMUNames[i] = current.getWarehouse().getName();
 
             if(current.getOutputStorage() == null) {
-                errors.add("No se pudo comparar con bodega " + warehouse.getName() + ": Invalid outputStorage");
+                errors.add("No se pudo comparar con" + current.getWarehouse().getName() + "-" + current.getPeriod() + ": brokenCaseLines + fullCaseLines + palletLines debe ser distinto de 0");
                 break;
             }
 
@@ -664,22 +664,23 @@ public class Benchmarking {
 
                 }
             }
+
+            JSONObject jo = new JSONObject();
+            jo.put("rendimiento", rendimiento);
+            jo.put("proyeccion", proyeccion);
+            jo.put("ranking", ranking);
+            jo.put("rendimientoO", rendimientoO);
+            jo.put("proyeccionO", proyeccionO);
+            jo.put("rankingO", rankingO);
+            jo.put("errors", errors);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "application/json; charset=utf-8");
+
+            return new ResponseEntity<String>(jo.toString(), headers, HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        JSONObject jo = new JSONObject();
-        jo.put("rendimiento", rendimiento);
-        jo.put("proyeccion", proyeccion);
-        jo.put("ranking", ranking);
-        jo.put("rendimientoO", rendimientoO);
-        jo.put("proyeccionO", proyeccionO);
-        jo.put("rankingO", rankingO);
-        jo.put("errors", errors);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-
-        return new ResponseEntity<String>(jo.toString(), headers, HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
 
     }
 }
