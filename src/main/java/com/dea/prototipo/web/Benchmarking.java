@@ -89,8 +89,11 @@ public class Benchmarking {
             WarehouseData current = warehouseData.get(i);
 
             System.out.println(current.getWarehouse().getName());
-            System.out.println(current.toString());
-
+            try {
+                System.out.println(current.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             testDMUNames[i] = current.getWarehouse().getName();
 
             testDataMatrix[i][0] = current.getSquareMeters();
