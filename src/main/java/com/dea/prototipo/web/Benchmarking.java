@@ -88,6 +88,9 @@ public class Benchmarking {
         for (int i = 0; i < warehouseData.size(); i++) {
             WarehouseData current = warehouseData.get(i);
 
+            System.out.println(current.getWarehouse().getName());
+            System.out.println(current.toString());
+
             testDMUNames[i] = current.getWarehouse().getName();
 
             testDataMatrix[i][0] = current.getSquareMeters();
