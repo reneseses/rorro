@@ -109,13 +109,12 @@
                         result.removeClass('hidden');
                         error.addClass('hidden');
                     })
-                    .fail(function (err, textStatus) {
-                        console.log(err)
+                    .fail(function (err) {
                         result.addClass('hidden');
                         error
                             .removeClass('hidden')
                             .empty()
-                            .text(textStatus);
+                            .text(err.responseText);
                     })
             });
         });
