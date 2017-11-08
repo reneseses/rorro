@@ -50,10 +50,8 @@
                     <ul><!-- --></ul>
                 </div>
             </div>
-            <div id="benchmark-error" class="hidden">
-                <div class="alert alert-danger">
-                    <!-- -->
-                </div>
+            <div id="benchmark-error" class="hidden alert alert-danger">
+                <!-- -->
             </div>
         </div>
     </div>
@@ -112,6 +110,7 @@
                         error.addClass('hidden');
                     })
                     .fail(function (err, textStatus) {
+                        console.log(err)
                         result.addClass('hidden');
                         error
                             .removeClass('hidden')
