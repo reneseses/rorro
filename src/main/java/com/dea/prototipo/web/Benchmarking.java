@@ -2,6 +2,7 @@ package com.dea.prototipo.web;
 
 import com.dea.prototipo.domain.User;
 import com.dea.prototipo.domain.WarehouseData;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.opensourcedea.dea.*;
@@ -55,7 +56,7 @@ public class Benchmarking {
         String rendimientoO = "";
         String proyeccionO = "";
         String rankingO = "";
-
+        JSONArray errors = new JSONArray();
 
         Warehouse warehouse = Warehouse.findWarehouse(bodegaId);
         int id = warehouse.getId().intValue();
@@ -88,13 +89,12 @@ public class Benchmarking {
         for (int i = 0; i < warehouseData.size(); i++) {
             WarehouseData current = warehouseData.get(i);
 
-            System.out.println(current.getWarehouse().getName());
-            try {
-                System.out.println(current.getOutputStorage());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             testDMUNames[i] = current.getWarehouse().getName();
+
+            if(current.getOutputStorage() == null) {
+                errors.add("No se pudo comparar con bodega " + warehouse.getName() + ": Invalid outputStorage");
+                break;
+            }
 
             testDataMatrix[i][0] = current.getSquareMeters();
             testDataMatrix[i][1] = current.getInputTotalInvestment();
@@ -675,6 +675,7 @@ public class Benchmarking {
         jo.put("rendimientoO", rendimientoO);
         jo.put("proyeccionO", proyeccionO);
         jo.put("rankingO", rankingO);
+        jo.put("errors", errors);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
