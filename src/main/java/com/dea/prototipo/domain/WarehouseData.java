@@ -178,6 +178,7 @@ public class WarehouseData {
         int palletRackLocations = this.output.getPalletRackLocations();
         int floorStacking = this.output.getFloorStacking();
 
+        System.out.println(brokenCaseLines + " " + fullCaseLines + " " + palletLines);
         if (brokenCaseLines + fullCaseLines + palletLines == 0) {
             return null;
         }
