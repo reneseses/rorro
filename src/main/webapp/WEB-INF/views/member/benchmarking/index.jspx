@@ -19,8 +19,8 @@
                         </c:forEach>
                     </select>
                     <span class="input-group-btn">
-                    <button class="btn btn-primary" id="genBenchmark" type="button">Generar</button>
-                </span>
+                        <button class="btn btn-primary" id="genBenchmark" type="button">Generar</button>
+                    </span>
                 </div>
             </form>
             <HR/>
@@ -31,6 +31,7 @@
                 <div id="benchmark">
                     <ol><!--  --></ol>
                     <div id="proyeccion">
+                        <!-- -->
                     </div>
                 </div>
                 <HR/>
@@ -41,17 +42,17 @@
                 <div id="benchmark2">
                     <ol><!--  --></ol>
                     <div id="proyeccionO">
+                        <!-- -->
                     </div>
-
                 </div>
 
                 <div class="alert alert-info benchmark-error hidden">
-                    <ul></ul>
+                    <ul><!-- --></ul>
                 </div>
             </div>
             <div id="benchmark-error" class="hidden">
                 <div class="alert alert-danger">
-
+                    <!-- -->
                 </div>
             </div>
         </div>
@@ -110,12 +111,12 @@
                         result.removeClass('hidden');
                         error.addClass('hidden');
                     })
-                    .fail(function (err) {
+                    .fail(function (err, textStatus) {
                         result.addClass('hidden');
                         error
                             .removeClass('hidden')
                             .empty()
-                            .text(err);
+                            .text(textStatus);
                     })
             });
         });
