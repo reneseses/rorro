@@ -57,12 +57,13 @@ public class WarehouseDataController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody ResponseEntity<String> list(@PathVariable Long warehouseId, Model uiModel) {
+    public @ResponseBody
+    ResponseEntity<String> list(@PathVariable Long warehouseId, Model uiModel) {
         Warehouse warehouse = Warehouse.findWarehouse(warehouseId);
         List<WarehouseData> warehouseData = WarehouseData.findWarehouseDataByWarehouse(warehouse);
 
         JSONArray response = new JSONArray();
-        for(WarehouseData current: warehouseData) {
+        for (WarehouseData current : warehouseData) {
             response.add(current.toString());
         }
 
@@ -111,14 +112,13 @@ public class WarehouseDataController {
         return "member/warehouse/data/create";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
-    public String delete(@PathVariable("warehouseId") Long warehouseId, @PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    ResponseEntity<String> delete(@PathVariable("warehouseId") Long warehouseId, @PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         WarehouseData warehouseData = WarehouseData.findWarehouseData(id);
         warehouseData.remove();
-        uiModel.asMap().clear();
-        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/member/warehouse/" + warehouseId;
+        JSONObject response = new JSONObject();
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
     private void populateEditForm(Model uiModel, WarehouseData warehouseData) {

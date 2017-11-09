@@ -8,10 +8,11 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
+    <spring:url value="/member" var="member"/>
     <div style="position: relative">
         <div class="thumbnail warehouse-thumb">
             <spring:url value="/member/warehouse/${warehouse.id}/image" var="image_url"/>
-            <img src="${image_url}" alt="${warehouse.name}" />
+            <img src="${image_url}" alt="${warehouse.name}"/>
             <button class="btn btn-xs btn-hover" data-target="#imageModal" data-toggle="modal" title="Cambiar">
                 <i class="fa fa-edit"><!-- --></i>
             </button>
@@ -72,7 +73,8 @@
                             <th class="text-center">M. de obra (horas)</th>
                             <th class="text-center">Acumulación</th>
                             <th class="text-center">Almacenamiento</th>
-                            <th style="width: 61px"><!-- --></th>
+                            <th style="width: 65px"><!-- --></th>
+                            <th style="width: 44px"><!-- --></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -81,14 +83,22 @@
                             <fmt:setLocale value="es_CL"/>
                             <tr class="clickable row-link" data-href="${show_url}">
                                 <td class="text-center">${data.period}</td>
-                                <td class="text-center"><fmt:formatNumber value="${data.inputTotalInvestment / 1000000}" /></td>
+                                <td class="text-center"><fmt:formatNumber
+                                        value="${data.inputTotalInvestment / 1000000}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.squareMeters}"/></td>
-                                <td class="text-center"><fmt:formatNumber value="${data.directWorkforce + data.indirectWorkforce}"/></td>
+                                <td class="text-center"><fmt:formatNumber
+                                        value="${data.directWorkforce + data.indirectWorkforce}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.outputAccumulation}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.outputStorage}"/></td>
                                 <td style="padding: 5px 8px">
                                     <button class="btn btn-default btn-xs">
-                                        <i class="fa fa-arrow-right"><!-- --></i> Ver
+                                        <i class="fa fa-fw fa-arrow-right"><!-- --></i> Ver
+                                    </button>
+                                </td>
+                                <td style="padding: 5px 8px 4px">
+                                    <button class="btn btn-danger btn-xs btn-remove" title="Eliminar"
+                                            data-id="${data.id}">
+                                        <i class="fa fa-fw fa-trash"><!-- --></i>
                                     </button>
                                 </td>
                             </tr>
@@ -155,6 +165,24 @@
                 }
             });
 
+            $('.btn-remove').click(function (e) {
+                e.stopPropagation();
+
+                if (!confirm("Esta operación no puede ser deshecha. Está seguro?")) {
+                    return
+                }
+
+                var id = $(this).data('id');
+
+                $.post("${member}/warehouse/${warehouse.id}/data/remove/" + id)
+                    .done(function () {
+                        window.location.reload()
+                    })
+                    .fail(function (err) {
+                        alert(err.responseText)
+                    })
+            });
+
             saveBtn.click(function () {
                 if (!image) {
                     return
@@ -169,7 +197,7 @@
                 fd.append('h', Math.floor(data.height));
 
                 $.ajax({
-                    url: '/member/warehouse/${warehouse.id}/image',
+                    url: '${member}/warehouse/${warehouse.id}/image',
                     contentType: false,
                     processData: false,
                     type: 'POST',
