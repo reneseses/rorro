@@ -207,7 +207,7 @@ public class Benchmarking {
                 BigDecimal ef = eficiencia.setScale(1, RoundingMode.HALF_UP);
                 rendimiento = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(ef) + " o " + String.valueOf(ef.intValue() * 100) + "%. ";
                 proyeccion = "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.";
-                ranking = "Esta warehouse ocupa el ranking " + ranks[aux] + " junto a " + cont + " bodegas más que trabajan eficientemente";
+                ranking = "Esta bodega ocupa el ranking " + ranks[aux] + " junto a " + cont + " bodegas más que trabajan eficientemente";
             } else if (rendi.doubleValue() < 1 && tester.getSlack(aux, 0) == 0 && tester.getSlack(aux, 1) == 0 && tester.getSlack(aux, 2) == 0) {
                 //INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA
                 System.out.println("Entro en INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA"
@@ -413,7 +413,7 @@ public class Benchmarking {
                 BigDecimal efO = eficienciaO.setScale(1, RoundingMode.HALF_UP);
                 rendimientoO = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(efO) + " o " + String.valueOf(efO.intValue() * 100) + "%. ";
                 proyeccionO = "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.";
-                rankingO = "Esta warehouse ocupa el ranking " + ranksO[aux] + " junto a " + cont + " bodegas más que trabajan eficientemente";
+                rankingO = "Esta bodega ocupa el ranking " + ranksO[aux] + " junto a " + cont + " bodegas más que trabajan eficientemente";
 
                 System.out.println(Arrays.toString(ranksO));
                 System.out.println(aux);
