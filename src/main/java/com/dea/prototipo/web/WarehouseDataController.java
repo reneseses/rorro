@@ -8,17 +8,18 @@ import com.dea.prototipo.domain.Warehouse;
 import com.dea.prototipo.domain.WarehouseData;
 
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
@@ -55,7 +56,19 @@ public class WarehouseDataController {
         return "redirect:/member/warehouse/" + warehouseId;
     }
 
-    //-Djava.library.path=D:\Documentos\git\rorro\OSDEASolver-v0.287\
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody ResponseEntity<String> list(@PathVariable Long warehouseId, Model uiModel) {
+        Warehouse warehouse = Warehouse.findWarehouse(warehouseId);
+        List<WarehouseData> warehouseData = WarehouseData.findWarehouseDataByWarehouse(warehouse);
+
+        JSONArray response = new JSONArray();
+        for(WarehouseData current: warehouseData) {
+            response.add(current.toString());
+        }
+
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
     @RequestMapping(params = "form", produces = "text/html")
     public String createForm(@PathVariable("warehouseId") Long warehouseId, Model uiModel) {
         populateEditForm(uiModel, new WarehouseData());

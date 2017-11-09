@@ -287,7 +287,7 @@ public class WarehouseData {
 
     public String toString() {
         JSONSerializer serializer = new JSONSerializer();
-        serializer.exclude("entityManager");
+        serializer.exclude("entityManager", "warehouse", "vehicles", "storage", "conveyor", "output");
         return serializer.serialize(this);
     }
 }

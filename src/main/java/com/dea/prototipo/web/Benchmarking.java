@@ -37,7 +37,7 @@ public class Benchmarking {
 
     @RequestMapping(value = "/solver", produces = "text/json")
     public @ResponseBody
-    ResponseEntity<String> solver(@RequestParam(value = "warehouse") Long bodegaId) {
+    ResponseEntity<String> solver(@RequestParam(value = "warehouse") Long bodegaId, @RequestParam String period) {
         System.out.println("bodegaId es " + bodegaId);
         int aux = 0;
         int cont = 0;

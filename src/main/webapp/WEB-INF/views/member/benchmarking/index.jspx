@@ -8,19 +8,36 @@
             Benchmark
         </div>
         <div class="panel-body">
-            <form class="form-group">
-                <label for="warehouse">
-                    Seleccione una Bodega
-                </label>
-                <div class="input-group">
-                    <select id="warehouse" class="form-control">
-                        <c:forEach items="${warehouses}" var="warehouse">
-                            <option value="${warehouse.id }">${warehouse.name }</option>
-                        </c:forEach>
-                    </select>
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" id="genBenchmark" type="button">Generar</button>
-                    </span>
+            <form class="row">
+                <div class="col-xs-12 col-md-5">
+                    <div class="form-group">
+                        <label for="warehouse-select">
+                            Seleccione una Bodega
+                        </label>
+                        <select id="warehouse-select" class="form-control">
+                            <option><!-- --></option>
+                            <c:forEach items="${warehouses}" var="warehouse">
+                                <option value="${warehouse.id }">${warehouse.name }</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-5">
+                    <div class="form-group">
+                        <label for="period-select">
+                            Seleccione un periodo
+                        </label>
+                        <select id="period-select" class="form-control" disabled="disabled">
+                            <option><!-- --></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-2">
+                    <button class="btn btn-primary btn-block" style="margin-top: 24px" id="genBenchmark"
+                            type="button">Generar
+                    </button>
                 </div>
             </form>
             <HR/>
@@ -57,66 +74,106 @@
     </div>
 
     <spring:url value="/member/benchmarking/solver" var="bench_url"/>
+    <spring:url value="/member" var="member"/>
     <script type="text/javascript">
         <![CDATA[
         $(function () {
-            $("#genBenchmark").click(function () {
-                var result = $("#benchmark-result");
-                var error = $("#benchmark-error");
-                $
-                    .ajax({
-                        url: "${bench_url}",
-                        type: "GET",
-                        data: {warehouse: $("#warehouse").val()}
-                    })
-                    .done(function (data) {
-                        var $rendimiento = $("<li/>");
-                        var $ranking = $("<li/>");
-                        var $rendimientoO = $("<li/>");
-                        var $rankingO = $("<li />");
-                        $rendimiento.text(data.rendimiento);
-                        $ranking.text(data.ranking);
-                        $rendimientoO.text(data.rendimientoO);
-                        $rankingO.text(data.rankingO);
+            var periodSelect = $("#period-select");
+            $("#warehouse-select")
+                .change(function () {
+                    var id = $(this).val();
+                    periodSelect
+                        .prop('disabled', true)
+                        .empty()
+                        .val(null);
+                    if (isNaN(parseInt(id))) {
+                        return
+                    }
 
-                        console.log(data);
-                        $("#benchmark ol").empty()
-                            .append($rendimiento)
-                            .append($ranking);
-                        $("#benchmark2 ol").empty()
-                            .append($rendimientoO)
-                            .append($rankingO);
-                        $("#benchmark #proyeccion")
-                            .empty()
-                            .text(data.proyeccion);
-
-                        $("#benchmark2 #proyeccionO")
-                            .empty()
-                            .text(data.proyeccionO);
-
-                        if (data.errors && data.errors.length) {
-                            var ul = $(".benchmark-error")
-                                .removeClass("hidden")
-                                .find("ul");
-
-                            for (var i = 0; i < data.errors.length; i++) {
-                                ul.append('<li>' + data.errors[i] + '</li>')
+                    $.get("${member}/warehouse/" + id + "/data")
+                        .done(function (data) {
+                            periodSelect
+                                .prop('disabled', false)
+                                .append("<option/>");
+                            for (var i = 0; i < data.length; i++) {
+                                periodSelect.append("<option>" + data[i].period + "</option>")
                             }
-                        } else {
-                            $(".benchmark-error").addClass("hidden")
-                        }
+                        })
+                        .fail(function (err) {
+                            console.log(err.responseText)
+                        })
+                });
+            $("#genBenchmark")
+                .click(function () {
+                    var warehouseId = $("#warehouse-select").val();
+                    var period = periodSelect.val();
 
-                        result.removeClass('hidden');
-                        error.addClass('hidden');
-                    })
-                    .fail(function (err) {
-                        result.addClass('hidden');
-                        error
-                            .removeClass('hidden')
-                            .empty()
-                            .text(err.responseText);
-                    })
-            });
+                    if (isNaN(parseInt(warehouseId))) {
+                        alert("Seleccione una bodega");
+                        return
+                    }
+
+                    if (!period) {
+                        alert("Seleccione una periodo");
+                        return
+                    }
+
+                    var result = $("#benchmark-result");
+                    var error = $("#benchmark-error");
+                    $
+                        .ajax({
+                            url: "${bench_url}",
+                            type: "GET",
+                            data: {warehouse: warehouseId, period: period}
+                        })
+                        .done(function (data) {
+                            var $rendimiento = $("<li/>");
+                            var $ranking = $("<li/>");
+                            var $rendimientoO = $("<li/>");
+                            var $rankingO = $("<li />");
+                            $rendimiento.text(data.rendimiento);
+                            $ranking.text(data.ranking);
+                            $rendimientoO.text(data.rendimientoO);
+                            $rankingO.text(data.rankingO);
+
+                            console.log(data);
+                            $("#benchmark ol").empty()
+                                .append($rendimiento)
+                                .append($ranking);
+                            $("#benchmark2 ol").empty()
+                                .append($rendimientoO)
+                                .append($rankingO);
+                            $("#benchmark #proyeccion")
+                                .empty()
+                                .text(data.proyeccion);
+
+                            $("#benchmark2 #proyeccionO")
+                                .empty()
+                                .text(data.proyeccionO);
+
+                            if (data.errors && data.errors.length) {
+                                var ul = $(".benchmark-error")
+                                    .removeClass("hidden")
+                                    .find("ul");
+
+                                for (var i = 0; i < data.errors.length; i++) {
+                                    ul.append('<li>' + data.errors[i] + '</li>')
+                                }
+                            } else {
+                                $(".benchmark-error").addClass("hidden")
+                            }
+
+                            result.removeClass('hidden');
+                            error.addClass('hidden');
+                        })
+                        .fail(function (err) {
+                            result.addClass('hidden');
+                            error
+                                .removeClass('hidden')
+                                .empty()
+                                .text(err.responseText);
+                        })
+                });
         });
         ]]>
     </script>
