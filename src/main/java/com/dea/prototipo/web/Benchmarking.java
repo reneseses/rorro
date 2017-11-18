@@ -5,8 +5,12 @@ import com.dea.prototipo.domain.WarehouseData;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.opensourcedea.dea.*;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -91,7 +95,7 @@ public class Benchmarking {
 
             testDMUNames[i] = current.getWarehouse().getName();
 
-            if(current.getOutputStorage() == null) {
+            if (current.getOutputStorage() == null) {
                 errors.add("No se pudo comparar con" + current.getWarehouse().getName() + "-" + current.getPeriod() + ": brokenCaseLines + fullCaseLines + palletLines debe ser distinto de 0");
                 break;
             }
@@ -183,7 +187,7 @@ public class Benchmarking {
             }
             for (int k = 0; k < largo; k++) {
                 if (ranks[k] <= ranks[aux]) {
-                        cont++;
+                    cont++;
                 }
                 for (int i = 0; i < largo; i++) {
                     if (ranks[i] == k) {
@@ -299,9 +303,9 @@ public class Benchmarking {
                     System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacks[aux][j]);
 
                 }
-				    				
+
 			    				/*for (int k = 0; k < largo; k++) {
-				    		    System.out.println(testDMUNames[k] + ": " );
+                                System.out.println(testDMUNames[k] + ": " );
 		    						for(int j=0;j<8;j++){
 		    						System.out.println(testDataMatrix[k][j]);
 		    						}
@@ -314,7 +318,7 @@ public class Benchmarking {
                     System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectives[i]);
 
                 }
-				    				/*System.out.println();
+                                    /*System.out.println();
 				    				System.out.println("DMUs projections porcentaje");
 				    				System.out.println();
 				    				for (int i = 0; i < largo; i++) {
@@ -682,6 +686,112 @@ public class Benchmarking {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @RequestMapping(value = "/test", produces = "text/json")
+    public @ResponseBody
+    ResponseEntity<String> test() {
+        JSONObject jsonObject = new JSONObject();
+
+        String[] testVariableNames = new String[8];
+        VariableOrientation[] testVariableOrientations = new VariableOrientation[8];
+        VariableType[] testVariableTypes = new VariableType[8];
+        testVariableOrientations[0] = VariableOrientation.INPUT;
+        testVariableOrientations[1] = VariableOrientation.INPUT;
+        testVariableOrientations[2] = VariableOrientation.INPUT;
+
+        testVariableOrientations[3] = VariableOrientation.OUTPUT;
+        testVariableOrientations[4] = VariableOrientation.OUTPUT;
+        testVariableOrientations[5] = VariableOrientation.OUTPUT;
+        testVariableOrientations[6] = VariableOrientation.OUTPUT;
+        testVariableOrientations[7] = VariableOrientation.OUTPUT;
+
+        testVariableNames[0] = "Superficie";
+        testVariableNames[1] = "Inversión";
+        testVariableNames[2] = "Horas de Trabajo";
+        testVariableNames[3] = "Broken Case Lines";
+        testVariableNames[4] = "Full Case Lines";
+        testVariableNames[5] = "Pallet Case Lines";
+        testVariableNames[6] = "Acumulación";
+        testVariableNames[7] = "Almacenamiento";
+
+        for (int i = 0; i < 8; i++) {
+            testVariableTypes[i] = VariableType.STANDARD;
+        }
+
+        try {
+            File f = new File("D:\\Documentos\\git\\rorro\\data.txt");
+            List<String> lines = FileUtils.readLines(f, "UTF-8");
+            int len = lines.size();
+            String[] testDMUNames = new String[len];
+
+            //Create a DEAProblem and specify number of DMUs (cantidad de bodegas en el sistema) and number of variables (8).
+            DEAProblem tester = new DEAProblem(len, 8);
+            DEAProblem testerO = new DEAProblem(len, 8);
+
+            //Set the DEA Problem Model Type (BCC Input Oriented y Output Oriented).
+            tester.setModelType(ModelType.BCC_I);
+            testerO.setModelType(ModelType.BCC_O);
+
+            //Set the DEA Problem DMU Names where testDMUName is a double[].
+            tester.setDMUNames(testDMUNames);
+            testerO.setDMUNames(testDMUNames);
+
+            //Set the DEA Problem Variable Names where testVariableName is a String[].
+            tester.setVariableNames(testVariableNames);
+            testerO.setVariableNames(testVariableNames);
+
+            //Set the DEA Problem Variable Orientation where testVariableOrientation is a VariableOrientation[].
+            tester.setVariableOrientations(testVariableOrientations);
+            testerO.setVariableOrientations(testVariableOrientations);
+
+            //Set the DEA Problem Variable Types where testVariableTypes is a VariableType[].
+            tester.setVariableTypes(testVariableTypes);
+            testerO.setVariableTypes(testVariableTypes);
+
+            double[][] testDataMatrix= new double[len][8];
+
+            int i = 0;
+            for (String line : lines) {
+                line = line.replaceAll(" ", "");
+                testDMUNames[i] = "Bodega " + i;
+                String[] split = line.split("\t");
+
+                System.out.println(StringUtils.join(split, ","));
+
+
+                testDataMatrix[i][0] = Double.parseDouble(split[7]) * 0.3048;
+                testDataMatrix[i][1] = Double.parseDouble(split[1]);
+                testDataMatrix[i][2] = Double.parseDouble(split[0]);
+                testDataMatrix[i][3] = Double.parseDouble(split[2]);
+                testDataMatrix[i][4] = Double.parseDouble(split[3]);
+                testDataMatrix[i][5] = Double.parseDouble(split[4]);
+                testDataMatrix[i][6] = Double.parseDouble(split[6]);
+                testDataMatrix[i][7] = Double.parseDouble(split[5]);
+
+                i++;
+                if(i >= len) {
+                    break;
+                }
+
+                System.out.println(StringUtils.join(split, ","));
+            }
+
+            tester.setDataMatrix(testDataMatrix);
+            testerO.setDataMatrix(testDataMatrix);
+            tester.solve();
+            testerO.solve();
+            double[] results = tester.getObjectives();
+            for(i = 0; i < results.length; i++) {
+                jsonObject.put("Bodega " + i, results[i]);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonObject.put("error", e.getMessage());
+        }
+
+        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
     }
 }
 	
