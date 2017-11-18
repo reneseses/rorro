@@ -310,7 +310,7 @@ td.thumbnail {
         line-height: 40px;
     }
 
-    #rootwizard .form-group label {
+    #rootwizard .form-group label:not(.help-block) {
         font-size: 12px;
         margin-bottom: 0;
         position: relative;
@@ -341,6 +341,14 @@ td.thumbnail {
         margin-left: 153px;
         min-height: 138px;
     }
+}
+
+input + .help-block {
+    position: absolute;
+    height: auto;
+    margin: auto;
+    font-weight: normal;
+    font-size: 12px;
 }
 
 @media (max-width: 767px) {

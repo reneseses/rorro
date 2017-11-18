@@ -33,9 +33,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="period" class="col-md-4"><span>Periodo</span></label>
+                <label for="period" class="col-md-4">Periodo <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                    <input id="period" name="period" class="form-control" value="${warehouseData.period}"/>
+                    <input id="period" name="period" class="form-control" value="${warehouseData.period}" required="true"/>
                 </div>
             </div>
         </div>
@@ -55,11 +55,11 @@
                 <div class="tab-pane" id="tab1">
                     <div class="form-group">
                         <label for="squareMeters" class="col-md-4">
-                            <span>Area Total <small>(m <sup>2</sup>)</small></span>
+                            Area Total <small>(m <sup>2</sup>)</small> <span>*</span>
                         </label>
                         <div class="col-md-8">
                             <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="0"
-                                   value="${warehouseData.squareMeters}"/>
+                                   value="${warehouseData.squareMeters}" required="true"/>
                         </div>
                     </div>
                     <h4>Mano de Obra</h4>
@@ -523,18 +523,38 @@
                 </div>
             </div>
             <ul class="pager wizard">
-                <li class="previous"><a href="javascript:;">Previous</a></li>
-                <li class="next"><a href="javascript:;">Next</a></li>
-                <li class="finish hidden pull-right active"><a href="javascript:;">Finish</a></li>
+                <li class="previous"><a href="javascript:;">Anterior</a></li>
+                <li class="next"><a href="javascript:;">Siguiente</a></li>
+                <li class="finish hidden pull-right active"><a href="javascript:;">Terminar</a></li>
             </ul>
         </div>
     </form>
 
     <script type="text/javascript">
-        var inputWeight = { <c:forEach items = "${inputWeight}" var="input" > "${input.name()}": ${input.getWeight()},</c:forEach>};
 
+        var inputWeight = { <c:forEach items = "${inputWeight}" var="input" > "${input.name()}": ${input.getWeight()},</c:forEach>};
+        <![CDATA[
         $(function () {
             var rootWizard = $('#rootwizard');
+            var form = $("#warehouseData")
+
+            form.find('input[type=number]').focus(function () {
+                var _this = $(this);
+                var val= _this.val();
+                var required= _this.prop('required');
+                if(parseInt(val) === 0 && !required) {
+                    $(this).val('')
+                }
+            });
+
+            form.find('input[type=number]').blur(function () {
+                var _this = $(this);
+                var val= _this.val();
+                var required= _this.prop('required');
+                if(!val && !required) {
+                    $(this).val(0)
+                }
+            });
 
             $(".input-wight").each(function () {
                 var label = $(this);
@@ -544,11 +564,35 @@
                 label.find('span').text(inputWeight[prop].toLocaleString())
             });
 
-            rootWizard.bootstrapWizard({
+            form.validate({
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
 
-                onTabShow: function (tab, navigation, index) {
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parent().addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parent().addClass( "has-success" ).removeClass( "has-error" );
+                }
+            });
+
+            rootWizard.bootstrapWizard({
+                onTabChange: function (tab, navigation, prev, index) {
                     if (index === 2) {
-                        makeSummary()
+                        makeSummary();
+                        return true
+                    }
+
+                    if(index === 0) {
+
                     }
 
                     var total = navigation.find('li').length;
@@ -560,11 +604,13 @@
                         rootWizard.find('.finish').addClass('hidden');
                         rootWizard.find('.next').removeClass('hidden');
                     }
+
+                    return form.valid()
                 }
             });
 
             rootWizard.find('.finish').click(function () {
-                $("#warehouseData").submit()
+                form.submit()
             });
 
             $('#period').datepicker({
@@ -634,6 +680,7 @@
                 $("#accumulation-row").text(accumulation.toLocaleString())
             }
         })
+            ]]>
     </script>
 
 </div>

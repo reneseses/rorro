@@ -183,7 +183,7 @@ public class Benchmarking {
             }
             for (int k = 0; k < largo; k++) {
                 if (ranks[k] <= ranks[aux]) {
-                    cont++;
+                        cont++;
                 }
                 for (int i = 0; i < largo; i++) {
                     if (ranks[i] == k) {
