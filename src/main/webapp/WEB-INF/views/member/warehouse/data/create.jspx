@@ -35,7 +35,8 @@
             <div class="form-group">
                 <label for="period" class="col-md-4">Periodo <span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                    <input id="period" name="period" class="form-control" value="${warehouseData.period}" required="true"/>
+                    <input id="period" name="period" class="form-control" value="${warehouseData.period}"
+                           required="true"/>
                 </div>
             </div>
         </div>
@@ -55,7 +56,9 @@
                 <div class="tab-pane" id="tab1">
                     <div class="form-group">
                         <label for="squareMeters" class="col-md-4">
-                            Area Total <small>(m <sup>2</sup>)</small> <span>*</span>
+                            Area Total
+                            <small>(m <sup>2</sup>)</small>
+                            <span>*</span>
                         </label>
                         <div class="col-md-8">
                             <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="0"
@@ -529,29 +532,29 @@
             </ul>
         </div>
     </form>
-
     <script type="text/javascript">
-
         var inputWeight = { <c:forEach items = "${inputWeight}" var="input" > "${input.name()}": ${input.getWeight()},</c:forEach>};
+    </script>
+    <script type="text/javascript">
         <![CDATA[
         $(function () {
             var rootWizard = $('#rootwizard');
-            var form = $("#warehouseData")
+            var form = $("#warehouseData");
 
             form.find('input[type=number]').focus(function () {
                 var _this = $(this);
-                var val= _this.val();
-                var required= _this.prop('required');
-                if(parseInt(val) === 0 && !required) {
+                var val = _this.val();
+                var required = _this.prop('required');
+                if (parseInt(val) === 0 && !required) {
                     $(this).val('')
                 }
             });
 
             form.find('input[type=number]').blur(function () {
                 var _this = $(this);
-                var val= _this.val();
-                var required= _this.prop('required');
-                if(!val && !required) {
+                var val = _this.val();
+                var required = _this.prop('required');
+                if (!val && !required) {
                     $(this).val(0)
                 }
             });
@@ -566,21 +569,21 @@
 
             form.validate({
                 errorElement: "em",
-                errorPlacement: function ( error, element ) {
+                errorPlacement: function (error, element) {
                     // Add the `help-block` class to the error element
-                    error.addClass( "help-block" );
+                    error.addClass("help-block");
 
-                    if ( element.prop( "type" ) === "checkbox" ) {
-                        error.insertAfter( element.parent( "label" ) );
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
                     } else {
-                        error.insertAfter( element );
+                        error.insertAfter(element);
                     }
                 },
-                highlight: function ( element, errorClass, validClass ) {
-                    $( element ).parent().addClass( "has-error" ).removeClass( "has-success" );
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parent().addClass("has-error").removeClass("has-success");
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    $( element ).parent().addClass( "has-success" ).removeClass( "has-error" );
+                    $(element).parent().addClass("has-success").removeClass("has-error");
                 }
             });
 
@@ -589,10 +592,6 @@
                     if (index === 2) {
                         makeSummary();
                         return true
-                    }
-
-                    if(index === 0) {
-
                     }
 
                     var total = navigation.find('li').length;
@@ -680,7 +679,7 @@
                 $("#accumulation-row").text(accumulation.toLocaleString())
             }
         })
-            ]]>
+        ]]>
     </script>
 
 </div>
