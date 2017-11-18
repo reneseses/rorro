@@ -538,6 +538,7 @@
     <script type="text/javascript">
         <![CDATA[
         $(function () {
+            var firstRender = true;
             var rootWizard = $('#rootwizard');
             var form = $("#warehouseData");
 
@@ -602,6 +603,11 @@
                     } else {
                         rootWizard.find('.finish').addClass('hidden');
                         rootWizard.find('.next').removeClass('hidden');
+                    }
+
+                    if(firstRender) {
+                        firstRender= false;
+                        return true;
                     }
 
                     return form.valid()
