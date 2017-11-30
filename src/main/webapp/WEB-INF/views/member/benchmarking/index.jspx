@@ -131,10 +131,10 @@
                             var $ranking = $("<li/>");
                             var $rendimientoO = $("<li/>");
                             var $rankingO = $("<li />");
-                            $rendimiento.text(data.rendimiento);
-                            $ranking.text(data.ranking);
-                            $rendimientoO.text(data.rendimientoO);
-                            $rankingO.text(data.rankingO);
+                            $rendimiento.text(data.input.performance);
+                            $ranking.text(data.input.ranking);
+                            $rendimientoO.text(data.output.performance);
+                            $rankingO.text(data.output.ranking);
 
                             console.log(data);
                             $("#benchmark ol").empty()
@@ -145,11 +145,11 @@
                                 .append($rankingO);
                             $("#benchmark #proyeccion")
                                 .empty()
-                                .text(data.proyeccion);
+                                .text(data.input.projection);
 
                             $("#benchmark2 #proyeccionO")
                                 .empty()
-                                .text(data.proyeccionO);
+                                .text(data.output.projection);
 
                             if (data.errors && data.errors.length) {
                                 var ul = $(".benchmark-error")

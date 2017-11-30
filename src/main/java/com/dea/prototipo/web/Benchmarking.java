@@ -1,7 +1,6 @@
 package com.dea.prototipo.web;
 
-import com.dea.prototipo.domain.User;
-import com.dea.prototipo.domain.WarehouseData;
+import com.dea.prototipo.domain.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dea.prototipo.domain.Warehouse;
+import javax.persistence.Basic;
 
 @RequestMapping("/member/benchmarking")
 @Controller
@@ -41,64 +40,93 @@ public class Benchmarking {
 
     @RequestMapping(value = "/solver", produces = "text/json")
     public @ResponseBody
-    ResponseEntity<String> solver(@RequestParam(value = "warehouse") Long bodegaId, @RequestParam String period) {
+    ResponseEntity<String> solver(@RequestParam(value = "warehouse") Long bodegaId, @RequestParam String period, @RequestParam(defaultValue = "default") String mode) {
         System.out.println("bodegaId es " + bodegaId);
-        int aux = 0;
-        int cont = 0;
-        String rendimiento = "";
-        String ranking = "";
-        String sup = "";
-        String inv = "";
-        String hr = "";
-        String broken = "";
-        String full = "";
-        String pallet = "";
-        String acumu = "";
-        String almac = "";
-        String bod = "";
-        String proyeccion = "";
-        String rendimientoO = "";
-        String proyeccionO = "";
-        String rankingO = "";
+
         JSONArray errors = new JSONArray();
-
         Warehouse warehouse = Warehouse.findWarehouse(bodegaId);
-        int id = warehouse.getId().intValue();
-        bod = warehouse.getName();
-        String[] testDMUNames;
-        String[] testVariableNames = new String[8];
-        VariableOrientation[] testVariableOrientations = new VariableOrientation[8];
-        VariableType[] testVariableTypes = new VariableType[8];
-        double[][] testDataMatrix;
-        List<WarehouseData> warehouseData = WarehouseData.findAllWarehouseData(); //SE DEBE BUSCAR LOS ÚLTIMOS DATOS REGISTRADOS PARA CADA BODEGA EN EL SISTEMA
-        int largo = warehouseData.size();
-        testDMUNames = new String[largo];
-        testDataMatrix = new double[largo][8];
+        List<WarehouseData> warehouseData;
+        switch (mode) {
+            case "default":
+                warehouseData = WarehouseData.findWarehouseDataByPeriod(period);
+                break;
+            case "self":
+                warehouseData = WarehouseData.findWarehouseDataByWarehouse(warehouse);
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        System.out.println("warehouse.getId() es" + id);
-        System.out.println("nombre warehouse con warehouse.getNombre()" + bod);
-        System.out.println(largo);
+        int len = warehouseData.size();
+        int varLen = 8;
 
-        //Set up the Variable Names
-        testVariableNames[0] = "Superficie";
-        testVariableNames[1] = "Inversión";
-        testVariableNames[2] = "Horas de Trabajo";
-        testVariableNames[3] = "Broken Case Lines";
-        testVariableNames[4] = "Full Case Lines";
-        testVariableNames[5] = "Pallet Case Lines";
-        testVariableNames[6] = "Acumulación";
-        testVariableNames[7] = "Almacenamiento";
+        System.out.println("warehouse.getId() es" + warehouse.getId());
+        System.out.println("nombre warehouse con warehouse.getNombre()" + warehouse.getName());
+        System.out.println("modo: " + mode);
+        System.out.print("Elementos a comparar " + len);
+
+        String[] DMUNames = new String[len];
+
+        String[] varNames = new String[varLen];
+        VariableType[] varTypes = new VariableType[varLen];
+        VariableOrientation[] varOrientations = new VariableOrientation[varLen];
+
+        varNames[0] = "Superficie";
+        varTypes[0] = VariableType.STANDARD;
+        varOrientations[0] = VariableOrientation.INPUT;
+
+        varNames[1] = "Inversión";
+        varTypes[1] = VariableType.STANDARD;
+        varOrientations[1] = VariableOrientation.INPUT;
+
+        varNames[2] = "Horas de Trabajo";
+        varTypes[2] = VariableType.STANDARD;
+        varOrientations[2] = VariableOrientation.INPUT;
+
+        varNames[3] = "Broken Case Lines";
+        varTypes[3] = VariableType.STANDARD;
+        varOrientations[3] = VariableOrientation.OUTPUT;
+
+        varNames[4] = "Full Case Lines";
+        varTypes[4] = VariableType.STANDARD;
+        varOrientations[4] = VariableOrientation.OUTPUT;
+
+        varNames[5] = "Pallet Case Lines";
+        varTypes[5] = VariableType.STANDARD;
+        varOrientations[5] = VariableOrientation.OUTPUT;
+
+        varNames[6] = "Acumulación";
+        varTypes[6] = VariableType.STANDARD;
+        varOrientations[6] = VariableOrientation.OUTPUT;
+
+        varNames[7] = "Almacenamiento";
+        varTypes[7] = VariableType.STANDARD;
+        varOrientations[7] = VariableOrientation.OUTPUT;
+
+        double[][] testDataMatrix = new double[len][varLen];
 
         //Set up the Data Matrix and  DMU Names
+
+        int indexToTest = -1;
         for (int i = 0; i < warehouseData.size(); i++) {
             WarehouseData current = warehouseData.get(i);
+            Warehouse currentWarehouse = current.getWarehouse();
 
-            testDMUNames[i] = current.getWarehouse().getName();
+            if (current.getPeriod().equals(period) && currentWarehouse.getId().equals(warehouse.getId())) {
+                indexToTest = i;
+            }
 
             if (current.getOutputStorage() == null) {
                 errors.add("No se pudo comparar con" + current.getWarehouse().getName() + "-" + current.getPeriod() + ": brokenCaseLines + fullCaseLines + palletLines debe ser distinto de 0");
                 break;
             }
+
+            String warehouseName = currentWarehouse.getName();
+            if (mode.equals("self")) {
+                warehouseName = warehouse.getName() + " - " + current.getPeriod();
+            }
+
+            DMUNames[i] = warehouseName;
 
             testDataMatrix[i][0] = current.getSquareMeters();
             testDataMatrix[i][1] = current.getInputTotalInvestment();
@@ -107,585 +135,215 @@ public class Benchmarking {
             testDataMatrix[i][4] = (double) current.getOutput().getFullCaseLines();
             testDataMatrix[i][5] = (double) current.getOutput().getPalletLines();
             testDataMatrix[i][6] = current.getOutputAccumulation();
-            testDataMatrix[i][7] = current.getOutputStorage(); // TODO: es output storage ???
+            testDataMatrix[i][7] = current.getOutputStorage();
         }
-        //Set up the variable types
 
-        testVariableOrientations[0] = VariableOrientation.INPUT;
-        testVariableOrientations[1] = VariableOrientation.INPUT;
-        testVariableOrientations[2] = VariableOrientation.INPUT;
-
-        testVariableOrientations[3] = VariableOrientation.OUTPUT;
-        testVariableOrientations[4] = VariableOrientation.OUTPUT;
-        testVariableOrientations[5] = VariableOrientation.OUTPUT;
-        testVariableOrientations[6] = VariableOrientation.OUTPUT;
-        testVariableOrientations[7] = VariableOrientation.OUTPUT;
-
-        for (int i = 0; i < 7; i++) {
-            testVariableTypes[i] = VariableType.STANDARD;
+        if (indexToTest == -1) {
+            System.out.println("Warehouse Data not Found");
         }
 
         //Create a DEAProblem and specify number of DMUs (cantidad de bodegas en el sistema) and number of variables (8).
-        DEAProblem tester = new DEAProblem(largo, 8);
-        DEAProblem testerO = new DEAProblem(largo, 8);
+        DEAProblem tester = new DEAProblem(len, varLen);
+        DEAProblem testerO = new DEAProblem(len, varLen);
 
         //Set the DEA Problem Model Type (BCC Input Oriented y Output Oriented).
         tester.setModelType(ModelType.BCC_I);
         testerO.setModelType(ModelType.BCC_O);
 
         //Set the DEA Problem DMU Names where testDMUName is a double[].
-        tester.setDMUNames(testDMUNames);
-        testerO.setDMUNames(testDMUNames);
+        tester.setDMUNames(DMUNames);
+        testerO.setDMUNames(DMUNames);
 
         //Set the DEA Problem Variable Names where testVariableName is a String[].
-        tester.setVariableNames(testVariableNames);
-        testerO.setVariableNames(testVariableNames);
+        tester.setVariableNames(varNames);
+        testerO.setVariableNames(varNames);
 
         //Set the DEA Problem Variable Orientation where testVariableOrientation is a VariableOrientation[].
-        tester.setVariableOrientations(testVariableOrientations);
-        testerO.setVariableOrientations(testVariableOrientations);
+        tester.setVariableOrientations(varOrientations);
+        testerO.setVariableOrientations(varOrientations);
 
         //Set the DEA Problem Variable Types where testVariableTypes is a VariableType[].
-        tester.setVariableTypes(testVariableTypes);
-        testerO.setVariableTypes(testVariableTypes);
+        tester.setVariableTypes(varTypes);
+        testerO.setVariableTypes(varTypes);
 
         tester.setDataMatrix(testDataMatrix);
         testerO.setDataMatrix(testDataMatrix);
-
 
         try {
             //Solve the DEA Problem
             tester.solve();
             testerO.solve();
-            //Get the solution Objectives
-            double[] objectives = tester.getObjectives();
-            double[] objectivesO = testerO.getObjectives();
-
-            double[][] pp = tester.getProjectionPercentages();
-            double[][] ppO = testerO.getProjectionPercentages();
-
-            ArrayList<NonZeroLambda>[] referenceSets = new ArrayList[largo];
-            referenceSets = tester.getReferenceSet();
-
-            double[][] slacks = tester.getSlacks();
-            double[][] slacksO = testerO.getSlacks();
-
-            double[][] projections = tester.getProjections();
-
-            double[][] weights = tester.getWeight();
-
-            int[] ranks = tester.getRanks(false, RankingType.STANDARD, 5);
-            int[] ranksO = testerO.getRanks(false, RankingType.STANDARD, 5);
-
-            //Busca la warehouse en el arreglo que se está consultando por el usuario.
-            for (int k = 0; k < largo; k++) {
-                if (testDMUNames[k].equals(warehouse.getName())) {
-                    aux = k;
-                    System.out.println("La warehouse a consultar es " + testDMUNames[k] + " y la posición a consultar será " + aux);
-                }
-
-            }
-            for (int k = 0; k < largo; k++) {
-                if (ranks[k] <= ranks[aux]) {
-                    cont++;
-                }
-                for (int i = 0; i < largo; i++) {
-                    if (ranks[i] == k) {
-                        System.out.println(testDMUNames[i] + ": " + ranks[i]);
-                    }
-                }
-
-            }
-
-            System.out.println(cont + " menores que [" + bod + "] y su ranking es " + ranks[aux]);
-            System.out.println(tester.getEfficiencyStatus(aux));
-            System.out.println("rendmiento de warehouse " + aux + " " + tester.getObjective(aux));
-            System.out.println("Max-slack input 1 " + tester.getSlack(aux, 0));
-            System.out.println("Max-slack input 2 " + tester.getSlack(aux, 1));
-            System.out.println("Max-slack input 3 " + tester.getSlack(aux, 2));
-            BigDecimal rend = new BigDecimal(objectives[aux]);
-            BigDecimal rendi = rend.setScale(1, RoundingMode.HALF_UP);
-            if (tester.getEfficiencyStatus(aux)) {
-                //EN EL CASO QUE LA BODEGA PRESENTE EFICIENCIA COMPLETA
-                BigDecimal eficiencia = new BigDecimal(objectives[aux]);
-                BigDecimal ef = eficiencia.setScale(1, RoundingMode.HALF_UP);
-                rendimiento = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(ef) + " o " + String.valueOf(ef.intValue() * 100) + "%. ";
-                proyeccion = "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.";
-                ranking = "Esta bodega ocupa el ranking " + ranks[aux] + " junto a " + cont + " bodegas más que trabajan eficientemente";
-            } else if (rendi.doubleValue() < 1 && tester.getSlack(aux, 0) == 0 && tester.getSlack(aux, 1) == 0 && tester.getSlack(aux, 2) == 0) {
-                //INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA
-                System.out.println("Entro en INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA"
-                );
-                BigDecimal eficiencia = new BigDecimal(objectives[aux]);
-                BigDecimal ef = eficiencia.setScale(2, RoundingMode.HALF_UP);
-                double efp = objectives[aux] * 100;
-                BigDecimal efiporc = new BigDecimal(efp);
-                BigDecimal epr = efiporc.setScale(0, RoundingMode.HALF_UP);
-                rendimiento = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(ef) + " o " + String.valueOf(epr) + "%. ";
-
-                proyeccion = "Esto indica que [" + bod + "] podría reducir sus ENTRADAS en un " + (100 - epr.doubleValue()) + "% en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS. ";
-                ranking = "De un total de " + largo + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + bod + "] ocupa la posición " + ranks[aux] + ".";
-                System.out.println();
-                System.out.println("DMUs Max-slack Solution");
-                System.out.println();
-                System.out.println();
-                System.out.println("Max-slack Solution " + testDMUNames[aux] + ":");
-                for (int j = 0; j < 8; j++) {
-                    System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacks[aux][j]);
-
-                }
-
-				/*for (int k = 0; k < largo; k++) {
-                    System.out.println(testDMUNames[k] + ": " );
-					for(int j=0;j<8;j++){
-						System.out.println(testDataMatrix[k][j]);
-					}
-				}*/
-
-                System.out.println();
-                System.out.println("DMUs Ratio Efficiency BCC INPUT");
-                System.out.println();
-                for (int i = 0; i < largo; i++) {
-                    System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectives[i]);
-
-                }
-                /*System.out.println();
-                System.out.println("DMUs projections porcentaje");
-				System.out.println();
-				for (int i = 0; i < largo; i++) {
-					System.out.println();
-					System.out.println("projections porcentaje solution " +testDMUNames[i] + ":");
-					for (int j = 0; j < 3; j++) {
-						System.out.println( + pp[i][j]);
-
-					}
-				}*/
-
-            } else if (tester.getObjective(aux) < 1 && tester.getSlack(aux, 0) != 0 || tester.getSlack(aux, 1) != 0 || tester.getSlack(aux, 2) != 0) {
-                //INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.
-                System.out.println("entro en INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.");
-                BigDecimal eficiencia = new BigDecimal(objectives[aux]);
-                BigDecimal ef = eficiencia.setScale(2, RoundingMode.HALF_UP);
-                double efp = objectives[aux] * 100;
-                BigDecimal efiporc = new BigDecimal(efp);
-                BigDecimal epr = efiporc.setScale(0, RoundingMode.HALF_UP);
-                rendimiento = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(ef) + " o " + String.valueOf(epr) + "%. ";
-
-                BigDecimal su = new BigDecimal(pp[aux][0]);
-                BigDecimal sur = su.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal in = new BigDecimal(pp[aux][1]);
-                BigDecimal inr = in.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal hh = new BigDecimal(pp[aux][2]);
-                BigDecimal hhr = hh.setScale(2, RoundingMode.HALF_UP);
-                System.out.println("Valor eficiencia " + rendi.doubleValue());
-                System.out.println("valor redondeado de mejora para superficie " + sur);
-                if (sur.doubleValue() != 0) {
-                    sup = "SUPERFICIE = " + String.valueOf(sur.doubleValue() * -100) + "%";
-                }
-                if
-                        (inr.doubleValue() != 0) {
-                    inv = " INVERSION = " + String.valueOf(inr.doubleValue() * -100) + "%";
-                }
-                if
-                        (hhr.doubleValue() != 0) {
-                    hr = " HORAS-HOMBRE = " + String.valueOf(hhr.doubleValue() * -100) + "%";
-                }
-
-
-                proyeccion = "Esto indica que [" + bod + "] podría reducir la(s) siguiente(s) ENTRADAS en: " + " " + sup + " " + " " + inv + " " + " " + hr + " " + ", en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS.";
-                ranking = "De un total de " + largo + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + bod + "] ocupa la posición " + ranks[aux] + ".";
-                System.out.println();
-                System.out.println("DMUs Max-slack Solution");
-                System.out.println();
-                System.out.println();
-                System.out.println("Max-slack Solution " + testDMUNames[aux] + ":");
-                for (int j = 0; j < 8; j++) {
-                    System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacks[aux][j]);
-
-                }
-
-			    				/*for (int k = 0; k < largo; k++) {
-                                System.out.println(testDMUNames[k] + ": " );
-		    						for(int j=0;j<8;j++){
-		    						System.out.println(testDataMatrix[k][j]);
-		    						}
-		    					}*/
-
-                System.out.println();
-                System.out.println("DMUs Ratio Efficiency BCC INPUT");
-                System.out.println();
-                for (int i = 0; i < largo; i++) {
-                    System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectives[i]);
-
-                }
-                                    /*System.out.println();
-				    				System.out.println("DMUs projections porcentaje");
-				    				System.out.println();
-				    				for (int i = 0; i < largo; i++) {
-			    					System.out.println();
-			    					System.out.println("projections porcentaje solution " +testDMUNames[i] + ":");
-				    					for (int j = 0; j < 3; j++) {
-				    						System.out.println( + pp[i][j]);
-
-				    					}
-				    				}*/
-
-            } else {
-                System.out.println("Ninguna de las anteriores");
-                BigDecimal eficiencia = new BigDecimal(objectives[aux]);
-                BigDecimal ef = eficiencia.setScale(2, RoundingMode.HALF_UP);
-                double efp = objectives[aux] * 100;
-                BigDecimal efiporc = new BigDecimal(efp);
-                BigDecimal epr = efiporc.setScale(0, RoundingMode.HALF_UP);
-                rendimiento = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(ef) + " o " + String.valueOf(epr) + "%. ";
-
-                BigDecimal su = new BigDecimal(pp[aux][0]);
-                BigDecimal sur = su.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal in = new BigDecimal(pp[aux][1]);
-                BigDecimal inr = in.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal hh = new BigDecimal(pp[aux][2]);
-                BigDecimal hhr = hh.setScale(2, RoundingMode.HALF_UP);
-                System.out.println("valor redondeado de mejora para superficie" + sur);
-                if (sur.doubleValue() != 0) {
-                    sup = "SUPERFICIE = " + String.valueOf(sur.doubleValue() * -100) + "%";
-                }
-                if
-                        (inr.doubleValue() != 0) {
-                    inv = " INVERSION = " + String.valueOf(inr.doubleValue() * -100) + "%";
-                }
-                if
-                        (hhr.doubleValue() != 0) {
-                    hr = " HORAS-HOMBRE = " + String.valueOf(hhr.doubleValue() * -100) + "%";
-                }
-
-
-                proyeccion = "Si bien presenta eficiencia esta no es completa, puesto que al menos una(s) de su(s) ENTRADA(s) no está(n) siendo aprovechada(s) de modo que [" + bod + "] podría reducir la(s) siguiente(s) ENTRADA(S) en: " + " " + sup + " " + " " + inv + " " + " " + hr + " " + ", en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS.";
-                ranking = "De un total de " + largo + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + bod + "] ocupa la posición " + ranks[aux] + ".";
-                System.out.println();
-                System.out.println("DMUs Max-slack Solution");
-                System.out.println();
-                System.out.println();
-                System.out.println("Max-slack Solution " + testDMUNames[aux] + ":");
-                for (int j = 0; j < 8; j++) {
-                    System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacks[aux][j]);
-
-                }
-				    				
-			    				/*for (int k = 0; k < largo; k++) {
-				    		    System.out.println(testDMUNames[k] + ": " );
-		    						for(int j=0;j<8;j++){
-		    						System.out.println(testDataMatrix[k][j]);
-		    						}
-		    					}*/
-
-                System.out.println();
-                System.out.println("DMUs Ratio Efficiency BCC INPUT");
-                System.out.println();
-                for (int i = 0; i < largo; i++) {
-                    System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectives[i]);
-
-                }
-            }
-            //SOLVER PARA ORIENTACION OUTPUT
-            cont = 0;
-            for (int k = 0; k < largo; k++) {
-                if (ranksO[k] <= ranksO[aux]) {
-                    cont++;
-                }
-                for (int i = 0; i < largo; i++) {
-                    if (ranksO[i] == k) {
-                        System.out.println(testDMUNames[i] + ": " + ranksO[i]);
-                    }
-                }
-
-            }
-
-            System.out.println(cont + "menores que [" + bod + "] y su ranking es " + ranksO[aux]);
-            System.out.println(testerO.getEfficiencyStatus(aux));
-            System.out.println("rendmiento de warehouse BCC-O" + aux + " " + testerO.getObjective(aux));
-            System.out.println("Max-slack output 4 " + testerO.getSlack(aux, 3));
-            System.out.println("Max-slack output 5 " + testerO.getSlack(aux, 4));
-            System.out.println("Max-slack output 6 " + testerO.getSlack(aux, 5));
-            System.out.println("Max-slack output 7 " + testerO.getSlack(aux, 6));
-            System.out.println("Max-slack output 8 " + testerO.getSlack(aux, 7));
-
-            BigDecimal rendO = new BigDecimal(objectivesO[aux]);
-            BigDecimal rendiO = rendO.setScale(1, RoundingMode.HALF_UP);
-            if (testerO.getEfficiencyStatus(aux)) {
-                //EN EL CASO QUE LA BODEGA PRESENTE EFICIENCIA COMPLETA
-                BigDecimal eficienciaO = new BigDecimal(objectivesO[aux]);
-                BigDecimal efO = eficienciaO.setScale(1, RoundingMode.HALF_UP);
-                rendimientoO = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(efO) + " o " + String.valueOf(efO.intValue() * 100) + "%. ";
-                proyeccionO = "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.";
-                rankingO = "Esta bodega ocupa el ranking " + ranksO[aux] + " junto a " + cont + " bodegas más que trabajan eficientemente";
-
-                System.out.println(Arrays.toString(ranksO));
-                System.out.println(aux);
-            } else if (rendiO.doubleValue() < 1 && testerO.getSlack(aux, 3) == 0 && testerO.getSlack(aux, 4) == 0 && testerO.getSlack(aux, 5) == 0 && testerO.getSlack(aux, 6) == 0 && testerO.getSlack(aux, 7) == 0) {
-                //INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE AUMENTAR DE MANERA RADIAL SUS SALIDAS PARA ALCANZAR EFICIENCIA
-                double efo = 1 / objectivesO[aux];
-                BigDecimal eficienciaO = new BigDecimal(efo);
-                BigDecimal efO = eficienciaO.setScale(2, RoundingMode.HALF_UP);
-                double efpO = (1 / objectivesO[aux]) * 100;
-                BigDecimal efiporcO = new BigDecimal(efpO);
-                BigDecimal eprO = efiporcO.setScale(0, RoundingMode.HALF_UP);
-                rendimientoO = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(efO) + " o " + String.valueOf(eprO) + "%. ";
-                proyeccionO = "Esto indica que [" + bod + "] podría aumentar sus SALIDAS en un " + eprO.doubleValue() + "% en relación a sus valores actuales mientras no se ocupen más recursos de ENTRADAS.";
-                rankingO = "De un total de " + largo + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + bod + "] ocupa la posición " + ranksO[aux] + ".";
-
-                System.out.println();
-                System.out.println("DMUs Max-slack Solution BCC-O");
-                System.out.println();
-                System.out.println();
-                System.out.println("Max-slack Solution " + testDMUNames[aux] + ":");
-                for (int j = 0; j < 8; j++) {
-                    System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacksO[aux][j]);
-
-                }
-
-				/*for (int k = 0; k < largo; k++) {
-					System.out.println(testDMUNames[k] + ": " );
-					for(int j=0;j<8;j++){
-						System.out.println(testDataMatrix[k][j]);
-					}
-				}*/
-
-                System.out.println();
-                System.out.println("DMUs Ratio Efficiency BCC OUTPUT");
-                System.out.println();
-                for (int i = 0; i < largo; i++) {
-                    System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectivesO[i]);
-
-                }
-				/*System.out.println();
-				System.out.println("DMUs projections porcentaje");
-				System.out.println();
-				for (int i = 0; i < largo; i++) {
-					System.out.println();
-					System.out.println("projections porcentaje solution " +testDMUNames[i] + ":");
-					for (int j = 0; j < 3; j++) {
-						System.out.println( + ppO[i][j]);
-
-					}
-				}*/
-
-            } else if (tester.getObjective(aux) < 1 && (testerO.getSlack(aux, 3) != 0 || testerO.getSlack(aux, 4) != 0 || testerO.getSlack(aux, 5) != 0 || testerO.getSlack(aux, 6) != 0 || testerO.getSlack(aux, 7) != 0)) {
-                //INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.
-                double b = 0;
-                double f = 0;
-                double p = 0;
-                double a = 0;
-                double s = 0;
-                double efo = 1 / objectivesO[aux];
-                BigDecimal eficienciaO = new BigDecimal(efo);
-                BigDecimal efO = eficienciaO.setScale(2, RoundingMode.HALF_UP);
-                double efpO = (1 / objectivesO[aux]) * 100;
-                BigDecimal efiporcO = new BigDecimal(efpO);
-                BigDecimal eprO = efiporcO.setScale(0, RoundingMode.HALF_UP);
-                rendimientoO = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(efO) + " o " + String.valueOf(eprO) + "%. ";
-                System.out.println("Porcentaje de proyección para " + aux + " es " + ppO[aux][3]);
-
-                if (Double.isInfinite(ppO[aux][3]) || Double.isNaN(ppO[aux][3])) {
-                    System.out.println("Entro y Broken Case y su % de mejora es " + ppO[aux][3]);
-                    b = 0;
-                } else {
-                    BigDecimal bc = new BigDecimal(ppO[aux][3]);
-                    BigDecimal bcr = bc.setScale(2, RoundingMode.HALF_UP);
-                    b = bcr.doubleValue();
-                }
-                if (Double.isInfinite(ppO[aux][4]) || Double.isNaN(ppO[aux][4])) {
-                    BigDecimal fc = new BigDecimal(0);
-                    BigDecimal fcr = fc.setScale(0, RoundingMode.HALF_UP);
-                    f = fcr.doubleValue();
-
-                } else {
-                    BigDecimal fc = new BigDecimal(ppO[aux][4]);
-                    BigDecimal fcr = fc.setScale(2, RoundingMode.HALF_UP);
-                    f = fcr.doubleValue();
-
-                }
-                if (Double.isInfinite(ppO[aux][5]) || Double.isNaN(ppO[aux][5])) {
-                    BigDecimal pl = new BigDecimal(0);
-                    BigDecimal plr = pl.setScale(0, RoundingMode.HALF_UP);
-                    p = plr.doubleValue();
-
-                } else {
-                    BigDecimal pl = new BigDecimal(ppO[aux][5]);
-                    BigDecimal plr = pl.setScale(2, RoundingMode.HALF_UP);
-                    p = plr.doubleValue();
-
-                }
-                if (Double.isInfinite(ppO[aux][6]) || Double.isNaN(ppO[aux][6])) {
-                    BigDecimal ac = new BigDecimal(0);
-                    BigDecimal acr = ac.setScale(0, RoundingMode.HALF_UP);
-                    a = acr.doubleValue();
-
-                } else {
-                    BigDecimal ac = new BigDecimal(ppO[aux][6]);
-                    BigDecimal acr = ac.setScale(2, RoundingMode.HALF_UP);
-                    a = acr.doubleValue();
-                }
-                if (Double.isInfinite(ppO[aux][6]) || Double.isNaN(ppO[aux][6])) {
-                    BigDecimal alm = new BigDecimal(0);
-                    BigDecimal almr = alm.setScale(0, RoundingMode.HALF_UP);
-                    s = almr.doubleValue();
-
-                } else {
-                    BigDecimal alm = new BigDecimal(ppO[aux][7]);
-                    BigDecimal almr = alm.setScale(2, RoundingMode.HALF_UP);
-                    s = almr.doubleValue();
-                }
-
-                //System.out.println("valor redondeado de mejora para Broken Case"+bc);
-                if (b != 0) {
-                    broken = "BROKEN CASE LINES en " + String.valueOf(b * 100) + "%";
-                    System.out.println("entro al si tiene mejora");
-                } else {
-                    broken = "BROKEN CASE LINES en 0%";
-                    System.out.println("Entro al no tiene mejora");
-                }
-                if (f != 0) {
-                    full = " FULL CASE LINES en " + String.valueOf(f * 100) + "%";
-                } else {
-                    full = " FULL CASE LINES EN 0%";
-                }
-                if (p != 0) {
-                    pallet = " PALLET CASE LINES en " + String.valueOf(p * 100) + "%";
-                } else {
-                    pallet = " PALLET CASE LINES en 0%";
-                }
-                if (a != 0) {
-                    acumu = " ACUMULACIÓN en " + String.valueOf(a * 100) + "%";
-                } else {
-                    acumu = " ACUMULAIÓN en 0%";
-                }
-                if (s != 0) {
-                    almac = " ALMACENAMIENTO en " + String.valueOf(s * 100) + "%";
-                } else {
-                    almac = " ALMACENAMIENTO en 0%";
-                }
-
-
-                proyeccionO = "Esto indica que [" + bod + "] podría AUMENTAR la(s) siguiente(s) SALIDAS en: " + " " + broken + " " + " " + full + " " + " " + pallet + " " + acumu + " " + almac + " , en relación a sus valores actuales manteniendo al menos el mismo nivel de ENTRADAS.";
-                rankingO = "De un total de " + largo + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + bod + "] ocupa la posición " + ranksO[aux] + ".";
-                System.out.println();
-                System.out.println("DMUs Max-slack Solution");
-                System.out.println();
-                System.out.println();
-                System.out.println("Max-slack Solution " + testDMUNames[aux] + ":");
-                for (int j = 0; j < 8; j++) {
-                    System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacksO[aux][j]);
-
-                }
-	    				
-    				/*for (int k = 0; k < largo; k++) {
-	    		    System.out.println(testDMUNames[k] + ": " );
-						for(int j=0;j<8;j++){
-						System.out.println(testDataMatrix[k][j]);
-						}
-					}*/
-
-                System.out.println();
-                System.out.println("DMUs Ratio Efficiency");
-                System.out.println();
-                for (int i = 0; i < largo; i++) {
-                    System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectivesO[i]);
-
-                }
-	    				/*System.out.println();
-	    				System.out.println("DMUs projections porcentaje");
-	    				System.out.println();
-	    				for (int i = 0; i < largo; i++) {
-    					System.out.println();
-    					System.out.println("projections porcentaje solution " +testDMUNames[i] + ":");
-	    					for (int j = 0; j < 3; j++) {
-	    						System.out.println( + pp[i][j]);
-
-	    					}
-	    				}*/
-
-            } else {
-
-                double efo = 1 / objectivesO[aux];
-                BigDecimal eficienciaO = new BigDecimal(efo);
-                BigDecimal efO = eficienciaO.setScale(2, RoundingMode.HALF_UP);
-                double efpO = (1 / objectivesO[aux]) * 100;
-                BigDecimal efiporcO = new BigDecimal(efpO);
-                BigDecimal eprO = efiporcO.setScale(0, RoundingMode.HALF_UP);
-                rendimientoO = "Para la warehouse [" + bod + "] el valor  de su rendimiento equivale a " + String.valueOf(efO) + " o " + String.valueOf(eprO) + "%. ";
-                BigDecimal bc = new BigDecimal(ppO[aux][3]);
-                BigDecimal bcr = bc.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal fc = new BigDecimal(ppO[aux][4]);
-                BigDecimal fcr = fc.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal pl = new BigDecimal(ppO[aux][5]);
-                BigDecimal plr = pl.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal ac = new BigDecimal(ppO[aux][6]);
-                BigDecimal acr = ac.setScale(2, RoundingMode.HALF_UP);
-                BigDecimal alm = new BigDecimal(ppO[aux][7]);
-                BigDecimal almr = alm.setScale(2, RoundingMode.HALF_UP);
-                System.out.println("valor redondeado de mejora para Broken Case" + bc);
-                if (bcr.doubleValue() != 0) {
-                    broken = "BROKEN CASE LINES en " + String.valueOf(bcr.doubleValue() * 100) + "%";
-                }
-                if (fcr.doubleValue() != 0) {
-                    full = " FULL CASE LINES en " + String.valueOf(fcr.doubleValue() * 100) + "%";
-                }
-                if (plr.doubleValue() != 0) {
-                    pallet = " PALLET CASE LINES en " + String.valueOf(plr.doubleValue() * 100) + "%";
-                }
-                if (acr.doubleValue() != 0) {
-                    acumu = " ACUMULACIÓN en " + String.valueOf(acr.doubleValue() * 100) + "%";
-                }
-                if (almr.doubleValue() != 0) {
-                    almac = " ALMACENAMIENTO en " + String.valueOf(almr.doubleValue() * 100) + "%";
-                }
-
-
-                proyeccionO = "Si bien presenta eficiencia esta no es completa, puesto que al menos una(s) de su(s) SALIDA(s) no está(n) siendo aprovechada(s) de modo que [" + bod + "] podría AUMENTAR la(s) siguiente(s) SALIDAS en: " + " " + broken + " " + " " + full + " " + " " + pallet + " " + acumu + " " + almac + " , en relación a sus valores actuales manteniendo al menos el mismo nivel de ENTRADAS.";
-                rankingO = "De un total de " + largo + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + bod + "] ocupa la posición " + ranksO[aux] + ".";
-                System.out.println();
-                System.out.println("DMUs Max-slack Solution");
-                System.out.println();
-                System.out.println();
-                System.out.println("Max-slack Solution " + testDMUNames[aux] + ":");
-                for (int j = 0; j < 8; j++) {
-                    System.out.println(testVariableOrientations[j] + " " + testVariableNames[j] + ":   " + slacksO[aux][j]);
-
-                }
-	    				
-    				/*for (int k = 0; k < largo; k++) {
-	    		    System.out.println(testDMUNames[k] + ": " );
-						for(int j=0;j<8;j++){
-						System.out.println(testDataMatrix[k][j]);
-						}
-					}*/
-
-                System.out.println();
-                System.out.println("DMUs Ratio Efficiency");
-                System.out.println();
-                for (int i = 0; i < largo; i++) {
-                    System.out.println("Ratio Efficiency " + testDMUNames[i] + ":   " + objectivesO[i]);
-
-                }
-            }
 
             JSONObject jo = new JSONObject();
-            jo.put("rendimiento", rendimiento);
-            jo.put("proyeccion", proyeccion);
-            jo.put("ranking", ranking);
-            jo.put("rendimientoO", rendimientoO);
-            jo.put("proyeccionO", proyeccionO);
-            jo.put("rankingO", rankingO);
+            jo.put("input", evaluateInputs(tester, indexToTest, DMUNames[indexToTest]));
+            jo.put("output", evualateOutputs(testerO, indexToTest, DMUNames[indexToTest]));
             jo.put("errors", errors);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json; charset=utf-8");
 
-            return new ResponseEntity<String>(jo.toString(), headers, HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
+            return new ResponseEntity<>(jo.toString(), headers, HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    private JSONObject evaluateInputs(DEAProblem tester, int warehouseIndex, String warehouseName) throws Exception {
+        JSONObject result = new JSONObject();
+
+        int[] ranks = tester.getRanks(false, RankingType.STANDARD, 5);
+        int rank = ranks[warehouseIndex];
+
+        int len = ranks.length;
+
+        double[] projectionPercentages = tester.getProjectionPercentages()[warehouseIndex];
+
+        double[] objectives = tester.getObjectives();
+        double performance = Math.round(objectives[warehouseIndex] * 100) / 100;
+
+        double slack0 = tester.getSlack(warehouseIndex, 0);
+        double slack1 = tester.getSlack(warehouseIndex, 1);
+        double slack2 = tester.getSlack(warehouseIndex, 2);
+
+        result.put("performance", "Para la bodega [" + warehouseName + "] el valor  de su rendimiento equivale a " + performance + " o " + (performance * 100) + "%.");
+        if (tester.getEfficiencyStatus(warehouseIndex)) {
+            //EN EL CASO QUE LA BODEGA PRESENTE EFICIENCIA COMPLETA
+            int efficient = 0;
+            for (int i = 0; i < ranks.length; i++) {
+                if (i != warehouseIndex && ranks[i] <= rank) {
+                    efficient++;
+                }
+            }
+
+            result.put("projection", "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.");
+            result.put("ranking", "Esta bodega ocupa el ranking " + rank + " junto a " + efficient + " bodegas más que trabajan eficientemente");
+        } else if (performance < 1 && slack0 == 0 && slack1 == 0 && slack2 == 0) {
+            //INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA
+            System.out.println("Entro en INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE REDUCIR DE MANERA RADIAL SUS ENTRADAS PARA ALCANZAR EFICIENCIA");
+            result.put("projection", "Esto indica que [" + warehouseName + "] podría reducir sus ENTRADAS en un " + (100 - performance * 100) + "% en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS. ");
+            result.put("ranking", "De un total de " + len + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + warehouseName + "] ocupa la posición " + rank + ".");
+        } else {
+            double surface = Math.round(projectionPercentages[0] * 100) / 100;
+            double inversion = Math.round(projectionPercentages[1] * 100) / 100;
+            double workforce = Math.round(projectionPercentages[2] * 100) / 100;
+
+            String projection;
+            if (performance < 1 && (slack0 != 0 || slack1 != 0 || slack2 != 0)) {
+                //INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.
+                System.out.println("entro en INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.");
+                projection = "Esto indica que [" + warehouseName + "] podría reducir la(s) siguiente(s) ENTRADAS en: ";
+            } else {
+                System.out.println("Ninguna de las anteriores");
+                projection = "Si bien presenta eficiencia esta no es completa, puesto que al menos una(s) de su(s) ENTRADA(s) no está(n) siendo aprovechada(s) de modo que [" + warehouseName + "] podría reducir la(s) siguiente(s) ENTRADA(S) en: ";
+            }
+
+            if (surface != 0) {
+                projection += "SUPERFICIE = " + String.valueOf(surface * -100) + "% ";
+            }
+            if (inversion != 0) {
+                projection += " INVERSION = " + String.valueOf(inversion * -100) + "%";
+            }
+            if (workforce != 0) {
+                projection += " HORAS-HOMBRE = " + String.valueOf(workforce * -100) + "%";
+            }
+
+            projection += ", en relación a sus valores actuales manteniendo al menos el mismo nivel de SALIDAS.";
+            result.put("projection", projection);
+            result.put("ranking", "De un total de " + len + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + warehouseName + "] ocupa la posición " + rank + ".");
+        }
+
+        return result;
+    }
+
+    private JSONObject evualateOutputs(DEAProblem tester, int warehouseIndex, String warehouseName) throws Exception {
+        JSONObject result = new JSONObject();
+        int[] ranks = tester.getRanks(false, RankingType.STANDARD, 5);
+        int rank = ranks[warehouseIndex];
+
+        int len = ranks.length;
+
+        double[] projectionPercentages = tester.getProjectionPercentages()[warehouseIndex];
+
+        double[] objectives = tester.getObjectives();
+        double performance = Math.round(objectives[warehouseIndex] * 100) / 100;
+
+        double slack3 = tester.getSlack(warehouseIndex, 3);
+        double slack4 = tester.getSlack(warehouseIndex, 4);
+        double slack5 = tester.getSlack(warehouseIndex, 5);
+        double slack6 = tester.getSlack(warehouseIndex, 6);
+        double slack7 = tester.getSlack(warehouseIndex, 7);
+
+        System.out.println(tester.getEfficiencyStatus(warehouseIndex));
+        System.out.println("rendmiento de warehouse BCC-O" + warehouseIndex + " " + tester.getObjective(warehouseIndex));
+        System.out.println("Max-slack output 4 " + tester.getSlack(warehouseIndex, 3));
+        System.out.println("Max-slack output 5 " + tester.getSlack(warehouseIndex, 4));
+        System.out.println("Max-slack output 6 " + tester.getSlack(warehouseIndex, 5));
+        System.out.println("Max-slack output 7 " + tester.getSlack(warehouseIndex, 6));
+        System.out.println("Max-slack output 8 " + tester.getSlack(warehouseIndex, 7));
+
+        result.put("performance", "Para la bodega [" + warehouseName + "] el valor  de su rendimiento equivale a " + performance + " o " + (performance * 100) + "%.");
+        if (tester.getEfficiencyStatus(warehouseIndex)) {
+            //EN EL CASO QUE LA BODEGA PRESENTE EFICIENCIA COMPLETA
+            int efficient = 0;
+            for (int i = 0; i < ranks.length; i++) {
+                if (i != warehouseIndex && ranks[i] <= rank) {
+                    efficient++;
+                }
+            }
+
+            result.put("projection", "Por lo tanto se concluye que su bodega trabaja de manera completamente eficienciente.");
+            result.put("ranking", "Esta bodega ocupa el ranking " + rank + " junto a " + efficient + " bodegas más que trabajan eficientemente");
+        } else if (performance < 1 && slack3 == 0 && slack4 == 0 && slack5 == 0 && slack6 == 0 && slack7 == 0) {
+            //INEFICIENCIA RADIAL PERO TODAS SUS SLACKS SON IGUAL A CERO, ESTO ES SOLO SE DEBE AUMENTAR DE MANERA RADIAL SUS SALIDAS PARA ALCANZAR EFICIENCIA
+            double efficiency = Math.round(100 / performance) / 100;
+            result.put("projection", "Esto indica que [" + warehouseName + "] podría aumentar sus SALIDAS en un " + (efficiency * 100) + "% en relación a sus valores actuales mientras no se ocupen más recursos de ENTRADAS.");
+            result.put("ranking", "De un total de " + len + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + warehouseName + "] ocupa la posición " + rank + ".");
+        } else {
+            double bcLines = 0;
+            double fcLines = 0;
+            double pLines = 0;
+            double accumulation = 0;
+            double storage = 0;
+
+            if (!Double.isInfinite(projectionPercentages[3]) && !Double.isNaN(projectionPercentages[3])) {
+                bcLines = Math.round(100 * projectionPercentages[3]) / 100;
+            }
+
+            if (!Double.isInfinite(projectionPercentages[4]) && !Double.isNaN(projectionPercentages[4])) {
+                fcLines = Math.round(100 * projectionPercentages[4]) / 100;
+            }
+
+            if (!Double.isInfinite(projectionPercentages[5]) && !Double.isNaN(projectionPercentages[5])) {
+                pLines = Math.round(100 * projectionPercentages[5]) / 100;
+            }
+
+            if (!Double.isInfinite(projectionPercentages[6]) && !Double.isNaN(projectionPercentages[6])) {
+                accumulation = Math.round(100 * projectionPercentages[6]) / 100;
+            }
+
+            if (!Double.isInfinite(projectionPercentages[7]) && !Double.isNaN(projectionPercentages[7])) {
+                storage = Math.round(100 * projectionPercentages[7]) / 100;
+            }
+
+            //System.out.println("valor redondeado de mejora para Broken Case"+bc);
+            String bcLinesStr = bcLines == 0 ? "" : "BROKEN CASE LINES en " + (bcLines * 100) + "%";
+            String fcLinesStr = fcLines == 0 ? "" : "FULL CASE LINES en " + (fcLines * 100) + "%";
+            String pcLinesStr = pLines == 0 ? "" : "PALLET CASE LINES en " + (pLines * 100) + "%";
+            String accumulationStr = accumulation == 0 ? "" : "ACUMULACIÓN en " + (accumulation * 100) + "%";
+            String storageStr = storage == 0 ? "" : "ALMACENAMIENTO en " + (storage * 100) + "%";
+
+            if (performance < 1 && (slack3 != 0 || slack4 != 0 || slack5 != 0 || slack6 != 0 || slack7 != 0)) {
+                //INEFICIENCIA RADIAL PERO Al MENOS UNAS DE SUS SLACKS SON DISTINTAS A CERO.
+                result.put("projection", "Esto indica que [" + warehouseName + "]  podría AUMENTAR la(s) siguiente(s) SALIDAS en: " + bcLinesStr + " " + fcLinesStr + " " + pcLinesStr + " " + accumulationStr + " " + storageStr + ", en relación a sus valores actuales manteniendo al menos el mismo nivel de ENTRADAS.");
+                result.put("ranking", "De un total de " + len + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + warehouseName + "] ocupa la posición " + rank + ".");
+            } else {
+                result.put("projection", "Si bien presenta eficiencia esta no es completa, puesto que al menos una(s) de su(s) SALIDA(s) no está(n) siendo aprovechada(s) de modo que [" + warehouseName + "] podría AUMENTAR la(s) siguiente(s) SALIDAS en: " + bcLinesStr + " " + fcLinesStr + " " + pcLinesStr + " " + accumulationStr + " " + storageStr + ", en relación a sus valores actuales manteniendo al menos el mismo nivel de ENTRADAS.");
+                result.put("ranking", "De un total de " + len + " bodegas en el sistema y bajo un análisis de eficiencia técnica relativa, [" + warehouseName + "] ocupa la posición " + rank + ".");
+            }
+        }
+
+        return result;
     }
 
     @RequestMapping(value = "/test", produces = "text/json")
@@ -693,27 +351,49 @@ public class Benchmarking {
     ResponseEntity<String> test() {
         JSONObject jsonObject = new JSONObject();
 
-        String[] testVariableNames = new String[8];
-        VariableOrientation[] testVariableOrientations = new VariableOrientation[8];
+        String[] varNames = new String[8];
+        VariableOrientation[] varOrientations = new VariableOrientation[8];
         VariableType[] testVariableTypes = new VariableType[8];
-        testVariableOrientations[0] = VariableOrientation.INPUT;
-        testVariableOrientations[1] = VariableOrientation.INPUT;
-        testVariableOrientations[2] = VariableOrientation.INPUT;
+        varOrientations[0] = VariableOrientation.INPUT;
+        varOrientations[1] = VariableOrientation.INPUT;
+        varOrientations[2] = VariableOrientation.INPUT;
 
-        testVariableOrientations[3] = VariableOrientation.OUTPUT;
-        testVariableOrientations[4] = VariableOrientation.OUTPUT;
-        testVariableOrientations[5] = VariableOrientation.OUTPUT;
-        testVariableOrientations[6] = VariableOrientation.OUTPUT;
-        testVariableOrientations[7] = VariableOrientation.OUTPUT;
+        varOrientations[3] = VariableOrientation.OUTPUT;
+        varOrientations[4] = VariableOrientation.OUTPUT;
+        varOrientations[5] = VariableOrientation.OUTPUT;
+        varOrientations[6] = VariableOrientation.OUTPUT;
+        varOrientations[7] = VariableOrientation.OUTPUT;
 
-        testVariableNames[0] = "Superficie";
-        testVariableNames[1] = "Inversión";
-        testVariableNames[2] = "Horas de Trabajo";
-        testVariableNames[3] = "Broken Case Lines";
-        testVariableNames[4] = "Full Case Lines";
-        testVariableNames[5] = "Pallet Case Lines";
-        testVariableNames[6] = "Acumulación";
-        testVariableNames[7] = "Almacenamiento";
+        varNames[0] = "Superficie";
+        varNames[1] = "Inversión";
+        varNames[2] = "Horas de Trabajo";
+        varNames[3] = "Broken Case Lines";
+        varNames[4] = "Full Case Lines";
+        varNames[5] = "Pallet Case Lines";
+        varNames[6] = "Acumulación";
+        varNames[7] = "Almacenamiento";
+
+        for (int j = 0; j < 20; j++) {
+            Warehouse warehouse = new Warehouse();
+            warehouse.setName("Warehouse " + j);
+            warehouse.setOperationType(OperationType.DISTRIBUCION);
+
+            //warehouse.merge();
+
+            WarehouseData wData = new WarehouseData();
+
+            wData.setPeriod("2017");
+            wData.setWarehouse(warehouse);
+
+            WarehouseDataConveyor conveyor = new WarehouseDataConveyor();
+            conveyor.setPowerBelt(2);
+            //conveyor.merge();
+
+            wData.setConveyor(conveyor);
+
+            //wData.merge();
+        }
+
 
         for (int i = 0; i < 8; i++) {
             testVariableTypes[i] = VariableType.STANDARD;
@@ -723,7 +403,7 @@ public class Benchmarking {
             File f = new File("D:\\Documentos\\git\\rorro\\data.txt");
             List<String> lines = FileUtils.readLines(f, "UTF-8");
             int len = lines.size();
-            String[] testDMUNames = new String[len];
+            String[] DMUNames = new String[len];
 
             //Create a DEAProblem and specify number of DMUs (cantidad de bodegas en el sistema) and number of variables (8).
             DEAProblem tester = new DEAProblem(len, 8);
@@ -734,27 +414,27 @@ public class Benchmarking {
             testerO.setModelType(ModelType.BCC_O);
 
             //Set the DEA Problem DMU Names where testDMUName is a double[].
-            tester.setDMUNames(testDMUNames);
-            testerO.setDMUNames(testDMUNames);
+            tester.setDMUNames(DMUNames);
+            testerO.setDMUNames(DMUNames);
 
             //Set the DEA Problem Variable Names where testVariableName is a String[].
-            tester.setVariableNames(testVariableNames);
-            testerO.setVariableNames(testVariableNames);
+            tester.setVariableNames(varNames);
+            testerO.setVariableNames(varNames);
 
             //Set the DEA Problem Variable Orientation where testVariableOrientation is a VariableOrientation[].
-            tester.setVariableOrientations(testVariableOrientations);
-            testerO.setVariableOrientations(testVariableOrientations);
+            tester.setVariableOrientations(varOrientations);
+            testerO.setVariableOrientations(varOrientations);
 
             //Set the DEA Problem Variable Types where testVariableTypes is a VariableType[].
             tester.setVariableTypes(testVariableTypes);
             testerO.setVariableTypes(testVariableTypes);
 
-            double[][] testDataMatrix= new double[len][8];
+            double[][] testDataMatrix = new double[len][8];
 
             int i = 0;
             for (String line : lines) {
                 line = line.replaceAll(" ", "");
-                testDMUNames[i] = "Bodega " + i;
+                DMUNames[i] = "Bodega " + i;
                 String[] split = line.split("\t");
 
                 System.out.println(StringUtils.join(split, ","));
@@ -770,7 +450,7 @@ public class Benchmarking {
                 testDataMatrix[i][7] = Double.parseDouble(split[5]);
 
                 i++;
-                if(i >= len) {
+                if (i >= len) {
                     break;
                 }
 
@@ -782,7 +462,7 @@ public class Benchmarking {
             tester.solve();
             testerO.solve();
             double[] results = tester.getObjectives();
-            for(i = 0; i < results.length; i++) {
+            for (i = 0; i < results.length; i++) {
                 jsonObject.put("Bodega " + i, results[i]);
             }
 
@@ -793,5 +473,7 @@ public class Benchmarking {
 
         return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
     }
+
+
 }
-	
+

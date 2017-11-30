@@ -14,7 +14,7 @@
         <put-attribute name="footer" value="/WEB-INF/views/footer.jspx"/>
     </definition>
 
-    <definition name="login-template" template="/WEB-INF/layouts/public.jspx">
+    <definition name="login-template" template="/WEB-INF/layouts/login.jspx">
     </definition>
 
 </tiles-definitions>

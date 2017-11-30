@@ -277,6 +277,27 @@ public class WarehouseData {
         return q.getResultList();
     }
 
+    public static List<WarehouseData> findWarehouseDataByPeriod(String period) {
+        if (period == null)
+            throw new IllegalArgumentException("The warehouse argument is required");
+        EntityManager em = entityManager();
+        TypedQuery<WarehouseData> q = em.createQuery("SELECT o FROM WarehouseData AS o WHERE o.period = :period", WarehouseData.class);
+        q.setParameter("period", period);
+
+        return q.getResultList();
+    }
+
+    public static WarehouseData findWarehouseDataByWarehouseAndPeriod(Warehouse warehouse, String period) {
+        if (warehouse == null || period == null)
+            throw new IllegalArgumentException("The warehouse argument is required");
+        EntityManager em = entityManager();
+        TypedQuery<WarehouseData> q = em.createQuery("SELECT o FROM WarehouseData AS o WHERE o.warehouse = :warehouse AND o.period = :period", WarehouseData.class);
+        q.setParameter("warehouse", warehouse);
+        q.setParameter("period", period);
+
+        return q.getSingleResult();
+    }
+
     public String toString() {
         JSONSerializer serializer = new JSONSerializer();
         serializer.exclude("entityManager", "warehouse", "vehicles", "storage", "conveyor", "output");

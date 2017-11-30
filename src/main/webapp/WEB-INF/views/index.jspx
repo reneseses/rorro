@@ -1,6 +1,4 @@
-<div xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
-     xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
-     xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+<div xmlns:spring="http://www.springframework.org/tags" class="index"
      xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
@@ -8,9 +6,26 @@
     <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
 
     <div class="main-banner">
-        <div class="container text-center">
-            <h1>Titulo</h1>
-            <h3>Titulo 2</h3>
+        <div class="container text-right" style="text-transform: uppercase">
+            <h1>
+                <div><small>El</small> Administrador</div>
+                <div>de bodega</div>
+                <div class="small">DEBE SER</div>
+                <div class="small">CREATIVO Y EFICIENTE</div>
+                <div class="small">EN CONVERTIR LOS RECURSOS DE</div>
+                <div>Trabajo,</div>
+                <div>EQUIPOS <small>y</small></div>
+                <div>ESPACIO</div>
+                <div class="small">EN LOS RESULTADOS DESEADOS</div>
+                <div class="small">DE LA BODEGA</div>
+            </h1>
         </div>
     </div>
+
+    <div class="container">
+        <section id="model">
+            <h2 class="text-center">Modelo de bodegas</h2>
+        </section>
+    </div>
+
 </div>

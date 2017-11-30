@@ -10,9 +10,14 @@ body {
     bottom: 0;
     right: 0;
     left: 0;
-    padding-bottom: 200px;
     overflow: auto;
-    color: #302f32
+    color: #302f32;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body.login {
+    background: #2e85c4;
+    color: #fff;
 }
 
 body.member {
@@ -59,20 +64,37 @@ body.member {
     content: "\e900";
 }
 
+.index section {
+    margin-top: 40px;
+}
+
+.index h2 {
+    color: #444;
+    font-size: 45px;
+    font-weight: 300;
+}
+
 .main-banner {
     position: relative;
-    height: 400px;
-    padding-top: 50px;
+    height: 500px;
+    padding-top: 40px;
     color: #fff;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #67666D;
     background-size: cover;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.3)), url(/images/warehouse1.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05)), url(/images/worker.jpg);
 }
 
 .main-banner h1 {
-    font-size: 50px;
+    font-size: 32px;
+    text-shadow: 2px 2px #555;
+}
+
+.main-banner h1 .small, .main-banner h1 small {
+    font-size: 20px;
+    color: #fff;
+    line-height: 24px;
 }
 
 .login-container {
@@ -100,11 +122,15 @@ body.member {
 
 .login-container h1 a {
     text-decoration: none;
-    color: #302f32
+    color: #fff
 }
 
 .login-container h1 a:hover {
     opacity: 0.8;
+}
+
+.login-container a {
+    color: #ededed;
 }
 
 .login-container h3 {
@@ -257,11 +283,18 @@ td.thumbnail {
 .navbar-public, .navbar-member {
     border-radius: 0;
     border: none;
-    background: #fff;
+    background: #2e85c4;
 }
 
 .navbar-public a, .navbar-member a {
-    color: #302f32 !important;
+    color: #fff !important;
+}
+
+.navbar-public .nav > li > a:focus,
+.navbar-public .nav > li > a:hover,
+.navbar-member .nav > li > a:focus,
+.navbar-member .nav > li > a:hover {
+    background: #2976ae !important;
 }
 
 .navbar-brand {
@@ -271,7 +304,7 @@ td.thumbnail {
 }
 
 .navbar-brand .icon-wpm {
-    font-size: 70px;
+    font-size: 60px;
 }
 
 .navbar-toggle {
@@ -290,7 +323,7 @@ td.thumbnail {
 .navbar.navbar-member .navbar-brand {
     height: 70px;
     padding: 5px 15px;
-    line-height: 60px;
+    line-height: 50px;
 }
 
 .navbar.navbar-member .navbar-brand .icon-wpm {
