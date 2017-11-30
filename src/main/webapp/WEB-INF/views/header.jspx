@@ -22,7 +22,7 @@
                 </button>
                 <spring:url value="/" var="index"/>
                 <a href="${index}" class="navbar-brand">
-                    <span class="icon-wpm"><!-- --></span>
+                    <span class="fa nh-nethouse"><!-- --></span> <span>NetHouse</span>
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">

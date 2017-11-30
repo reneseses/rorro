@@ -16,8 +16,7 @@ body {
 }
 
 body.login {
-    background: #2e85c4;
-    color: #fff;
+
 }
 
 body.member {
@@ -45,6 +44,27 @@ body.member {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'nethouse';
+    src: url('fonts/nethouse.eot');
+    src: url('fonts/nethouse.eot?#iefix') format('embedded-opentype'),
+    url('fonts/nethouse.woff') format('woff'),
+    url('fonts/nethouse.ttf') format('truetype'),
+    url('fonts/nethouse.svg#nethouse') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class*='nh-']:before {
+    display: inline-block;
+    font-family: 'nethouse';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
 [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;
@@ -58,6 +78,46 @@ body.member {
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.nh-nethouse:before {
+    content: '\0041';
+}
+
+.nh-accumulation:before {
+    content: '\0042';
+}
+
+.nh-storage:before {
+    content: '\0043';
+}
+
+.nh-broken-case:before {
+    content: '\0044';
+}
+
+.nh-full-case:before {
+    content: '\0045';
+}
+
+.nh-equipment:before {
+    content: '\0046';
+}
+
+.nh-workforce:before {
+    content: '\0047';
+}
+
+.nh-movement:before {
+    content: '\0048';
+}
+
+.nh-pallet:before {
+    content: '\0049';
+}
+
+.nh-surface:before {
+    content: '\004a';
 }
 
 .icon-wpm:before {
@@ -122,15 +182,10 @@ body.member {
 
 .login-container h1 a {
     text-decoration: none;
-    color: #fff
 }
 
 .login-container h1 a:hover {
     opacity: 0.8;
-}
-
-.login-container a {
-    color: #ededed;
 }
 
 .login-container h3 {
@@ -282,33 +337,40 @@ td.thumbnail {
 /**** NAVBAR ****/
 .navbar-public, .navbar-member {
     border-radius: 0;
-    border: none;
-    background: #2e85c4;
+    /*border: none;*/
+    background: #fff;
 }
 
 .navbar-public a, .navbar-member a {
-    color: #fff !important;
+    color: #333 !important;
 }
 
 .navbar-public .nav > li > a:focus,
 .navbar-public .nav > li > a:hover,
 .navbar-member .nav > li > a:focus,
 .navbar-member .nav > li > a:hover {
-    background: #2976ae !important;
+    /*background: #2976ae !important;*/
 }
 
 .navbar-brand {
-    height: 90px;
+    height: 70px;
     padding: 10px 15px;
-    line-height: 80px;
+    font-size: 25px;
 }
 
-.navbar-brand .icon-wpm {
-    font-size: 60px;
+.navbar-brand > * {
+    vertical-align: middle;
+    line-height: 38px;
+    color: #3d93d1
+}
+
+.navbar-brand .nh-nethouse {
+    font-size: 50px;
+    margin-right: 10px;
 }
 
 .navbar-toggle {
-    padding: 27px 10px;
+    padding: 17px 10px;
 }
 
 .navbar-toggle .icon-bar {
@@ -321,9 +383,6 @@ td.thumbnail {
 }
 
 .navbar.navbar-member .navbar-brand {
-    height: 70px;
-    padding: 5px 15px;
-    line-height: 50px;
 }
 
 .navbar.navbar-member .navbar-brand .icon-wpm {
@@ -336,11 +395,9 @@ td.thumbnail {
 
 @media (min-width: 768px) {
     .navbar-nav > li > a {
-        line-height: 60px;
-    }
-
-    .navbar.navbar-member .navbar-nav > li > a {
-        line-height: 40px;
+        line-height: 58px;
+        padding-top: 10px;
+        padding-bottom: 3px;
     }
 
     #rootwizard .form-group label:not(.help-block) {
@@ -387,11 +444,9 @@ input + .help-block {
 @media (max-width: 767px) {
     .navbar-collapse {
         text-align: center;
-        background: #2b3137;
     }
 
     .navbar-collapse a {
-        color: #ddd !important;
         font-size: 15px;
     }
 
@@ -402,6 +457,10 @@ input + .help-block {
     .navbar .nav > li > a:focus, .navbar .nav > li > a:hover {
         background: transparent;
         outline: none;
+    }
+
+    .navbar-brand {
+
     }
 }
 
