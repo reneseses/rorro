@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div class="login-container" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
      xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
     <spring:url value="/signup" var="form_url"/>
-    <form class="login-form" action="${form_url}" method="POST" enctype="application/x-www-form-urlencoded">
-        <h1 class="text-center">
-            <spring:url value="/" var="index_url" />
-            <a href="${index_url}">
-                <span class="icon-wpm"><!-- --></span>
-            </a>
-        </h1>
-        <h3 class="text-center">Registro</h3>
-        <div class="form-group">
-            <input id="_name_id" placeholder="Nombre" name="name" class="form-control" type="text"/>
-        </div>
-        <div class="form-group">
-            <input id="_email_id" placeholder="Correo Electrónico" name="email" class="form-control" type="email"/>
-        </div>
-        <div class="form-group">
-            <input id="_password_id" placeholder="Contraseña" name="password" class="form-control" type="password"/>
-        </div>
-        <button id="proceed" class="btn btn-block btn-primary">Enviar</button>
 
-        <spring:url value="/login" var="signup_url"/>
-        <div class="text-center" style="margin-top: 20px">
-            ¿Ya tiene una cuenta? <a href="${signup_url}">Ingrese</a>
+    <div class="container" style="margin-top: 50px">
+        <div class="row">
+            <div class="col-md-6 hidden-xs hidden-sm" style="color: #3d93d1; letter-spacing: 5px">
+                <div style="border-right: 1px solid #9dc9e8">
+                    <h1>
+                        ENFOQUE
+                        <div>SISTÉMICO DE</div>
+                        <div>EFICIENCIA</div>
+                        OPERACIONAL.
+                    </h1>
+                    <div>
+                        COMPARA EL DESEMPEÑO DE TU
+                        <div>BODEGA CON EL RESTO DE LA</div>
+                        INDUSTRIA.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="login-container">
+                    <form class="login-form" action="${form_url}" method="POST" enctype="application/x-www-form-urlencoded">
+                        <h3 class="text-center">Registro</h3>
+                        <div class="form-group">
+                            <input id="_name_id" placeholder="Nombre" name="name" class="form-control" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="_email_id" placeholder="Correo Electrónico" name="email" class="form-control" type="email"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="_password_id" placeholder="Contraseña" name="password" class="form-control" type="password"/>
+                        </div>
+                        <button id="proceed" class="btn btn-block btn-primary">Enviar</button>
+
+                        <spring:url value="/login" var="signup_url"/>
+                        <div class="text-center" style="margin-top: 20px">
+                            ¿Ya tiene una cuenta? <a href="${signup_url}">Ingrese</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
 </div>

@@ -15,6 +15,7 @@
     </definition>
 
     <definition name="login-template" template="/WEB-INF/layouts/login.jspx">
+        <put-attribute name="header" value="/WEB-INF/views/header.jspx"/>
     </definition>
 
 </tiles-definitions>
