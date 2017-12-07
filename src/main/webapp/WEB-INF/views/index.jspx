@@ -5,11 +5,11 @@
     <spring:message var="app_name" code="application_name" htmlEscape="false"/>
     <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
 
-    <section class="blue banner">
-        <div class="container">
+    <section class="blue">
+        <div class="container banner manager-banner">
             <div class="row">
                 <div class="col-md-7 col-md-push-5">
-                    <h1 class="text-right" style="font-weight: bold">
+                    <h1 class="text-right">
                         <div>
                             <small>El</small>
                             Administrador
@@ -27,18 +27,15 @@
                         <div class="small">DE LA BODEGA</div>
                     </h1>
                 </div>
-                <div class="col-md-5 col-md-pull-7">
-                    <img src="/images/white-manager-circle.svg" class="manager-image"/>
-                </div>
             </div>
         </div>
     </section>
 
-    <section class="banner">
-        <div class="container">
+    <section>
+        <div class="container banner warehouse-banner">
             <div class="row">
                 <div class="col-md-7">
-                    <h1 style="font-weight: bold">
+                    <h1>
                         <div>
                             <small>El</small>
                             Enfoque Sistémico
@@ -71,16 +68,14 @@
     <section class="banner blue">
         <div class="container">
             <div class="row">
-                <div class="col-md-5">
-                    <div class="home-thumb">
-                        <img src="/images/warehouse-benchmark-circle.png"/>
-                    </div>
-                </div>
-                <div class="col-md-7">
+                <div class="col-md-7 col-md-push-5">
                     <h1 style="text-transform: none; margin-top: 30px">
                         Con la metodología DEA puedes comparar el desempeño de tu bodega con una comunidad de otras bodegas.
                     </h1>
-                    <div style="margin-top: 30px">DEA CONSTRUYE UNA BODEGA HIPOTÉTICA A PARTIR DE LOS DATOS DE ENTRADA Y SALIDA PARA TODAS LAS DEMÁS BODEGAS, Y ESTA BODEGA HIPOTÉTICA SE COMPARA CON TU BODEGA.</div>
+                    <div style="margin-top: 30px; font-size: 16px">DEA CONSTRUYE UNA BODEGA HIPOTÉTICA A PARTIR DE LOS DATOS DE ENTRADA Y SALIDA PARA TODAS LAS DEMÁS BODEGAS, Y ESTA BODEGA HIPOTÉTICA SE COMPARA CON TU BODEGA.</div>
+                </div>
+                <div class="col-md-5 col-md-pull-7">
+                    <img src="/images/warehouse-benchmark-circle.png" style="margin-top: 0" class="warehouse-image"/>
                 </div>
             </div>
         </div>
@@ -91,7 +86,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1 style="text-transform: none; margin-top: 80px; font-weight: bold">
+                    <h1 style="text-transform: none; margin: 80px 0 30px;">
                         El valor obtenido por tu
                         <div>bodega en la evaluación</div>
                         de eficiencia está

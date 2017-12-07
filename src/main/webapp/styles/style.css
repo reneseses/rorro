@@ -129,26 +129,28 @@ body.member {
     content: "\e900";
 }
 
-.index section {
-    padding: 80px 0;
-}
-
 .index section * {
     color: #3d93d1;
 }
 
 .index section.blue {
-    background: #3d93d1;
+    background-color: #3d93d1;
 }
 
 .index section.blue * {
     color: #fff
 }
 
+.index .manager-banner {
+    background-image: url('/images/manager-white.png');
+    background-repeat: no-repeat;
+    background-position-y: 40px;
+}
+
 .index .manager-image {
     display: block;
-    max-height: 404px;
-    margin: -20px auto;
+    max-height: 407px;
+    margin: 0 auto -80px;
 }
 
 .index .warehouse-image {
@@ -180,10 +182,15 @@ body.member {
     display: block;
 }
 
+.banner {
+    padding: 80px 0;
+}
+
 .banner h1 {
     font-size: 38px;
     text-transform: uppercase;
-    margin: 0
+    margin: 0;
+    font-weight: bold;
 }
 
 .blue.banner h1 {
@@ -492,14 +499,20 @@ input + .help-block {
         background: transparent;
         outline: none;
     }
-
-    .navbar-brand {
-
-    }
 }
 
 @media (min-width: 1200px) {
     .container {
         width: 1140px;
+    }
+}
+
+@media (max-width: 990px) {
+    .index .manager-banner {
+        background-image: none;
+    }
+
+    .index h1 {
+        text-align: center !important;
     }
 }
