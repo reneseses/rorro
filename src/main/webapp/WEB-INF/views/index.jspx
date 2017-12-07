@@ -5,8 +5,8 @@
     <spring:message var="app_name" code="application_name" htmlEscape="false"/>
     <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
 
-    <section class="blue">
-        <div class="container banner manager-banner">
+    <section class="blue banner">
+        <div class="container manager-banner">
             <div class="row">
                 <div class="col-md-7 col-md-push-5">
                     <h1 class="text-right">
@@ -26,6 +26,9 @@
                         <div class="small">EN LOS RESULTADOS DESEADOS</div>
                         <div class="small">DE LA BODEGA</div>
                     </h1>
+                </div>
+                <div class="col-md-5 col-md-pull-7">
+                    <img src="/images/white-manager-circle.svg" class="manager-image"/>
                 </div>
             </div>
         </div>

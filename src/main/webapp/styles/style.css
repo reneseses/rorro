@@ -141,16 +141,10 @@ body.member {
     color: #fff
 }
 
-.index .manager-banner {
-    background-image: url('/images/manager-white.png');
-    background-repeat: no-repeat;
-    background-position-y: 40px;
-}
-
 .index .manager-image {
     display: block;
     max-height: 407px;
-    margin: 0 auto -80px;
+    margin: -40px auto;
 }
 
 .index .warehouse-image {
@@ -508,10 +502,6 @@ input + .help-block {
 }
 
 @media (max-width: 990px) {
-    .index .manager-banner {
-        background-image: none;
-    }
-
     .index h1 {
         text-align: center !important;
     }
