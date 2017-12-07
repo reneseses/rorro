@@ -10,7 +10,7 @@
     <spring:url var="banner" value="/resources/externos/logodea.png"/>
     <spring:url var="home" value="/"/>
     <spring:message code="button_home" var="home_label" htmlEscape="false"/>
-    <nav class="navbar navbar-public">
+    <nav class="navbar navbar-public navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -22,7 +22,7 @@
                 </button>
                 <spring:url value="/" var="index"/>
                 <a href="${index}" class="navbar-brand">
-                    <span class="fa nh-nethouse"><!-- --></span> <span>NetHouse</span>
+                    <img src="/images/logo.svg" />
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">

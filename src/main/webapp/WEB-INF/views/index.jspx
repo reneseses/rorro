@@ -5,107 +5,130 @@
     <spring:message var="app_name" code="application_name" htmlEscape="false"/>
     <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
 
-    <div class="banner manager-banner">
-        <div class="container text-right">
-            <h1 style="font-weight: bold">
-                <div>
-                    <small>El</small>
-                    Administrador
-                </div>
-                <div>de bodega</div>
-                <div class="small">DEBE SER</div>
-                <div class="small">CREATIVO Y EFICIENTE</div>
-                <div class="small">EN CONVERTIR LOS RECURSOS DE</div>
-                <div>Trabajo,</div>
-                <div>EQUIPOS
-                    <small>y</small>
-                </div>
-                <div>ESPACIO</div>
-                <div class="small">EN LOS RESULTADOS DESEADOS</div>
-                <div class="small">DE LA BODEGA</div>
-            </h1>
-        </div>
-    </div>
-
-    <section class="banner warehouse-banner">
+    <section class="blue banner">
         <div class="container">
-            <h1 style="font-weight: bold">
-                <div>
-                    <small>El</small>
-                    Enfoque Sistémico
-                </div>
-                <div>
-                    <small>de</small>
-                    Eficiencia
-                    <small>supera</small>
-                </div>
-                <div class="small">las limitaciones de las</div>
-                <div>Métricas</div>
-                <div>Tradicionales</div>
-                <div class="small">de un solo factor productivo</div>
-            </h1>
-
-            <h1 style="font-size: 28px; margin-top: 60px">
-                <div class="small">Este enfoque considera</div>
-                <div class="small">Simultáneamente todas las entradas de</div>
-                <div class="small">recurso y la salidas de producción de</div>
-                <div class="small">la bodega de manera simultánea</div>
-            </h1>
-        </div>
-    </section>
-
-    <section class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="home-thumb">
-                    <img src="/images/Imagen1.png"/>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <p class="lead text-center">
-                    Con la metodología DEA puedes comparar el desempeño de tu bodega con una comunidad de otras bodegas.
-                </p>
-                <div>DEA CONSTRUYE UNA BODEGA HIPOTÉTICA A PARTIR DE LOS DATOS DE ENTRADA Y SALIDA PARA TODAS LAS DEMÁS BODEGAS, Y ESTA BODEGA HIPOTÉTICA SE COMPARA CON TU BODEGA.</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="blue">
-        <div class="container">
-            <p class="lead text-center">
-                El valor obtenido por tu bodega en la evaluación de eficiencia está expresado como un porcentaje.
-            </p>
             <div class="row">
-                <div class="col-md-7 text-center" style="font-size: 15px">
-                    <div>
+                <div class="col-md-7 col-md-push-5">
+                    <h1 class="text-right" style="font-weight: bold">
                         <div>
-                            Esto significa que la bodega hipotética
+                            <small>El</small>
+                            Administrador
                         </div>
-                        <div>compuesta por bodegas reales con</div>
-                        <div style="font-weight: bold; font-size: 18px">mejores prácticas,</div>
-                        <div>utiliza no más del 85% de cada recurso utilizado</div>
-                        <div>para producir el mismo nivel de resultados que</div>
-                        tu bodega.
-                    </div>
+                        <div>de bodega</div>
+                        <div class="small">DEBE SER</div>
+                        <div class="small">CREATIVO Y EFICIENTE</div>
+                        <div class="small">EN CONVERTIR LOS RECURSOS DE</div>
+                        <div>Trabajo,</div>
+                        <div>EQUIPOS
+                            <small>y</small>
+                        </div>
+                        <div>ESPACIO</div>
+                        <div class="small">EN LOS RESULTADOS DESEADOS</div>
+                        <div class="small">DE LA BODEGA</div>
+                    </h1>
+                </div>
+                <div class="col-md-5 col-md-pull-7">
+                    <img src="/images/white-manager-circle.svg" class="manager-image"/>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <div class="text-center" style="margin-top: 20px">
-                        En base a la bodega hipotética conformada por
-                        <div>las mejores prácticas existe la oportunidad de</div>
-                        reducir los recursos de tu bodega en un 15%.
-                    </div>
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 style="font-weight: bold">
+                        <div>
+                            <small>El</small>
+                            Enfoque Sistémico
+                        </div>
+                        <div>
+                            <small>de</small>
+                            Eficiencia
+                            <small>supera</small>
+                        </div>
+                        <div class="small">las limitaciones de las</div>
+                        <div>Métricas</div>
+                        <div>Tradicionales</div>
+                        <div class="small">de un solo factor productivo</div>
+                    </h1>
+
+                    <h1 style="font-size: 28px; margin-top: 60px">
+                        <div class="small">Este enfoque considera simultáneamente</div>
+                        <div class="small">todas las entradas de recurso y las</div>
+                        <div class="small">salidas de producción de la bodega de</div>
+                        <div class="small">manera simultánea</div>
+                    </h1>
                 </div>
                 <div class="col-md-5">
-                    <h4 class="text-center" style="margin-top: 0">
-                        <i class="fa nh-warehouse" style="font-size: 40px"><!-- --></i>
-                        <div>Tu Bodega</div>
-                    </h4>
-                    <div class="giant">
-                        85
-                        <small style="margin-left: -10px">%</small>
+                    <img src="/images/warehouse.png" class="warehouse-image"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="home-thumb">
+                        <img src="/images/warehouse-benchmark-circle.png"/>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <h1 style="text-transform: none; margin-top: 30px">
+                        Con la metodología DEA puedes comparar el desempeño de tu bodega con una comunidad de otras bodegas.
+                    </h1>
+                    <div style="margin-top: 30px">DEA CONSTRUYE UNA BODEGA HIPOTÉTICA A PARTIR DE LOS DATOS DE ENTRADA Y SALIDA PARA TODAS LAS DEMÁS BODEGAS, Y ESTA BODEGA HIPOTÉTICA SE COMPARA CON TU BODEGA.</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 style="text-transform: none; margin-top: 80px; font-weight: bold">
+                        El valor obtenido por tu
+                        <div>bodega en la evaluación</div>
+                        de eficiencia está
+                        <div>expresado como un</div>
+                        porcentaje.
+                    </h1>
+                </div>
+                <div class="col-md-5">
+                    <div class="text-center">
+                        <h4 style="margin-top: 0; display: inline-block; vertical-align: middle">
+                            <i class="fa nh-warehouse" style="font-size: 40px"><!-- --></i>
+                            <div>Tu Bodega</div>
+                        </h4>
+                        <div class="giant" style="display: inline-block; vertical-align: middle">
+                            85
+                            <small style="margin-left: -35px">%</small>
+                        </div>
                     </div>
 
-                </div>
+                    <div style="font-size: 16px; width: 340px; margin: auto; text-align: justify; text-justify: inter-word;">
+                        <div>
+                            Esto significa que la bodega hipotética
+                            compuesta por bodegas reales con
+                            mejores prácticas, utiliza no más del
+                            <strong>85%</strong> de cada recurso utilizado para
+                            producir el mismo nivel de resultados que
+                            tu bodega.
+                        </div>
 
+                        <div style="margin-top: 20px">
+                            En base a la bodega hipotética
+                            conformada por las mejores prácticas
+                            existe la oportunidad de reducir los
+                            recursos de tu bodega en un 15%.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

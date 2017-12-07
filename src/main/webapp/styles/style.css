@@ -10,10 +10,10 @@ body {
     bottom: 0;
     right: 0;
     left: 0;
-    overflow: auto;
     color: #302f32;
     font-family: Verdana, 'Open Sans', sans-serif;
     padding-bottom: 100px;
+    padding-top: 71px;
 }
 
 body.login {
@@ -80,29 +80,81 @@ body.member {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.nh-warehouse:before{content:'\0041';}
-.nh-nethouse:before{content:'\0042';}
-.nh-accumulation:before{content:'\0043';}
-.nh-broken-case:before{content:'\0044';}
-.nh-Caja_abierta_sin_fondo_:before{content:'\0045';}
-.nh-full-case:before{content:'\0046';}
-.nh-equipment:before{content:'\0047';}
-.nh-workforce:before{content:'\0048';}
-.nh-movement:before{content:'\0049';}
-.nh-pallet:before{content:'\004a';}
-.nh-surface:before{content:'\004b';}
+
+.nh-warehouse:before {
+    content: '\0041';
+}
+
+.nh-nethouse:before {
+    content: '\0042';
+}
+
+.nh-accumulation:before {
+    content: '\0043';
+}
+
+.nh-broken-case:before {
+    content: '\0044';
+}
+
+.nh-Caja_abierta_sin_fondo_:before {
+    content: '\0045';
+}
+
+.nh-full-case:before {
+    content: '\0046';
+}
+
+.nh-equipment:before {
+    content: '\0047';
+}
+
+.nh-workforce:before {
+    content: '\0048';
+}
+
+.nh-movement:before {
+    content: '\0049';
+}
+
+.nh-pallet:before {
+    content: '\004a';
+}
+
+.nh-surface:before {
+    content: '\004b';
+}
 
 .icon-wpm:before {
     content: "\e900";
 }
 
 .index section {
-    padding: 50px 0;
+    padding: 80px 0;
+}
+
+.index section * {
+    color: #3d93d1;
 }
 
 .index section.blue {
     background: #3d93d1;
+}
+
+.index section.blue * {
     color: #fff
+}
+
+.index .manager-image {
+    display: block;
+    max-height: 404px;
+    margin: -20px auto;
+}
+
+.index .warehouse-image {
+    max-width: 372px;
+    margin: 30px auto 0;
+    display: block;
 }
 
 .index .lead {
@@ -116,7 +168,7 @@ body.member {
     letter-spacing: -16px;
 }
 
-.index .giant small{
+.index .giant small {
     font-size: 60%;
     margin-left: -35px;
 }
@@ -128,39 +180,14 @@ body.member {
     display: block;
 }
 
-.banner {
-    position: relative;
-    color: #fff;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #67666D;
-    background-size: cover;
-}
-
-.manager-banner {
-    height: 500px;
-    padding-top: 40px;
-    color: #fff;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url(/images/worker.jpg);
-}
-
-.warehouse-banner {
-    height: 700px;
-    padding-top: 200px;
-    color: #fff;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2)), url(/images/warehouse.jpg);
-}
-
 .banner h1 {
     font-size: 38px;
-    text-shadow: 2px 2px #555;
-    text-transform: uppercase
+    text-transform: uppercase;
+    margin: 0
 }
 
-.banner h1 .small, .banner h1 small {
-    font-size: 80%;
-    color: #fff;
-    line-height: 32px;
+.blue.banner h1 {
+    text-shadow: 2px 2px #246798;
 }
 
 .login-container {
@@ -367,6 +394,10 @@ td.thumbnail {
     color: #333
 }
 
+.navbar-brand img {
+    height: 50px;
+}
+
 .navbar-brand .nh-nethouse {
     font-size: 50px;
     margin-right: 10px;
@@ -469,6 +500,6 @@ input + .help-block {
 
 @media (min-width: 1200px) {
     .container {
-        width: 970px;
+        width: 1140px;
     }
 }
