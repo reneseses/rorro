@@ -72,15 +72,12 @@ public class WarehouseController {
             Model uiModel,
             HttpServletRequest httpServletRequest) {
 
-        System.out.println("update");
-        System.out.println(warehouse);
-
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, warehouse);
             return "member/warehouse/update";
         }
         uiModel.asMap().clear();
-        warehouse.merge();
+        warehouse.update();
         return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
     }
 

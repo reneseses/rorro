@@ -265,7 +265,6 @@ public class WarehouseData {
         q.setParameter("id", this.id);
 
         q.executeUpdate();
-
     }
 
     public static List<WarehouseData> findWarehouseDataByWarehouse(Warehouse warehouse) {

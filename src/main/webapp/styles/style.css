@@ -473,7 +473,7 @@ input + .help-block {
     height: auto;
     margin: auto;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 @media (max-width: 767px) {

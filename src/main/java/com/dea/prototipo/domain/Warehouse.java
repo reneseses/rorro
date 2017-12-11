@@ -166,6 +166,18 @@ public class Warehouse {
     }
 
     @Transactional
+    public void update() {
+        if (this.id == null) throw new IllegalArgumentException("The warehouse argument is required");
+        EntityManager em = entityManager();
+        Query q = em.createQuery("UPDATE Warehouse SET name= :name, operationType= :operationType WHERE id = :id");
+        q.setParameter("name", this.name);
+        q.setParameter("operationType", this.operationType);
+        q.setParameter("id", this.id);
+
+        q.executeUpdate();
+    }
+
+    @Transactional
     public Warehouse merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         Warehouse merged = this.entityManager.merge(this);

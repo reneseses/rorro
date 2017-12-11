@@ -38,20 +38,35 @@ public class Benchmarking {
         return "member/benchmarking/index";
     }
 
-    @RequestMapping(value = "/solver", produces = "text/json")
+    @RequestMapping(value = "/solver", produces = "application/json;charset=utf-8")
     public @ResponseBody
     ResponseEntity<String> solver(@RequestParam(value = "warehouse") Long bodegaId, @RequestParam String period, @RequestParam(defaultValue = "default") String mode) {
         System.out.println("bodegaId es " + bodegaId);
 
         JSONArray errors = new JSONArray();
+        JSONObject jo = new JSONObject();
         Warehouse warehouse = Warehouse.findWarehouse(bodegaId);
         List<WarehouseData> warehouseData;
+
+        System.out.println("warehouse.getId() es" + warehouse.getId());
+        System.out.println("nombre warehouse con warehouse.getNombre()" + warehouse.getName());
+        System.out.println("modo: " + mode);
         switch (mode) {
             case "default":
                 warehouseData = WarehouseData.findWarehouseDataByPeriod(period);
+                if (warehouseData.size() < 2) {
+                    jo.put("message", "No se han encontrado más bodegas con datos en el periodo");
+                    return new ResponseEntity<>(jo.toString(), HttpStatus.BAD_REQUEST);
+                }
                 break;
             case "self":
                 warehouseData = WarehouseData.findWarehouseDataByWarehouse(warehouse);
+
+                if (warehouseData.size() < 2) {
+                    jo.put("message", "Deben exister al menos dos periodos para porder realizar la comparación");
+                    return new ResponseEntity<>(jo.toString(), HttpStatus.BAD_REQUEST);
+                }
+
                 break;
             default:
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,10 +75,7 @@ public class Benchmarking {
         int len = warehouseData.size();
         int varLen = 8;
 
-        System.out.println("warehouse.getId() es" + warehouse.getId());
-        System.out.println("nombre warehouse con warehouse.getNombre()" + warehouse.getName());
-        System.out.println("modo: " + mode);
-        System.out.print("Elementos a comparar " + len);
+        System.out.println("Elementos a comparar " + len);
 
         String[] DMUNames = new String[len];
 
@@ -174,14 +186,10 @@ public class Benchmarking {
             tester.solve();
             testerO.solve();
 
-            JSONObject jo = new JSONObject();
             jo.put("input", evaluateInputs(tester, indexToTest, DMUNames[indexToTest]));
             jo.put("output", evualateOutputs(testerO, indexToTest, DMUNames[indexToTest]));
             jo.put("errors", errors);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "application/json; charset=utf-8");
-
-            return new ResponseEntity<>(jo.toString(), headers, HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
+            return new ResponseEntity<>(jo.toString(), HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

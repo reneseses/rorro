@@ -61,7 +61,7 @@
                             <span>*</span>
                         </label>
                         <div class="col-md-8">
-                            <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="0"
+                            <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="1"
                                    value="${warehouseData.squareMeters}" required="true"/>
                         </div>
                     </div>
@@ -542,6 +542,12 @@
             var rootWizard = $('#rootwizard');
             var form = $("#warehouseData");
 
+            $.validator.addMethod("greaterThan", function(value, element, params) {
+                var field_1 = $('input[name="' + params[0] + '"]').val();
+                var field_2 = $('input[name="' + params[1] + '"]').val();
+                return parseInt(field_1) + parseInt(field_2) > parseInt(params[2]);
+            }, "La mano de obra no pueder ser nula");
+
             form.find('input[type=number]').focus(function () {
                 var _this = $(this);
                 var val = _this.val();
@@ -570,6 +576,11 @@
 
             form.validate({
                 errorElement: "em",
+                rules: {
+                    directWorkforce: {
+                        greaterThan: ['directWorkforce', 'indirectWorkforce', 0]
+                    }
+                },
                 errorPlacement: function (error, element) {
                     // Add the `help-block` class to the error element
                     error.addClass("help-block");
@@ -593,6 +604,10 @@
                     if (index === 2) {
                         makeSummary();
                         return true
+                    }
+
+                    if(prev === 0) {
+
                     }
 
                     var total = navigation.find('li').length;
