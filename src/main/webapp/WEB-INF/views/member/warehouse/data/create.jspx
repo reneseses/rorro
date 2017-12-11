@@ -61,7 +61,7 @@
                             <span>*</span>
                         </label>
                         <div class="col-md-8">
-                            <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="1"
+                            <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="1" step="1"
                                    value="${warehouseData.squareMeters}" required="true"/>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                             </label>
                             <div class="col-md-8">
                                 <input id="directWorkforce" name="directWorkforce" class="form-control"
-                                       type="number"
+                                       type="number" step="1"
                                        min="0" value="${warehouseData.directWorkforce}"/>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                             <label for="indirectWorkforce" class="col-md-4"><span>Indirecta</span></label>
                             <div class="col-md-8">
                                 <input id="indirectWorkforce" name="indirectWorkforce" class="form-control"
-                                       type="number" min="0" value="${warehouseData.indirectWorkforce}"/>
+                                       type="number" min="0" step="1" value="${warehouseData.indirectWorkforce}"/>
                             </div>
                         </div>
                     </div>
