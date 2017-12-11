@@ -109,7 +109,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="palletTruck" name="vehicles.palletTruck" class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.palletTruck}"/>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="walkieStacker" name="vehicles.walkieStacker" class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.walkieStacker}"/>
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="sitDownCounterBalance" name="vehicles.sitDownCounterBalance"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.sitDownCounterBalance}"/>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="standUpCounterBalance" name="vehicles.standUpCounterBalance"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.standUpCounterBalance}"/>
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="straddleTruck" name="vehicles.straddleTruck" class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.straddleTruck}"/>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                                         <div class="col-md-5">
                                             <input id="sideLoaderTruck" name="vehicles.sideLoaderTruck"
                                                    class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.sideLoaderTruck}"/>
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="turretTruck" name="vehicles.turretTruck" class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.turretTruck}"/>
                                         </div>
                                     </div>
@@ -194,7 +194,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="hybridTruck" name="vehicles.hybridTruck" class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.hybridTruck}"/>
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="palletASRSMachine" name="vehicles.palletASRSMachine"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.palletASRSMachine}"/>
                                         </div>
                                     </div>
@@ -216,7 +216,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="railGuidedOrderPicker" name="vehicles.railGuidedOrderPicker"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.railGuidedOrderPicker}"/>
                                         </div>
                                     </div>
@@ -227,7 +227,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="wireGuidedOrderPicker" name="vehicles.wireGuidedOrderPicker"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.vehicles.wireGuidedOrderPicker}"/>
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="AGV" name="vehicles.agv" class="form-control" type="number"
-                                                   min="0"
+                                                   min="0" step="1"
                                                    value="${warehouseData.vehicles.agv}"/>
                                         </div>
                                     </div>
@@ -267,7 +267,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="personAboardASRSAisles" name="storage.personAboardASRSAisles"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.storage.personAboardASRSAisles}"/>
                                         </div>
                                     </div>
@@ -278,7 +278,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="horizontalCarousel" name="storage.horizontalCarousel"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.storage.horizontalCarousel}"/>
                                         </div>
                                     </div>
@@ -289,7 +289,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="verticalCarousel" name="storage.verticalCarousel"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.storage.verticalCarousel}"/>
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@
                                                class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="miniloadASRSAisles" name="storage.miniloadASRSAisles"
-                                                   class="form-control" type="number" min="0"
+                                                   class="form-control" type="number" min="0" step="1"
                                                    value="${warehouseData.storage.miniloadASRSAisles}"/>
                                         </div>
                                     </div>
@@ -311,7 +311,7 @@
                                         <div class="col-md-5">
                                             <input id="aFrameDispenser" name="storage.aFrameDispenser"
                                                    class="form-control"
-                                                   type="number" min="0"
+                                                   type="number" min="0" step="1"
                                                    value="${warehouseData.storage.aFrameDispenser}"/>
                                         </div>
                                     </div>
@@ -420,6 +420,7 @@
                         <label for="totalOrders" class="col-md-4"><span>Ordenes Totales</span></label>
                         <div class="col-md-8">
                             <input id="totalOrders" name="output.totalOrders" class="form-control"
+                                   step="1" min="0"
                                    value="${warehouseData.output.totalOrders}"/>
                         </div>
 
@@ -432,7 +433,7 @@
                                class="col-md-4"><span>Lineas caja abierta despachadas</span></label>
                         <div class="col-md-8">
                             <input id="brokenCaseLines" name="output.brokenCaseLines" class="form-control" type="number"
-                                   min="0" value="${warehouseData.output.brokenCaseLines}"/>
+                                   min="0"  step="1" value="${warehouseData.output.brokenCaseLines}"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -440,14 +441,14 @@
                                class="col-md-4"><span>Lineas caja completa despachadas</span></label>
                         <div class="col-md-8">
                             <input id="fullCaseLines" name="output.fullCaseLines" class="form-control" type="number"
-                                   min="0" value="${warehouseData.output.brokenCaseLines}"/>
+                                   min="0"  step="1" value="${warehouseData.output.brokenCaseLines}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="palletLines" class="col-md-4"><span>Lineas pallet despachadas</span></label>
                         <div class="col-md-8">
                             <input id="palletLines" name="output.palletLines" class="form-control" type="number"
-                                   min="0" value="${warehouseData.output.palletLines}"/>
+                                   min="0"  step="1" value="${warehouseData.output.palletLines}"/>
                         </div>
                     </div>
 
@@ -459,14 +460,14 @@
                         <div class="col-md-8">
                             <input id="brokenCasePickSlots" name="output.brokenCasePickSlots" class="form-control"
                                    type="number"
-                                   min="0" value="${warehouseData.output.brokenCasePickSlots}"/>
+                                   min="0" step="1" value="${warehouseData.output.brokenCasePickSlots}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="floorStacking" class="col-md-4"><span>Almacenamiento en el suelo</span></label>
                         <div class="col-md-8">
                             <input id="floorStacking" name="output.floorStacking" class="form-control" type="number"
-                                   min="0" value="${warehouseData.output.floorStacking}"/>
+                                   min="0" step="1" value="${warehouseData.output.floorStacking}"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -474,7 +475,7 @@
                         <div class="col-md-8">
                             <input id="palletRackLocations" name="output.palletRackLocations" class="form-control"
                                    type="number"
-                                   min="0" value="${warehouseData.output.palletRackLocations}"/>
+                                   min="0" step="1" value="${warehouseData.output.palletRackLocations}"/>
                         </div>
                     </div>
                 </div>
