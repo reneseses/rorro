@@ -6,6 +6,9 @@
     <definition extends="public" name="index">
         <put-attribute name="body" value="/WEB-INF/views/index.jspx"/>
     </definition>
+    <definition extends="public" name="model">
+        <put-attribute name="body" value="/WEB-INF/views/model.jspx"/>
+    </definition>
 
     <definition extends="public" name="dataAccessFailure">
         <put-attribute name="body" value="/WEB-INF/views/dataAccessFailure.jspx"/>

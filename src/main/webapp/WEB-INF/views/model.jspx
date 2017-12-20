@@ -1,0 +1,133 @@
+<div xmlns:spring="http://www.springframework.org/tags" class="index"
+     xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <spring:message var="app_name" code="application_name" htmlEscape="false"/>
+    <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false"/>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model1.png" style="width: 100%; max-width: 1000px; margin: auto; display: block"/>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model2.png" style="width: 100%; max-width: 880px; margin: auto; display: block"/>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 80px; font-size: 18px">
+                <div style="font-size: 22px">LOS RECURSOS PRINCIPALES DE UNA BODEGA SON:</div>
+                <br/>
+                <div>INVERSIÓN</div>
+                <div>ESPACIO</div>
+                <div>MANO DE OBRA</div>
+            </div>
+            <img src="/images/model3.png" style="width: 100%; max-width: 880px; margin: auto; display: block"/>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model-equipos.png" style="width: 100%; max-width: 350px; margin: 0 auto 30px; display: block"/>
+            <div class="text-center" style="font-size: 18px">
+                CORRESPONDE A TODOS LOS <strong>VEHÍCULOS,</strong>
+                <div><strong>SISTEMAS DE ALMACENAMIENTO Y CINTAS</strong></div>
+                <strong>TRANSPORTADORAS</strong> UTILIZADOS EN LA
+                <div>BODEGA.</div>
+                <br />
+                SE CUANTIFICA COMO LA SUMA TOTAL DEL
+                <div><strong>COSTO ESTANDAR DE REEMPLAZO</strong> DE CADA</div>
+                EQUIPO.
+            </div>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model-superficie.png" style="width: 100%; max-width: 350px; margin: 0 auto 25px; display: block"/>
+            <div class="text-center" style="font-size: 18px">
+                ES LA SUPERFICIE DEDICADA A LAS
+                <div>OPERACIONES DE RECEPCIÓN, UBICACIÓN, </div>
+                ALMACENAMIENTO, RECUPERACIÓN,
+                <div>RECOLECCIÓN DE PEDIDOS, EMPAQUE Y </div>
+                <div>DESPACHO.</div>
+                <br />
+                SE CUANTIFICA COMO EL TOTAL DE <strong>METROS</strong>
+                <div><strong>CUADRADOS</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model-hh.png" style="width: 100%; max-width: 370px; margin: 0 auto 25px; display: block"/>
+            <div class="text-center" style="font-size: 18px">
+                <div>ES LA MANO DE OBRA QUE DESEMPEÑA LAS</div>
+                OPERACIONES DE RECEPCIÓN, UBICACIÓN,
+                <div>ALMACENAMIENTO, RECUPERACIÓN,</div>
+                RECOLECCIÓN DE PEDIDOS , EMPAQUE Y
+                <div>DESPACHO. TAMBIÉN SE CONSIDERA EL TRABAJO</div>
+                INDIRECTO DE ADMINISTRACIÓN,
+                <div>PLANIFICACIÓN Y MANTENIMIENTO DE EQUIPOS.</div>
+                <br/>
+                SE CUANTIFICA COMO EL TOTAL DE <strong>HORAS DE</strong>
+                <div>MANO DE OBRA ANUALES INCLUYENDO MANO</div>
+                DE OBRA <strong>DIRECTA</strong> E <strong>INDIRECTA</strong>.
+
+            </div>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 80px; font-size: 18px">
+                <div style="font-size: 22px">UNA BODEGA PROVEE TRES SERVICIOS VALIOSOS:</div>
+                <br/>
+                <div>ALMACENAMIENTO DE PRODUCTOS</div>
+                <div>PROCESAMIENTO DE LA DEMANDA</div>
+                <div>CONSOLIDACIÓN DE PEDIDOS</div>
+            </div>
+            <img src="/images/model-4.png" style="width: 100%; max-width: 880px; margin: auto; display: block"/>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model-acumulacion.png" style="width: 100%; max-width: 360px; margin: 0 auto 15px; display: block"/>
+            <div class="text-center" style="font-size: 18px">
+                CORRESPONDE A LA CONSOLIDACIÓN DE
+                <div>PEDIDOS</div>
+                <br />
+                SE CUANTIFICA COMO LA DIFERENCIA ENTRE
+                <div> EL <strong>TOTAL DE LÍNEAS </strong></div>
+                <div>RECOLECTADAS/DESPACHADAS</div>
+                Y EL <strong>TOTAL DE PEDIDOS</strong> ANUALES.
+            </div>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model-almacenamiento.png" style="width: 100%; max-width: 459px; margin: 0 auto 15px; display: block"/>
+            <div class="text-center" style="font-size: 18px">
+                CORRESPONDE A LA FORMA EN QUE LOS
+                <div>PRODUCTOS SON ALMACENADOS EN  LA </div>
+                <div>BODEGA.</div>
+                <br />
+                SE CUANTIFICA A TRAVÉS DE LA <strong>FUNCIÓN DE</strong>
+                <div><strong>ALMACENAMIENTO.</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blue banner" style="padding: 50px 0; border-bottom: 2px solid #fff">
+        <div class="container">
+            <img src="/images/model-5.png" style="width: 100%; max-width: 1000px; margin: 0 auto 15px; display: block"/>
+        </div>
+    </section>
+
+</div>
