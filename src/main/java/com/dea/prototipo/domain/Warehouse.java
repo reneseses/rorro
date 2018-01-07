@@ -1,8 +1,6 @@
 package com.dea.prototipo.domain;
 
 import flexjson.JSONSerializer;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -10,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RooJavaBean
 @RooToString
@@ -31,8 +27,8 @@ public class Warehouse {
      */
     @NotNull
     private String name;
-    
-    
+
+
     @Version
     private Integer version;
 
@@ -40,7 +36,11 @@ public class Warehouse {
      */
     @NotNull
     @Enumerated(EnumType.STRING)
-    private OperationType operationType;
+    private ProductType productType;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TILevel tiLevel;
 
     @ManyToOne
     private User user;
@@ -61,12 +61,20 @@ public class Warehouse {
         this.version = version;
     }
 
-    public OperationType getOperationType() {
-        return this.operationType;
+    public ProductType getProductType() {
+        return this.productType;
     }
 
-    public void setOperationType(OperationType operationType) {
-        this.operationType = operationType;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public TILevel getTiLevel() {
+        return this.tiLevel;
+    }
+
+    public void setTiLevel(TILevel tiLevel) {
+        this.tiLevel = tiLevel;
     }
 
     public User getUser() {
@@ -88,7 +96,7 @@ public class Warehouse {
     @PersistenceContext
     transient EntityManager entityManager;
 
-    public static final List<String> fieldNames4OrderClauseFilter = java.util.Arrays.asList("operationType", "user", "name");
+    public static final List<String> fieldNames4OrderClauseFilter = java.util.Arrays.asList("productType", "user", "name");
 
     public static final EntityManager entityManager() {
         EntityManager em = new Warehouse().entityManager;
@@ -169,9 +177,9 @@ public class Warehouse {
     public void update() {
         if (this.id == null) throw new IllegalArgumentException("The warehouse argument is required");
         EntityManager em = entityManager();
-        Query q = em.createQuery("UPDATE Warehouse SET name= :name, operationType= :operationType WHERE id = :id");
+        Query q = em.createQuery("UPDATE Warehouse SET name= :name, productType= :operationType WHERE id = :id");
         q.setParameter("name", this.name);
-        q.setParameter("operationType", this.operationType);
+        q.setParameter("operationType", this.productType);
         q.setParameter("id", this.id);
 
         q.executeUpdate();

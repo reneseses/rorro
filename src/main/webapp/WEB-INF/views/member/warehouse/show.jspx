@@ -36,15 +36,15 @@
                 <div class="clearfix"><!-- --></div>
             </div>
             <div class="row">
-                <div class="col-sm-4 col-md-3">Tipo de Operación</div>
-                <div class="col-sm-8 col-md-9" style="text-transform: capitalize">
-                    <strong>${fn:toLowerCase(warehouse.operationType)}</strong>
+                <div class="col-sm-12 col-md-4">Tipo de Producto</div>
+                <div class="col-sm-12 col-md-8">
+                    <strong>${warehouse.productType.getName()}</strong>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 col-md-3">Sector Productivo</div>
-                <div class="col-sm-8 col-md-9" style="text-transform: capitalize">
-                    <strong>${fn:toLowerCase(warehouse.operationType)}</strong>
+                <div class="col-sm-12 col-md-4">Nivel de tecnologías de información</div>
+                <div class="col-sm-12 col-md-8" style="text-transform: capitalize">
+                    <strong>${warehouse.tiLevel.getName()}</strong>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
                                 <td class="text-center"><fmt:formatNumber
                                         value="${data.directWorkforce + data.indirectWorkforce}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.outputAccumulation}"/></td>
-                                <td class="text-center"><fmt:formatNumber value="${data.outputStorage}"/></td>
+                                <td class="text-center"><fmt:formatNumber value="${data.outputStorage}" maxFractionDigits="3"/></td>
                                 <td style="padding: 5px 8px">
                                     <button class="btn btn-default btn-xs">
                                         <i class="fa fa-fw fa-arrow-right"><!-- --></i> Ver

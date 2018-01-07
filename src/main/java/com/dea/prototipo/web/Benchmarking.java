@@ -5,17 +5,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.opensourcedea.dea.*;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import java.util.*;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,8 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.persistence.Basic;
 
 @RequestMapping("/member/benchmarking")
 @Controller
@@ -384,7 +378,7 @@ public class Benchmarking {
         for (int j = 0; j < 20; j++) {
             Warehouse warehouse = new Warehouse();
             warehouse.setName("Warehouse " + j);
-            warehouse.setOperationType(OperationType.DISTRIBUCION);
+            warehouse.setProductType(ProductType.Drinks);
 
             //warehouse.merge();
 

@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +30,7 @@ public class WarehouseController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(
-            @Valid Warehouse warehouse,
+            @ModelAttribute("warehouseForm") @Valid Warehouse warehouse,
             BindingResult bindingResult,
             Model uiModel,
             HttpServletRequest httpServletRequest) {
@@ -46,8 +45,19 @@ public class WarehouseController {
         }
         uiModel.asMap().clear();
         warehouse.setUser(user);
-        warehouse.persist();
-        return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
+        try {
+            warehouse.persist();
+            return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
+        } catch (Exception e) {
+            String message = "Algo ha salido mal";
+            if(e.getLocalizedMessage().contains("Duplicate entry")) {
+                message = "Ya existe una bodega con este nombre";
+            }
+
+            bindingResult.rejectValue("name","save_error", message);
+            populateEditForm(uiModel, warehouse);
+            return "member/warehouse/create";
+        }
     }
 
     @RequestMapping(params = "form", produces = "text/html")
@@ -136,12 +146,13 @@ public class WarehouseController {
         return "redirect:/member";
     }
 
-    void populateEditForm(Model uiModel, Warehouse warehouse) {
+    private void populateEditForm(Model uiModel, Warehouse warehouse) {
         uiModel.addAttribute("warehouse", warehouse);
-        uiModel.addAttribute("operationTypes", Arrays.asList(OperationType.values()));
+        uiModel.addAttribute("productTypes", Arrays.asList(ProductType.values()));
+        uiModel.addAttribute("tiLevels", Arrays.asList(TILevel.values()));
     }
 
-    String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
+    private String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
         if (enc == null) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;

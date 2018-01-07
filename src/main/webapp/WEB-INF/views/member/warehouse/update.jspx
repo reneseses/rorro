@@ -7,7 +7,7 @@
                  versionField="Version" z="user-managed">
         <field:input field="name" id="c_com_dea_prototipo_domain_Warehouse_name" required="true"
                      z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
-        <field:select field="operationType" id="c_com_dea_prototipo_domain_Warehouse_operationType"
-                      items="${operationTypes}" path="operationType" required="true" z="igHn5temVyGDrO/oe2p/R8uYDUE="/>
+        <field:select field="productType" id="c_com_dea_prototipo_domain_Warehouse_operationType"
+                      items="${operationTypes}" path="productType" required="true" z="igHn5temVyGDrO/oe2p/R8uYDUE="/>
     </form:update>
 </div>

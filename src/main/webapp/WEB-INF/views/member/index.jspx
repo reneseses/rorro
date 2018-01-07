@@ -36,7 +36,7 @@
                             <strong>${warehouse.name}</strong>
                         </td>
                         <td class="text-capitalize"
-                            style="vertical-align: middle">${fn:toLowerCase(warehouse.operationType)}</td>
+                            style="vertical-align: middle">${fn:toLowerCase(warehouse.productType)}</td>
                         <td style="width: 61px; vertical-align: middle">
                             <button class="btn btn-default btn-xs">
                                 <i class="fa fa-arrow-right"><!-- --></i> Ver

@@ -56,9 +56,8 @@
                 <div class="tab-pane" id="tab1">
                     <div class="form-group">
                         <label for="squareMeters" class="col-md-4">
-                            Area Total
+                            Área Total
                             <small>(m <sup>2</sup>)</small>
-                            <span>*</span>
                         </label>
                         <div class="col-md-8">
                             <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="1" step="1"
@@ -101,7 +100,7 @@
                                 <div class="panel-body ">
                                     <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
                                         <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
-                                        <div class="col-md-5 text-center">Unidades</div>
+                                        <div class="col-md-5 text-center">Total (unidades)</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="palletTruck" class="col-md-4"><span>Carretillas</span></label>
@@ -258,7 +257,7 @@
                                 <div class="panel-body ">
                                     <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
                                         <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
-                                        <div class="col-md-5 text-center">Unidades</div>
+                                        <div class="col-md-5 text-center">Total (unidades)</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="personAboardASRSAisles"
@@ -332,7 +331,7 @@
                                 <div class="panel-body ">
                                     <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
                                         <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
-                                        <div class="col-md-5 text-center">Unidades</div>
+                                        <div class="col-md-5 text-center">Total (metros)</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="nonPoweredRoller"
@@ -417,7 +416,7 @@
                 </div>
                 <div class="tab-pane" id="tab2">
                     <div class="form-group">
-                        <label for="totalOrders" class="col-md-4"><span>Ordenes Totales</span></label>
+                        <label for="totalOrders" class="col-md-4"><span>Total de pedidos</span></label>
                         <div class="col-md-8">
                             <input id="totalOrders" name="output.totalOrders" class="form-control"
                                    step="1" min="0"
@@ -495,7 +494,7 @@
                                     <td class="text-right" id="work-force-row"><!-- --></td>
                                 </tr>
                                 <tr>
-                                    <th>Metros Cuadrados</th>
+                                    <th>Área Total</th>
                                     <td class="text-right" id="area-row"><!-- --></td>
                                 </tr>
                                 <tr class="active">
@@ -671,7 +670,8 @@
 
                 var directWorkforce = parseFloat($("#directWorkforce").val() || 0);
                 var indirectWorkforce = parseFloat($("#indirectWorkforce").val() || 0);
-                $("#work-force-row").text(directWorkforce + indirectWorkforce);
+                var workforce = directWorkforce + indirectWorkforce
+                $("#work-force-row").text(workforce.toLocaleString());
 
                 var brokenCaseLines = parseFloat($("#brokenCaseLines").val() || 0);
                 var fullCaseLines = parseFloat($("#fullCaseLines").val() || 0);
@@ -690,6 +690,7 @@
                     var p = brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines);
                     var storage = p * Math.sqrt(brokenCasePickSlots) + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(squareMeters * floorStacking));
 
+                    storage = Math.round(storage * 1000) / 1000;
                     $("#storage-row").text(storage.toLocaleString())
                 }
 
