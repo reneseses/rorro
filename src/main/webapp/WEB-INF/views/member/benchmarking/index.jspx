@@ -8,54 +8,91 @@
             Benchmark
         </div>
         <div class="panel-body">
-            <form class="row">
-                <div class="col-xs-12 col-md-10">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-4">
-                            <div class="form-group">
-                                <label for="warehouse-select">
-                                    Bodega
-                                </label>
-                                <select id="warehouse-select" class="form-control">
-                                    <option><!-- --></option>
-                                    <c:forEach items="${warehouses}" var="warehouse">
-                                        <option value="${warehouse.id }">${warehouse.name }</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+            <form>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <label for="warehouse-select">
+                                Bodega
+                            </label>
+                            <select id="warehouse-select" class="form-control">
+                                <option><!-- --></option>
+                                <c:forEach items="${warehouses}" var="warehouse">
+                                    <option value="${warehouse.id }">${warehouse.name }</option>
+                                </c:forEach>
+                            </select>
                         </div>
+                    </div>
 
-                        <div class="col-xs-12 col-md-4">
-                            <div class="form-group">
-                                <label for="period-select">
-                                    Periodo
-                                </label>
-                                <select id="period-select" class="form-control" disabled="disabled">
-                                    <option><!-- --></option>
-                                </select>
-                            </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <label for="period-select">
+                                Periodo
+                            </label>
+                            <select id="period-select" class="form-control" disabled="disabled">
+                                <option><!-- --></option>
+                            </select>
                         </div>
+                    </div>
 
-                        <div class="col-xs-12 col-md-4">
-                            <div class="form-group">
-                                <label for="mode-select">
-                                    Modo
-                                </label>
-                                <select id="mode-select" class="form-control" disabled="disabled">
-                                    <option value="default">Con universo</option>
-                                    <option value="self">Consigo misma</option>
-                                </select>
-                            </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <label for="mode-select">
+                                Grupo
+                            </label>
+                            <select id="mode-select" class="form-control" disabled="disabled">
+                                <option value="default">Todas las bodegas</option>
+                                <option value="self">Consigo misma</option>
+                                <option value="user">Entre mis bodegas</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-2">
-                    <button class="btn btn-primary btn-block" style="margin-top: 24px" id="genBenchmark"
-                            type="button">Generar
+                <div><strong>Sólo considerar bodegas</strong></div>
+                <ul class="list-unstyled" style="padding-left: 40px">
+                    <li>
+                        <div class="checkbox" style="margin-right: 20px">
+                            <label>
+                                <input type="checkbox" id="operationType"/>
+                                Con el mismo tipo de operación
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="checkbox" style="margin-right: 20px">
+                            <label data-info="Sólo se tomarán en cuenta bodegas con el mismo nivel de tecnologías de la información">
+                                <input type="checkbox" id="tiLevel"/>
+                                Con el mismo nivel de tecnologías de la información
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="checkbox" style="margin-right: 20px">
+                            <label>
+                                <input type="checkbox" id="productType"/>
+                                Con el mismo tipo de producto
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="checkbox" style="margin-right: 20px">
+                            <label>
+                                <input type="checkbox" id="samePeriod"/>
+                                Del mismo periodo seleccionado
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <hr/>
+                <div>
+                    <button class="btn btn-primary pull-right" id="genBenchmark" type="button">
+                        Generar
                     </button>
+                    <div class="clearfix"><!-- --></div>
                 </div>
             </form>
-            <HR/>
+
+            <hr/>
             <div id="benchmark-result" class="hidden">
                 <p>
                     <STRONG>ORIENTACION HACIA LAS ENTRADAS</STRONG>
@@ -95,6 +132,11 @@
         $(function () {
             var periodSelect = $("#period-select");
             var modeSelect = $("#mode-select");
+            var samePeriod = $("#samePeriod");
+            var tiLevel = $("#tiLevel");
+            var productType = $("#productType");
+            var operationType = $("#operationType");
+
             $("#warehouse-select")
                 .change(function () {
                     var id = $(this).val();
@@ -125,6 +167,22 @@
                             console.log(err.responseText)
                         })
                 });
+
+            modeSelect.change(function () {
+                var val = $(this).val();
+                $('.checkbox').each(function () {
+                    var el = $(this);
+                    if (val === 'self') {
+                        el.addClass('disabled')
+                            .find('input[type=checkbox]').prop('disabled', true)
+                    } else {
+                        el.removeClass('disabled')
+                            .find('input[type=checkbox]').prop('disabled', false)
+                    }
+
+                })
+            });
+
             $("#genBenchmark")
                 .click(function () {
                     var warehouseId = $("#warehouse-select").val();
@@ -143,13 +201,24 @@
 
                     var result = $("#benchmark-result");
                     var error = $("#benchmark-error");
+
                     $
                         .ajax({
                             url: "${bench_url}",
                             type: "GET",
-                            data: {warehouse: warehouseId, period: period, mode: mode}
+                            data: {
+                                warehouse: warehouseId,
+                                period: parseInt(period),
+                                mode: mode,
+                                samePeriod: samePeriod[0].checked,
+                                tiLevel: tiLevel[0].checked,
+                                productType: productType[0].checked,
+                                operationType: operationType[0].checked
+                            }
                         })
                         .done(function (data) {
+                            console.log(data)
+
                             var $rendimiento = $("<li/>");
                             var $ranking = $("<li/>");
                             var $rendimientoO = $("<li/>");
@@ -194,11 +263,11 @@
 
                             try {
                                 var obj = JSON.parse(err);
-                                console.log(obj)
-                                if(obj.message) {
+                                if (obj.message) {
                                     err = obj.message;
                                 }
-                            } catch (e) {}
+                            } catch (e) {
+                            }
 
                             result.addClass('hidden');
                             error

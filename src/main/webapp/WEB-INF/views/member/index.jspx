@@ -17,13 +17,17 @@
 
         <div>
             <table class="table table-hover no-margin">
-                <!--<thead>
+                <c:if test="${warehouses.size() gt 0}">
+                <thead>
                 <tr>
+                    <th><!-- --></th>
                     <th>Nombre</th>
-                    <th>Tipo de Operación</th>
-                    <th style="width: 39px">&lt;!&ndash; &ndash;&gt;</th>
+                    <th style="width: 180px">Tipo de Operación</th>
+                    <th  style="width: 180px">Nivel TI</th>
+                    <th style="width: 39px"><!-- --></th>
                 </tr>
-                </thead>-->
+                </thead>
+                </c:if>
                 <tbody>
                 <c:forEach items="${warehouses}" var="warehouse">
                     <spring:url value="/member/warehouse/${warehouse.id}" var="show_url"/>
@@ -36,7 +40,13 @@
                             <strong>${warehouse.name}</strong>
                         </td>
                         <td class="text-capitalize"
-                            style="vertical-align: middle">${fn:toLowerCase(warehouse.productType)}</td>
+                            style="vertical-align: middle">
+                            ${warehouse.operationType.getName()}
+                        </td>
+                        <td class="text-capitalize"
+                            style="vertical-align: middle">
+                            ${warehouse.tiLevel.getName()}
+                        </td>
                         <td style="width: 61px; vertical-align: middle">
                             <button class="btn btn-default btn-xs">
                                 <i class="fa fa-arrow-right"><!-- --></i> Ver

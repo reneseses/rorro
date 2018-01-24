@@ -36,9 +36,9 @@
                 <div class="clearfix"><!-- --></div>
             </div>
             <div class="row">
-                <div class="col-sm-12 col-md-4">Tipo de Producto</div>
-                <div class="col-sm-12 col-md-8">
-                    <strong>${warehouse.productType.getName()}</strong>
+                <div class="col-sm-12 col-md-4">Tipo de operación</div>
+                <div class="col-sm-12 col-md-8" style="text-transform: capitalize">
+                    <strong>${warehouse.operationType.getName()}</strong>
                 </div>
             </div>
             <div class="row">
@@ -47,6 +47,13 @@
                     <strong>${warehouse.tiLevel.getName()}</strong>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-4">Tipo de Producto</div>
+                <div class="col-sm-12 col-md-8">
+                    <strong>${warehouse.productType.getName()}</strong>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -78,6 +85,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <fmt:setLocale value="es_CL" />
                         <c:forEach items="${warehouseData}" var="data">
                             <spring:url value="/member/warehouse/${warehouse.id}/data/${data.id}?form" var="show_url"/>
                             <fmt:setLocale value="es_CL"/>
@@ -88,7 +96,7 @@
                                 <td class="text-center"><fmt:formatNumber value="${data.squareMeters}"/></td>
                                 <td class="text-center"><fmt:formatNumber
                                         value="${data.directWorkforce + data.indirectWorkforce}"/></td>
-                                <td class="text-center"><fmt:formatNumber value="${data.outputAccumulation}"/></td>
+                                <td class="text-center"><fmt:formatNumber  value="${data.outputAccumulation}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.outputStorage}" maxFractionDigits="3"/></td>
                                 <td style="padding: 5px 8px">
                                     <button class="btn btn-default btn-xs">

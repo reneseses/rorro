@@ -50,11 +50,11 @@ public class WarehouseController {
             return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
         } catch (Exception e) {
             String message = "Algo ha salido mal";
-            if(e.getLocalizedMessage().contains("Duplicate entry")) {
+            if (e.getLocalizedMessage().contains("Duplicate entry")) {
                 message = "Ya existe una bodega con este nombre";
             }
 
-            bindingResult.rejectValue("name","save_error", message);
+            bindingResult.rejectValue("name", "save_error", message);
             populateEditForm(uiModel, warehouse);
             return "member/warehouse/create";
         }
@@ -87,8 +87,21 @@ public class WarehouseController {
             return "member/warehouse/update";
         }
         uiModel.asMap().clear();
-        warehouse.update();
-        return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
+        System.out.println(warehouse.toString());
+        try {
+            warehouse.update();
+            return "redirect:/member/warehouse/" + encodeUrlPathSegment(warehouse.getId().toString(), httpServletRequest);
+        } catch (Exception e) {
+            String message = "Algo ha salido mal";
+            if (e.getLocalizedMessage().contains("Duplicate entry")) {
+                message = "Ya existe una bodega con este nombre";
+            }
+
+            bindingResult.rejectValue("name", "save_error", message);
+            populateEditForm(uiModel, warehouse);
+            return "member/warehouse/update";
+        }
+
     }
 
     @RequestMapping(value = "/{id}/image", method = RequestMethod.POST)
@@ -148,6 +161,7 @@ public class WarehouseController {
 
     private void populateEditForm(Model uiModel, Warehouse warehouse) {
         uiModel.addAttribute("warehouse", warehouse);
+        uiModel.addAttribute("operationTypes", Arrays.asList(OperationType.values()));
         uiModel.addAttribute("productTypes", Arrays.asList(ProductType.values()));
         uiModel.addAttribute("tiLevels", Arrays.asList(TILevel.values()));
     }

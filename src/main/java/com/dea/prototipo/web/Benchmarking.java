@@ -34,38 +34,55 @@ public class Benchmarking {
 
     @RequestMapping(value = "/solver", produces = "application/json;charset=utf-8")
     public @ResponseBody
-    ResponseEntity<String> solver(@RequestParam(value = "warehouse") Long bodegaId, @RequestParam String period, @RequestParam(defaultValue = "default") String mode) {
+    ResponseEntity<String> solver(
+            @RequestParam(value = "warehouse") Long bodegaId,
+            @RequestParam Integer period,
+            @RequestParam(defaultValue = "default") String mode,
+            @RequestParam Boolean operationType,
+            @RequestParam Boolean productType,
+            @RequestParam Boolean tiLevel,
+            @RequestParam Boolean samePeriod) {
         System.out.println("bodegaId es " + bodegaId);
+
+        operationType = operationType == null ? false : operationType;
+        productType = productType == null ? false : productType;
+        tiLevel = tiLevel == null ? false : tiLevel;
+        samePeriod = samePeriod == null ? false : samePeriod;
 
         JSONArray errors = new JSONArray();
         JSONObject jo = new JSONObject();
         Warehouse warehouse = Warehouse.findWarehouse(bodegaId);
-        List<WarehouseData> warehouseData;
+        List<WarehouseData> warehouseData = new ArrayList<>();
 
         System.out.println("warehouse.getId() es" + warehouse.getId());
         System.out.println("nombre warehouse con warehouse.getNombre()" + warehouse.getName());
         System.out.println("modo: " + mode);
+
+        WarehouseData selectedWD = WarehouseData.findWarehouseDataByWarehouseAndPeriod(warehouse, period);
+
+        if (selectedWD == null) {
+            jo.put("message", "Datos de bodegas no encontrados");
+            return new ResponseEntity<>(jo.toString(), HttpStatus.BAD_REQUEST);
+        }
+
         switch (mode) {
             case "default":
-                warehouseData = WarehouseData.findWarehouseDataByPeriod(period);
-                if (warehouseData.size() < 2) {
-                    jo.put("message", "No se han encontrado más bodegas con datos en el periodo");
-                    return new ResponseEntity<>(jo.toString(), HttpStatus.BAD_REQUEST);
-                }
+            case "user":
+                warehouseData = selectedWD.findBenchmarking(mode, operationType, productType, tiLevel, samePeriod);
                 break;
             case "self":
-                warehouseData = WarehouseData.findWarehouseDataByWarehouse(warehouse);
-
-                if (warehouseData.size() < 2) {
-                    jo.put("message", "Deben exister al menos dos periodos para porder realizar la comparación");
-                    return new ResponseEntity<>(jo.toString(), HttpStatus.BAD_REQUEST);
-                }
-
+                warehouseData = selectedWD.findBenchmarking(mode, false, false, false, false);
                 break;
             default:
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        if (warehouseData.size() < 2) {
+            jo.put("message", "No se han encontrado más bodegas con datos en el periodo");
+            return new ResponseEntity<>(jo.toString(), HttpStatus.BAD_REQUEST);
+        }
+
+        warehouseData.add(selectedWD);
         int len = warehouseData.size();
         int varLen = 8;
 
@@ -384,7 +401,7 @@ public class Benchmarking {
 
             WarehouseData wData = new WarehouseData();
 
-            wData.setPeriod("2017");
+            wData.setPeriod(2017);
             wData.setWarehouse(warehouse);
 
             WarehouseDataConveyor conveyor = new WarehouseDataConveyor();
@@ -473,9 +490,7 @@ public class Benchmarking {
             jsonObject.put("error", e.getMessage());
         }
 
-        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);//Variable String que mostrará por pantalla la información del DEA solver
+        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
     }
-
-
 }
 

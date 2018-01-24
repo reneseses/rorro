@@ -3,9 +3,12 @@ package com.dea.prototipo.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.dea.prototipo.domain.Warehouse;
+import com.dea.prototipo.domain.*;
 import com.dea.prototipo.web.forms.SignupForm;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,8 +17,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.dea.prototipo.domain.User;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Random;
 
 @RequestMapping("/")
 @Controller
@@ -60,6 +65,78 @@ public class PublicController {
         user.persist();
 
         return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/testData", produces = "text/json")
+    public @ResponseBody
+    ResponseEntity<String> createTestData() {
+        OperationType[] oTypes = OperationType.values();
+        ProductType[] pTypes = ProductType.values();
+        TILevel[] tiLevels = TILevel.values();
+
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setName("User" + i);
+            user.setPassword(messageDigestPasswordEncoder.encodePassword("passpass", null));
+            user.setEmail("user" + i + "@test.com");
+            user.persist();
+
+            for (int j = 0; j < 10; j++) {
+                Random rand = new Random();
+                int oType = rand.nextInt(oTypes.length);
+                int pType = rand.nextInt(pTypes.length);
+                int tiLevel = rand.nextInt(tiLevels.length);
+                Warehouse warehouse = new Warehouse();
+                warehouse.setName("Warehouse-" + i + "-" + j);
+                warehouse.setOperationType(oTypes[oType]);
+                warehouse.setProductType(pTypes[pType]);
+                warehouse.setTiLevel(tiLevels[tiLevel]);
+                warehouse.setUser(user);
+                warehouse.persist();
+
+                for (int k = 0; k < 10; k++) {
+                    WarehouseDataConveyor conveyor = new WarehouseDataConveyor();
+                    conveyor.persist();
+
+                    WarehouseDataStorage storage = new WarehouseDataStorage();
+                    storage.persist();
+
+                    WarehouseDataVehicles vehicles = new WarehouseDataVehicles();
+                    vehicles.setPalletTruck(rand.nextInt(3) + 1);
+                    vehicles.setWalkieStacker(rand.nextInt(1));
+                    vehicles.persist();
+
+                    WarehouseDataOutput output = new WarehouseDataOutput();
+                    output.setTotalOrders(rand.nextInt(1000) + 1000);
+                    output.setBrokenCaseLines(rand.nextInt(500) + 200);
+                    output.setFullCaseLines(rand.nextInt(500) + 200);
+                    output.setPalletLines(rand.nextInt(500) + 200);
+
+                    int diff = output.getTotalOrders() - output.getBrokenCaseLines() - output.getFullCaseLines() - output.getPalletLines();
+                    if (diff > 0) {
+                        output.setFloorStacking(rand.nextInt(diff));
+                        diff -= output.getFloorStacking();
+                        output.setBrokenCasePickSlots(diff > 0 ? rand.nextInt(diff) : 0);
+                        output.setPalletRackLocations(diff - output.getBrokenCasePickSlots());
+                    }
+                    output.persist();
+
+                    WarehouseData wData = new WarehouseData();
+                    wData.setDirectWorkforce(rand.nextInt(200000));
+                    wData.setIndirectWorkforce(rand.nextInt(200000));
+                    wData.setPeriod(2007 + k);
+                    wData.setSquareMeters(rand.nextInt(400) + 100);
+                    wData.setWarehouse(warehouse);
+                    wData.setConveyor(conveyor);
+                    wData.setStorage(storage);
+                    wData.setVehicles(vehicles);
+                    wData.setOutput(output);
+                    wData.persist();
+                }
+            }
+        }
+
+        return new ResponseEntity<>(new JSONObject().toString(), HttpStatus.OK);
     }
 
 }

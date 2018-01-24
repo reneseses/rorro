@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="http://www.springframework.org/tags/form"
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
      xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:update id="fu_com_dea_prototipo_domain_Warehouse" modelAttribute="warehouse" path="/member/warehouse"
-                 versionField="Version" z="user-managed">
-        <field:input field="name" id="c_com_dea_prototipo_domain_Warehouse_name" required="true"
-                     z="HqdMGO/O76YcgRHUr3g+U0g2Xt8="/>
-        <field:select field="productType" id="c_com_dea_prototipo_domain_Warehouse_operationType"
-                      items="${operationTypes}" path="productType" required="true" z="igHn5temVyGDrO/oe2p/R8uYDUE="/>
-    </form:update>
+    <spring:url value="/member/warehouse" var="form_url" />
+    <form:form class="well" method="POST" action="${form_url}" enctype="application/x-www-form-urlencoded" modelAttribute="warehouseForm">
+        <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+        <input type="hidden" name="_method" value="PUT" />
+        <input id="_id_id" name="id" type="hidden" value="${warehouse.id}" />
+        <div class="form-group">
+            <label for="name">Nombre *</label>
+            <input class="form-control" id="name" name="name" value="${warehouse.name}" required=""/>
+        </div>
+        <div class="form-group">
+            <label for="operationType">Tipo de operación *</label>
+            <select id="operationType" required=""
+                    name="operationType" class="form-control">
+                <option><!-- --></option>
+                <c:forEach items="${operationTypes}" var="operationType">
+                    <c:if test="${operationType eq warehouse.operationType}">
+                        <option value="${operationType}" selected="" >${operationType.getName()}</option>
+                    </c:if>
+                    <c:if test="${operationType ne warehouse.operationType}">
+                        <option value="${operationType}" >${operationType.getName()}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tiLevel">Nivel de tecnologías de información *</label>
+            <select id="tiLevel" required=""
+                    name="tiLevel" class="form-control">
+                <option><!-- --></option>
+                <c:forEach items="${tiLevels}" var="tiLevel">
+                    <c:if test="${tiLevel eq warehouse.tiLevel}">
+                        <option value="${tiLevel}" selected="">${tiLevel.getName()}</option>
+                    </c:if>
+                    <c:if test="${tiLevel ne warehouse.tiLevel}">
+                        <option value="${tiLevel}">${tiLevel.getName()}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="productType">Tipo de Producto</label>
+            <select id="productType"
+                    name="productType" class="form-control">
+                <option><!-- --></option>
+                <c:forEach items="${productTypes}" var="productType">
+                    <c:if test="${productType eq warehouse.productType}">
+                        <option value="${productType}" selected="">${productType.getName()}</option>
+                    </c:if>
+                    <c:if test="${productType ne warehouse.productType}">
+                        <option value="${productType}">${productType.getName()}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-primary">Guardar</button>
+        </div>
+    </form:form>
 </div>

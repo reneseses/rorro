@@ -12,24 +12,36 @@
     <form:form class="well" method="POST" action="${form_url}" enctype="application/x-www-form-urlencoded" modelAttribute="warehouseForm">
         <form:errors path="*" cssClass="alert alert-danger" element="div"/>
         <div class="form-group">
-            <label for="name">Nombre</label>
+            <label for="name">Nombre *</label>
             <input class="form-control" id="name" name="name" value="${warehouse.name}" required=""/>
         </div>
         <div class="form-group">
-            <label for="productType">Tipo de Producto</label>
-            <select id="productType" required=""
-                    name="productType" class="form-control">
-                <c:forEach items="${productTypes}" var="productType">
-                    <option value="${productType}">${productType.getName()}</option>
+            <label for="operationType">Tipo de operación *</label>
+            <select id="operationType" required=""
+                    name="operationType" class="form-control">
+                <option><!-- --></option>
+                <c:forEach items="${operationTypes}" var="operationType">
+                    <option value="${operationType}">${operationType.getName()}</option>
                 </c:forEach>
             </select>
         </div>
         <div class="form-group">
-            <label for="tiLevel">Nivel de tecnologías de información</label>
+            <label for="tiLevel">Nivel de tecnologías de información *</label>
             <select id="tiLevel" required=""
                     name="tiLevel" class="form-control">
+                <option><!-- --></option>
                 <c:forEach items="${tiLevels}" var="tiLevel">
                     <option value="${tiLevel}">${tiLevel.getName()}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="productType">Tipo de Producto</label>
+            <select id="productType"
+                    name="productType" class="form-control">
+                <option><!-- --></option>
+                <c:forEach items="${productTypes}" var="productType">
+                    <option value="${productType}">${productType.getName()}</option>
                 </c:forEach>
             </select>
         </div>

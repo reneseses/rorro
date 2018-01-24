@@ -36,6 +36,11 @@ public class Warehouse {
      */
     @NotNull
     @Enumerated(EnumType.STRING)
+    private OperationType operationType;
+
+    /**
+     */
+    @Enumerated(EnumType.STRING)
     private ProductType productType;
 
     @NotNull
@@ -59,6 +64,14 @@ public class Warehouse {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public OperationType getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType;
     }
 
     public ProductType getProductType() {
@@ -177,9 +190,11 @@ public class Warehouse {
     public void update() {
         if (this.id == null) throw new IllegalArgumentException("The warehouse argument is required");
         EntityManager em = entityManager();
-        Query q = em.createQuery("UPDATE Warehouse SET name= :name, productType= :operationType WHERE id = :id");
+        Query q = em.createQuery("UPDATE Warehouse SET name= :name, operationType= :operationType, tiLevel= :tiLevel, productType= :productType WHERE id = :id");
         q.setParameter("name", this.name);
-        q.setParameter("operationType", this.productType);
+        q.setParameter("operationType", this.operationType);
+        q.setParameter("tiLevel", this.tiLevel);
+        q.setParameter("productType", this.productType);
         q.setParameter("id", this.id);
 
         q.executeUpdate();
@@ -209,6 +224,39 @@ public class Warehouse {
         return q;
     }
 
+    public static List<Warehouse> findWarehousesByUser(User user, OperationType operationType, ProductType productType, TILevel tiLevel) {
+        if (user == null) throw new IllegalArgumentException("The user argument is required");
+        String qString = "SELECT o FROM Warehouse AS o WHERE o.user = :user";
+
+        if (operationType != null) {
+            qString += " AND o.operationType= :operationType";
+        }
+
+        if (productType != null) {
+            qString += " AND o.productType= :productType";
+        }
+
+        if (tiLevel != null) {
+            qString += " AND o.tiLevel= :tiLevel";
+        }
+
+        EntityManager em = Warehouse.entityManager();
+        TypedQuery<Warehouse> q = em.createQuery(qString, Warehouse.class);
+        q.setParameter("user", user);
+        if (operationType != null) {
+            q.setParameter("operationType", operationType);
+        }
+
+        if (productType != null) {
+            q.setParameter("productType", productType);
+        }
+
+        if (tiLevel != null) {
+            q.setParameter("tiLevel", tiLevel);
+        }
+        return q.getResultList();
+    }
+
     public static TypedQuery<Warehouse> findWarehousesByUser(User user, String sortFieldName, String sortOrder) {
         if (user == null) throw new IllegalArgumentException("The user argument is required");
         EntityManager em = Warehouse.entityManager();
@@ -222,6 +270,47 @@ public class Warehouse {
         TypedQuery<Warehouse> q = em.createQuery(jpaQuery, Warehouse.class);
         q.setParameter("user", user);
         return q;
+    }
+
+    public static List<Warehouse> findWarehouseByTypes(OperationType operationType, ProductType productType, TILevel tiLevel) {
+        if (operationType == null && productType == null && tiLevel == null)
+            throw new IllegalArgumentException("The user argument is required");
+
+        String qString = "SELECT o FROM Warehouse AS o WHERE";
+
+        if (operationType != null) {
+            qString += " o.operationType= :operationType";
+        }
+
+        if (productType != null) {
+            if (operationType != null) {
+                qString += " AND";
+            }
+            qString += " o.productType= :productType";
+        }
+
+        if (tiLevel != null) {
+            if (operationType != null || productType != null) {
+                qString += " AND";
+            }
+            qString += " o.tiLevel= :tiLevel";
+        }
+
+        EntityManager em = Warehouse.entityManager();
+        TypedQuery<Warehouse> q = em.createQuery(qString, Warehouse.class);
+
+        if (operationType != null) {
+            q.setParameter("operationType", operationType);
+        }
+
+        if (productType != null) {
+            q.setParameter("productType", productType);
+        }
+
+        if (tiLevel != null) {
+            q.setParameter("tiLevel", tiLevel);
+        }
+        return q.getResultList();
     }
 
     public String toString() {

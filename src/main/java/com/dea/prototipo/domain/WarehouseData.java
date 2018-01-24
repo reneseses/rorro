@@ -1,11 +1,13 @@
 package com.dea.prototipo.domain;
 
 import flexjson.JSONSerializer;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -62,7 +64,7 @@ public class WarehouseData {
     private Warehouse warehouse;
 
     @NotNull
-    private String period;
+    private Integer period;
 
     public Long getId() {
         return id;
@@ -144,11 +146,11 @@ public class WarehouseData {
         this.warehouse = warehouse;
     }
 
-    public String getPeriod() {
+    public Integer getPeriod() {
         return period;
     }
 
-    public void setPeriod(String period) {
+    public void setPeriod(Integer period) {
         this.period = period;
     }
 
@@ -276,7 +278,7 @@ public class WarehouseData {
         return q.getResultList();
     }
 
-    public static List<WarehouseData> findWarehouseDataByPeriod(String period) {
+    public static List<WarehouseData> findWarehouseDataByPeriod(Integer period) {
         if (period == null)
             throw new IllegalArgumentException("The warehouse argument is required");
         EntityManager em = entityManager();
@@ -286,7 +288,7 @@ public class WarehouseData {
         return q.getResultList();
     }
 
-    public static WarehouseData findWarehouseDataByWarehouseAndPeriod(Warehouse warehouse, String period) {
+    public static WarehouseData findWarehouseDataByWarehouseAndPeriod(Warehouse warehouse, Integer period) {
         if (warehouse == null || period == null)
             throw new IllegalArgumentException("The warehouse argument is required");
         EntityManager em = entityManager();
@@ -295,6 +297,79 @@ public class WarehouseData {
         q.setParameter("period", period);
 
         return q.getSingleResult();
+    }
+
+    public static List<WarehouseData> findWarehouseDataByWarehouseAndPeriodBetween(Warehouse warehouse, Integer begin, Integer end) {
+        if (warehouse == null || end == null || begin == null)
+            throw new IllegalArgumentException("The warehouse argument is required");
+        EntityManager em = entityManager();
+        TypedQuery<WarehouseData> q = em.createQuery("SELECT o FROM WarehouseData AS o WHERE o.warehouse = :warehouse AND o.period BETWEEN :begin AND :finish", WarehouseData.class);
+        q.setParameter("warehouse", warehouse);
+        q.setParameter("begin", begin);
+        q.setParameter("finish", end);
+
+        return q.getResultList();
+    }
+
+    public List<WarehouseData> findBenchmarking(String mode, boolean sameOperationType, boolean sameProductType, boolean sameTILevel, boolean samePeriod) {
+        Integer period = this.period;
+        Long warehouse = this.warehouse.getId();
+        Long user = this.warehouse.getUser().getId();
+        EntityManager em = entityManager();
+        Query q = null;
+        List<WarehouseData> list = new ArrayList<>();
+        if (mode.equals("self")) {
+            q = em.createNativeQuery("SELECT * FROM warehouse_data AS w1 WHERE w1.warehouse = :warehouse AND w1.period != :period", WarehouseData.class);
+            q.setParameter("warehouse", warehouse);
+            q.setParameter("period", period);
+        } else {
+            List<Warehouse> warehouses = new ArrayList<>();
+            if (mode.equals("default")) {
+                warehouses = Warehouse.findWarehouseByTypes(
+                        sameOperationType ? this.warehouse.getOperationType() : null,
+                        sameProductType ? this.warehouse.getProductType() : null,
+                        sameTILevel ? this.warehouse.getTiLevel() : null);
+            } else if (mode.equals("user")) {
+                warehouses = Warehouse.findWarehousesByUser(
+                        this.warehouse.getUser(),
+                        sameOperationType ? this.warehouse.getOperationType() : null,
+                        sameProductType ? this.warehouse.getProductType() : null,
+                        sameTILevel ? this.warehouse.getTiLevel() : null);
+            }
+            List<Long> ids = new ArrayList<>();
+            for (Warehouse wh : warehouses) {
+                if (!wh.getId().equals(warehouse))
+                    ids.add(wh.getId());
+            }
+            if (ids.size() > 0) {
+                String query = "SELECT w1.id, w1.direct_workforce, w1.indirect_workforce, w1.period, w1.square_meters, w1.version, w1.conveyor, w1.output, w1.storage, w1.vehicles, w1.warehouse" +
+                        " FROM warehouse_data AS w1 LEFT JOIN warehouse_data AS w2" +
+                        " ON (w1.warehouse = w2.warehouse AND w1.period < w2.period)" +
+                        " WHERE w2.id IS NULL AND w1.warehouse != :warehouse AND w1.warehouse IN (:ids)";
+
+                if (samePeriod) {
+                    query = "SELECT * FROM warehouse_data AS w1" +
+                            " WHERE w1.warehouse != :warehouse AND w1.warehouse IN (:ids) AND w1.period= :period";
+                }
+
+                q = em.createNativeQuery(query, WarehouseData.class);
+                q.setParameter("warehouse", warehouse);
+                q.setParameter("ids", ids);
+
+                if (samePeriod) {
+                    q.setParameter("period", period);
+                }
+            }
+        }
+
+        if (q != null) {
+            list = q.getResultList();
+            /*System.out.println(list.size());
+            for (WarehouseData wd : list) {
+                System.out.println(wd);
+            }*/
+        }
+        return list;
     }
 
     public String toString() {
