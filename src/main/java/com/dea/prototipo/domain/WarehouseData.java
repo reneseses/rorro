@@ -364,10 +364,10 @@ public class WarehouseData {
 
         if (q != null) {
             list = q.getResultList();
-            /*System.out.println(list.size());
+            System.out.println(list.size());
             for (WarehouseData wd : list) {
-                System.out.println(wd);
-            }*/
+                System.out.println(wd.getPeriod());
+            }
         }
         return list;
     }

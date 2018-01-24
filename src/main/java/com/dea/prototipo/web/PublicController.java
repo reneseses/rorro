@@ -108,17 +108,15 @@ public class PublicController {
 
                     WarehouseDataOutput output = new WarehouseDataOutput();
                     output.setTotalOrders(rand.nextInt(1000) + 1000);
-                    output.setBrokenCaseLines(rand.nextInt(500) + 200);
-                    output.setFullCaseLines(rand.nextInt(500) + 200);
-                    output.setPalletLines(rand.nextInt(500) + 200);
+                    output.setBrokenCaseLines(rand.nextInt(1000) + 500);
+                    output.setFullCaseLines(rand.nextInt(1000) + 500);
 
-                    int diff = output.getTotalOrders() - output.getBrokenCaseLines() - output.getFullCaseLines() - output.getPalletLines();
-                    if (diff > 0) {
-                        output.setFloorStacking(rand.nextInt(diff));
-                        diff -= output.getFloorStacking();
-                        output.setBrokenCasePickSlots(diff > 0 ? rand.nextInt(diff) : 0);
-                        output.setPalletRackLocations(diff - output.getBrokenCasePickSlots());
-                    }
+                    int diff = output.getTotalOrders() - output.getBrokenCaseLines() - output.getFullCaseLines();
+                    output.setPalletLines(diff > 0 ? rand.nextInt(1000) + diff : rand.nextInt(1000) + 500);
+
+                    output.setFloorStacking(rand.nextInt(200) + 50);
+                    output.setBrokenCasePickSlots(rand.nextInt(200) + 50);
+                    output.setPalletRackLocations(rand.nextInt(200) + 50);
                     output.persist();
 
                     WarehouseData wData = new WarehouseData();
