@@ -273,10 +273,10 @@ public class Warehouse {
     }
 
     public static List<Warehouse> findWarehouseByTypes(OperationType operationType, ProductType productType, TILevel tiLevel) {
-        if (operationType == null && productType == null && tiLevel == null)
-            throw new IllegalArgumentException("The user argument is required");
-
-        String qString = "SELECT o FROM Warehouse AS o WHERE";
+        String qString = "SELECT o FROM Warehouse AS o";
+        if (operationType != null || productType != null || tiLevel != null) {
+            qString += " WHERE";
+        }
 
         if (operationType != null) {
             qString += " o.operationType= :operationType";

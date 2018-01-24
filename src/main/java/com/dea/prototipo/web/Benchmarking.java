@@ -55,7 +55,7 @@ public class Benchmarking {
         List<WarehouseData> warehouseData = new ArrayList<>();
 
         System.out.println("warehouse.getId() es" + warehouse.getId());
-        System.out.println("nombre warehouse con warehouse.getNombre()" + warehouse.getName());
+        System.out.println("nombre warehouse con " + warehouse.getName());
         System.out.println("modo: " + mode);
 
         WarehouseData selectedWD = WarehouseData.findWarehouseDataByWarehouseAndPeriod(warehouse, period);
@@ -129,15 +129,10 @@ public class Benchmarking {
         double[][] testDataMatrix = new double[len][varLen];
 
         //Set up the Data Matrix and  DMU Names
-
-        int indexToTest = -1;
+        int indexToTest = warehouseData.size() - 1;
         for (int i = 0; i < warehouseData.size(); i++) {
             WarehouseData current = warehouseData.get(i);
             Warehouse currentWarehouse = current.getWarehouse();
-
-            if (current.getPeriod().equals(period) && currentWarehouse.getId().equals(warehouse.getId())) {
-                indexToTest = i;
-            }
 
             if (current.getOutputStorage() == null) {
                 errors.add("No se pudo comparar con" + current.getWarehouse().getName() + "-" + current.getPeriod() + ": brokenCaseLines + fullCaseLines + palletLines debe ser distinto de 0");
