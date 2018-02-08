@@ -80,6 +80,9 @@
                             <th class="text-center">M. de obra (horas)</th>
                             <th class="text-center">Acumulación</th>
                             <th class="text-center">Almacenamiento</th>
+                            <th class="text-center">Lineas caja abierta despachadas</th>
+                            <th class="text-center">Lineas caja completa despachadas</th>
+                            <th class="text-center">Lineas pallet despachadas</th>
                             <th style="width: 65px"><!-- --></th>
                             <th style="width: 44px"><!-- --></th>
                         </tr>
@@ -98,6 +101,9 @@
                                         value="${data.directWorkforce + data.indirectWorkforce}"/></td>
                                 <td class="text-center"><fmt:formatNumber  value="${data.outputAccumulation}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.outputStorage}" maxFractionDigits="3"/></td>
+                                <td class="text-center">${data.output.brokenCaseLines}</td>
+                                <td class="text-center">${data.output.fullCaseLines}</td>
+                                <td class="text-center">${data.output.palletLines}</td>
                                 <td style="padding: 5px 8px">
                                     <button class="btn btn-default btn-xs">
                                         <i class="fa fa-fw fa-arrow-right"><!-- --></i> Ver
