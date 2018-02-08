@@ -27,14 +27,14 @@
 
         <div>
             <div class="form-group">
-                <label for="period" class="col-md-4"><span>Bodega</span></label>
-                <div class="col-md-8">
+                <label for="period" class="col-md-5"><span>Bodega</span></label>
+                <div class="col-md-7">
                     <a href="/member/warehouse/${warehouse.id}"><strong>${warehouse.name}</strong></a>
                 </div>
             </div>
             <div class="form-group">
-                <label for="period" class="col-md-4">Periodo <span class="text-danger">*</span></label>
-                <div class="col-md-8">
+                <label for="period" class="col-md-5">Periodo <span class="text-danger">*</span></label>
+                <div class="col-md-7">
                     <input id="period" name="period" type="number" class="form-control" value="${warehouseData.period}"
                            required="true"/>
                 </div>
@@ -55,11 +55,11 @@
             <div class="tab-content">
                 <div class="tab-pane" id="tab1">
                     <div class="form-group">
-                        <label for="squareMeters" class="col-md-4">
+                        <label for="squareMeters" class="col-md-5">
                             Área Total
                             <small>(m <sup>2</sup>)</small>
                         </label>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <input id="squareMeters" name="squareMeters" class="form-control" type="number" min="1" step="1"
                                    value="${warehouseData.squareMeters}" required="true"/>
                         </div>
@@ -67,18 +67,18 @@
                     <h4>Mano de Obra</h4>
                     <div>
                         <div class="form-group">
-                            <label for="directWorkforce" class="col-md-4">
+                            <label for="directWorkforce" class="col-md-5">
                                 <span>Directa</span>
                             </label>
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <input id="directWorkforce" name="directWorkforce" class="form-control"
                                        type="number" step="1"
                                        min="0" value="${warehouseData.directWorkforce}"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="indirectWorkforce" class="col-md-4"><span>Indirecta</span></label>
-                            <div class="col-md-8">
+                            <label for="indirectWorkforce" class="col-md-5"><span>Indirecta</span></label>
+                            <div class="col-md-7">
                                 <input id="indirectWorkforce" name="indirectWorkforce" class="form-control"
                                        type="number" min="0" step="1" value="${warehouseData.indirectWorkforce}"/>
                             </div>
@@ -99,13 +99,18 @@
                             <div id="vehicles" class="panel-collapse collapse">
                                 <div class="panel-body ">
                                     <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
-                                        <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
+                                        <div class="col-md-2 col-md-offset-5 text-right">Valor de Reemplazo</div>
                                         <div class="col-md-5 text-center">Total (unidades)</div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="palletTruck" class="col-md-4"><span>Carretillas</span></label>
+                                        <label for="palletTruck" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/pallet-trucks/8900-rider-pallet-truck.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas
+                                        </label>
                                         <label for="palletTruck"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="palletTruck" name="vehicles.palletTruck" class="form-control"
                                                    type="number" min="0" step="1"
@@ -113,9 +118,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="walkieStacker" class="col-md-4"><span>Carretillas Apiladoras</span></label>
+                                        <label for="walkieStacker" class="col-md-5">
+                                            <a target="_blank" href="https://toyota-forklifts.es/nuestra-oferta/gama-de-productos/apiladores-electricos/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Apiladoras
+                                        </label>
                                         <label for="walkieStacker"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="walkieStacker" name="vehicles.walkieStacker" class="form-control"
                                                    type="number" min="0" step="1"
@@ -123,10 +133,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="sitDownCounterBalance" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/counterbalanced-trucks/4450-sit-down-counterbalanced.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Contrabalanceadas hombre sentado
+                                        </label>
                                         <label for="sitDownCounterBalance"
-                                               class="col-md-4"><span>Carretillas Contrabalanceadas hombre sentado</span></label>
-                                        <label for="sitDownCounterBalance"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="sitDownCounterBalance" name="vehicles.sitDownCounterBalance"
                                                    class="form-control" type="number" min="0" step="1"
@@ -135,9 +149,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="standUpCounterBalance"
-                                               class="col-md-4"><span>Carretillas Cotrabalanceadas hombre parado</span></label>
+                                               class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/counterbalanced-trucks/4250-stand-up-counterbalanced.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Cotrabalanceadas hombre parado
+                                        </label>
                                         <label for="standUpCounterBalance"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="standUpCounterBalance" name="vehicles.standUpCounterBalance"
                                                    class="form-control" type="number" min="0" step="1"
@@ -145,9 +164,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="straddleTruck" class="col-md-4"><span>Carretillas Retráctiles</span></label>
+                                        <label for="straddleTruck" class="col-md-5">
+                                            <a target="_blank" href="https://www.jungheinrich.cl/productos/vista-rapida-de-equipos/retractiles/etv-110112/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Retráctiles
+                                        </label>
                                         <label for="straddleTruck"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="straddleTruck" name="vehicles.straddleTruck" class="form-control"
                                                    type="number" min="0" step="1"
@@ -155,10 +179,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="straddleReachTruck" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/reach-fork-trucks/7000-deep-reach.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Retráctiles Pantógrafo
+                                        </label>
                                         <label for="straddleReachTruck"
-                                               class="col-md-4"><span>Carretillas Retráctiles Pantógrafo</span></label>
-                                        <label for="straddleReachTruck"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="straddleReachTruck" name="vehicles.straddleReachTruck"
                                                    class="form-control" type="number" min="0"
@@ -166,9 +194,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sideLoaderTruck" class="col-md-4"><span>Cargadores Laterales</span></label>
+                                        <label for="sideLoaderTruck" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/sideloaders/9300-sideloader.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Cargadores Laterales
+                                        </label>
                                         <label for="sideLoaderTruck"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="sideLoaderTruck" name="vehicles.sideLoaderTruck"
                                                    class="form-control"
@@ -177,9 +210,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="turretTruck" class="col-md-4"><span>Carretillas Trilaterales</span></label>
+                                        <label for="turretTruck" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/swing-reach-trucks/transtacker.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Trilaterales
+                                        </label>
                                         <label for="turretTruck"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="turretTruck" name="vehicles.turretTruck" class="form-control"
                                                    type="number" min="0" step="1"
@@ -187,10 +225,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="hybridTruck" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/swing-reach-trucks/transtacker.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Transelevador hombre a bordo (Transtacker)
+                                        </label>
                                         <label for="hybridTruck"
-                                               class="col-md-4"><span>Transelevador hombre a bordo (Transtacker)</span></label>
-                                        <label for="hybridTruck"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="hybridTruck" name="vehicles.hybridTruck" class="form-control"
                                                    type="number" min="0" step="1"
@@ -198,10 +240,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="palletASRSMachine" class="col-md-5">
+                                            <a target="_blank" href="https://www.mecalux.cl/automatizacion-de-bodegas-pallets/transelevadores">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Transelevadores para pallets (ASRS)
+                                        </label>
                                         <label for="palletASRSMachine"
-                                               class="col-md-4"><span>Transelevadores (ASRS)</span></label>
-                                        <label for="palletASRSMachine"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="palletASRSMachine" name="vehicles.palletASRSMachine"
                                                    class="form-control" type="number" min="0" step="1"
@@ -209,10 +255,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="railGuidedOrderPicker" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/orderpickers/5500-orderpicker.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Preparadoras de Pedido guiado por riel
+                                        </label>
                                         <label for="railGuidedOrderPicker"
-                                               class="col-md-4"><span>Carretillas Preparadoras de Pedido guiado por riel</span></label>
-                                        <label for="railGuidedOrderPicker"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="railGuidedOrderPicker" name="vehicles.railGuidedOrderPicker"
                                                    class="form-control" type="number" min="0" step="1"
@@ -220,10 +270,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="wireGuidedOrderPicker" class="col-md-5">
+                                            <a target="_blank" href="http://www.raymond.mx/lift-trucks/orderpickers/5500-orderpicker.php">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carretillas Preparadoras de Pedido guiado por cable
+                                        </label>
                                         <label for="wireGuidedOrderPicker"
-                                               class="col-md-4"><span>Carretillas Preparadoras de Pedido giado por cable</span></label>
-                                        <label for="wireGuidedOrderPicker"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="wireGuidedOrderPicker" name="vehicles.wireGuidedOrderPicker"
                                                    class="form-control" type="number" min="0" step="1"
@@ -231,10 +285,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="AGV" class="col-md-5">
+                                            <a target="_blank" href="https://www.jungheinrich.cl/productos/equipos-automaticos/vehiculos-autoguiados/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Vehículos autoguiados (AVG)
+                                        </label>
                                         <label for="AGV"
-                                               class="col-md-4"><span>Vehículos autoguiados (AVG)</span></label>
-                                        <label for="AGV"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="AGV" name="vehicles.agv" class="form-control" type="number"
                                                    min="0" step="1"
@@ -256,14 +314,18 @@
                             <div id="storageSystem" class="panel-collapse collapse">
                                 <div class="panel-body ">
                                     <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
-                                        <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
+                                        <div class="col-md-2 col-md-offset-5 text-right">Valor de Reemplazo</div>
                                         <div class="col-md-5 text-center">Total (unidades)</div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="personAboardASRSAisles" class="col-md-5">
+                                            <a target="_blank" href="https://cadenadesuministros.wordpress.com/bodegas-automatizadas/5-1-sistemas-automatizados-de-almacenamientorecuperacion-asrs/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Transelevador (ASRS) hombre a bordo
+                                        </label>
                                         <label for="personAboardASRSAisles"
-                                               class="col-md-4"><span>Transelevador (ASRS) hombre a bordo</span></label>
-                                        <label for="personAboardASRSAisles"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="personAboardASRSAisles" name="storage.personAboardASRSAisles"
                                                    class="form-control" type="number" min="0" step="1"
@@ -271,10 +333,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="horizontalCarousel" class="col-md-5">
+                                            <a target="_blank" href="http://www.kardex-remstar.es/es/remstar-productos/carrusel-horizontal.html">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carrusel Horizontal
+                                        </label>
                                         <label for="horizontalCarousel"
-                                               class="col-md-4"><span>Carrusel Horizontal</span></label>
-                                        <label for="horizontalCarousel"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="horizontalCarousel" name="storage.horizontalCarousel"
                                                    class="form-control" type="number" min="0" step="1"
@@ -282,10 +348,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="verticalCarousel" class="col-md-5">
+                                            <a target="_blank" href="http://www.jungheinrich.es/productos/estanterias-y-sistemas-de-almacenaje/almacenaje-de-contenedores-y-piezas-pequenas/sistema-de-carrusel-vertical/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Carrusel Vertical
+                                        </label>
                                         <label for="verticalCarousel"
-                                               class="col-md-4"><span>Carrusel Vertical</span></label>
-                                        <label for="verticalCarousel"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="verticalCarousel" name="storage.verticalCarousel"
                                                    class="form-control" type="number" min="0" step="1"
@@ -293,9 +363,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="miniloadASRSAisles" class="col-md-4"><span>ASRS de Minicarga</span></label>
+                                        <label for="miniloadASRSAisles" class="col-md-5">
+                                            <a target="_blank" href="https://www.mecalux.cl/automatizacion-de-bodegas-cajas/transelevador">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Pasillos ASRS de Minicarga
+                                        </label>
                                         <label for="miniloadASRSAisles"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="miniloadASRSAisles" name="storage.miniloadASRSAisles"
                                                    class="form-control" type="number" min="0" step="1"
@@ -303,10 +378,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="aFrameDispenser" class="col-md-5">
+                                            <a target="_blank" href="http://www.mindugar.cl/a-frame/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Dispensador A-Frame
+                                        </label>
                                         <label for="aFrameDispenser"
-                                               class="col-md-4"><span>Dispensador A-Frame</span></label>
-                                        <label for="aFrameDispenser"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="aFrameDispenser" name="storage.aFrameDispenser"
                                                    class="form-control"
@@ -330,14 +409,18 @@
                             <div id="conveyorSystem" class="panel-collapse collapse">
                                 <div class="panel-body ">
                                     <div class="row hidden-xs hidden-sm" style="margin-bottom: 15px">
-                                        <div class="col-md-3 col-md-offset-4 text-right">Valor de Reemplazo</div>
+                                        <div class="col-md-2 col-md-offset-5 text-right">Valor de Reemplazo</div>
                                         <div class="col-md-5 text-center">Total (metros)</div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="nonPoweredRoller" class="col-md-5">
+                                            <a target="_blank" href="https://www.uline.com/BL_4031/Gravity-Roller-Conveyors">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Cinta de Rodillos
+                                        </label>
                                         <label for="nonPoweredRoller"
-                                               class="col-md-4"><span>Cinta de Rodillos</span></label>
-                                        <label for="nonPoweredRoller"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="nonPoweredRoller" name="conveyor.nonPoweredRoller"
                                                    class="form-control" type="number" min="0"
@@ -345,10 +428,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="poweredRollerConveyor" class="col-md-5">
+                                            <a target="_blank" href="https://www.apluswhs.com/conveyors/power-conveyors/powered-heavy-duty-roller-conveyor/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Cinta de Rodillos Motorizada
+                                        </label>
                                         <label for="poweredRollerConveyor"
-                                               class="col-md-4"><span>Cinta de Rodillos Motorizada</span></label>
-                                        <label for="poweredRollerConveyor"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="poweredRollerConveyor" name="conveyor.poweredRollerConveyor"
                                                    class="form-control" type="number" min="0"
@@ -356,10 +443,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="powerBelt" class="col-md-5">
+                                            <a target="_blank" href="https://www.apluswhs.com/conveyors/power-conveyors/belt-conveyors/box-style-slider-belt-conveyor/">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Cinta de Banda Motorizada
+                                        </label>
                                         <label for="powerBelt"
-                                               class="col-md-4"><span>Cinta de Banda Motorizada</span></label>
-                                        <label for="powerBelt"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="powerBelt" name="conveyor.powerBelt"
                                                    class="form-control" type="number" min="0"
@@ -367,9 +458,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="skateWheel" class="col-md-4"><span>Cinta de Ruedas</span></label>
+                                        <label for="skateWheel" class="col-md-5">
+                                            <a target="_blank" href="https://www.uline.com/BL_800/Gravity-Skate-Wheel-Conveyors">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Cinta de Ruedas
+                                        </label>
                                         <label for="skateWheel"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="skateWheel" name="conveyor.skateWheel"
                                                    class="form-control" type="number" min="0"
@@ -378,9 +474,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="towLine"
-                                               class="col-md-4"><span>Tow Line (Cinta por cable enterrado)</span></label>
+                                               class="col-md-5">
+                                            <a target="_blank" href="http://www.gieicom.com/productos/sistema-de-transportadores-conveyors/transportador-cadena-towline">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Tow Line (Cinta por cable enterrado)
+                                        </label>
                                         <label for="towLine"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="towLine" name="conveyor.towLine"
                                                    class="form-control" type="number" min="0"
@@ -388,9 +489,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tiltTraySorter" class="col-md-4"><span>Clasificador Tilt Tray</span></label>
+                                        <label for="tiltTraySorter" class="col-md-5">
+                                            <a target="_blank" href="http://www.gieicom.com/productos/sortation-clasificadores/sorter-titl-tray">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Clasificador Tilt Tray
+                                        </label>
                                         <label for="tiltTraySorter"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="tiltTraySorter" name="conveyor.tiltTraySorter"
                                                    class="form-control" type="number" min="0"
@@ -399,9 +505,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="palletConveyor"
-                                               class="col-md-4"><span>Cinta Transportadora de Pallet</span></label>
+                                               class="col-md-5">
+                                            <a target="_blank" href="https://www.mecalux.cl/automatizacion-de-bodegas-pallets/correas-transportadoras">
+                                                <i class="fa fa-info-circle" style="font-size: 15px"><!-- --></i>
+                                            </a>
+                                            Cinta Transportadora de Pallet
+                                        </label>
                                         <label for="palletConveyor"
-                                               class="col-md-3 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
+                                               class="col-md-2 text-right input-wight text-normal hidden-sm hidden-xs"><span><!-- --></span></label>
                                         <div class="col-md-5">
                                             <input id="palletConveyor" name="conveyor.palletConveyor"
                                                    class="form-control" type="number" min="0"
@@ -416,8 +527,8 @@
                 </div>
                 <div class="tab-pane" id="tab2">
                     <div class="form-group">
-                        <label for="totalOrders" class="col-md-4"><span>Total de pedidos</span></label>
-                        <div class="col-md-8">
+                        <label for="totalOrders" class="col-md-5"><span>Total de pedidos</span></label>
+                        <div class="col-md-7">
                             <input id="totalOrders" name="output.totalOrders" class="form-control"
                                    step="1" min="0"
                                    value="${warehouseData.output.totalOrders}"/>
@@ -429,23 +540,23 @@
                     </h4>
                     <div class="form-group">
                         <label for="brokenCaseLines"
-                               class="col-md-4"><span>Lineas caja abierta despachadas</span></label>
-                        <div class="col-md-8">
+                               class="col-md-5"><span>Lineas caja abierta despachadas</span></label>
+                        <div class="col-md-7">
                             <input id="brokenCaseLines" name="output.brokenCaseLines" class="form-control" type="number"
                                    min="0"  step="1" value="${warehouseData.output.brokenCaseLines}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="fullCaseLines"
-                               class="col-md-4"><span>Lineas caja completa despachadas</span></label>
-                        <div class="col-md-8">
+                               class="col-md-5"><span>Lineas caja completa despachadas</span></label>
+                        <div class="col-md-7">
                             <input id="fullCaseLines" name="output.fullCaseLines" class="form-control" type="number"
                                    min="0"  step="1" value="${warehouseData.output.fullCaseLines}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="palletLines" class="col-md-4"><span>Lineas pallet despachadas</span></label>
-                        <div class="col-md-8">
+                        <label for="palletLines" class="col-md-5"><span>Lineas pallet despachadas</span></label>
+                        <div class="col-md-7">
                             <input id="palletLines" name="output.palletLines" class="form-control" type="number"
                                    min="0"  step="1" value="${warehouseData.output.palletLines}"/>
                         </div>
@@ -455,23 +566,23 @@
                         Distrubución Física
                     </h4>
                     <div class="form-group">
-                        <label for="brokenCasePickSlots" class="col-md-4"><span>SKU Caja abierta</span></label>
-                        <div class="col-md-8">
+                        <label for="brokenCasePickSlots" class="col-md-5"><span>SKU Caja abierta</span></label>
+                        <div class="col-md-7">
                             <input id="brokenCasePickSlots" name="output.brokenCasePickSlots" class="form-control"
                                    type="number"
                                    min="0" step="1" value="${warehouseData.output.brokenCasePickSlots}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="floorStacking" class="col-md-4"><span>Almacenamiento en el suelo</span></label>
-                        <div class="col-md-8">
+                        <label for="floorStacking" class="col-md-5"><span>Almacenamiento en el suelo</span></label>
+                        <div class="col-md-7">
                             <input id="floorStacking" name="output.floorStacking" class="form-control" type="number"
                                    min="0" step="1" value="${warehouseData.output.floorStacking}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="palletRackLocations" class="col-md-4"><span>Ubicaciones pallet</span></label>
-                        <div class="col-md-8">
+                        <label for="palletRackLocations" class="col-md-5"><span>Ubicaciones pallet</span></label>
+                        <div class="col-md-7">
                             <input id="palletRackLocations" name="output.palletRackLocations" class="form-control"
                                    type="number"
                                    min="0" step="1" value="${warehouseData.output.palletRackLocations}"/>

@@ -31,7 +31,7 @@
                     name="tiLevel" class="form-control">
                 <option><!-- --></option>
                 <c:forEach items="${tiLevels}" var="tiLevel">
-                    <option value="${tiLevel}">${tiLevel.getName()}</option>
+                    <option value="${tiLevel}">${tiLevel.getName()} (${tiLevel.getDescription()})</option>
                 </c:forEach>
             </select>
         </div>

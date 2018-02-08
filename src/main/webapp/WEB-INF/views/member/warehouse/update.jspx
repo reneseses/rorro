@@ -36,10 +36,10 @@
                 <option><!-- --></option>
                 <c:forEach items="${tiLevels}" var="tiLevel">
                     <c:if test="${tiLevel eq warehouse.tiLevel}">
-                        <option value="${tiLevel}" selected="">${tiLevel.getName()}</option>
+                        <option value="${tiLevel}" selected="">${tiLevel.getName()} (${tiLevel.getDescription()})</option>
                     </c:if>
                     <c:if test="${tiLevel ne warehouse.tiLevel}">
-                        <option value="${tiLevel}">${tiLevel.getName()}</option>
+                        <option value="${tiLevel}">${tiLevel.getName()} (${tiLevel.getDescription()})</option>
                     </c:if>
                 </c:forEach>
             </select>
