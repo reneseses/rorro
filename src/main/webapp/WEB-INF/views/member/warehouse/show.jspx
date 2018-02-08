@@ -101,9 +101,9 @@
                                         value="${data.directWorkforce + data.indirectWorkforce}"/></td>
                                 <td class="text-center"><fmt:formatNumber  value="${data.outputAccumulation}"/></td>
                                 <td class="text-center"><fmt:formatNumber value="${data.outputStorage}" maxFractionDigits="3"/></td>
-                                <td class="text-center">${data.output.brokenCaseLines}</td>
-                                <td class="text-center">${data.output.fullCaseLines}</td>
-                                <td class="text-center">${data.output.palletLines}</td>
+                                <td class="text-center"><fmt:formatNumber value="${data.output.brokenCaseLines}"/></td>
+                                <td class="text-center"><fmt:formatNumber value="${data.output.fullCaseLines}"/></td>
+                                <td class="text-center"><fmt:formatNumber value="${data.output.palletLines}"/></td>
                                 <td style="padding: 5px 8px">
                                     <button class="btn btn-default btn-xs">
                                         <i class="fa fa-fw fa-arrow-right"><!-- --></i> Ver
