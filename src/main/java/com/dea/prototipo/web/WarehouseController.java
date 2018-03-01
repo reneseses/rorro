@@ -6,6 +6,11 @@ import javax.validation.Valid;
 
 import com.dea.prototipo.domain.*;
 
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -191,6 +196,53 @@ public class WarehouseController {
             warehouseImage.merge();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value="/export")
+    public void download(HttpServletResponse response){
+        Workbook wb= new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("Planilla");
+        int rownum= 0;
+
+        Font font = wb.createFont();
+        font.setColor(IndexedColors.WHITE.getIndex());
+
+        XSSFColor blue= new XSSFColor(new java.awt.Color(68,114,196));
+
+        XSSFCellStyle rowHeader = (XSSFCellStyle) wb.createCellStyle();
+        rowHeader.setAlignment(CellStyle.ALIGN_RIGHT);
+        rowHeader.setFillForegroundColor(blue);
+        rowHeader.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        rowHeader.setFont(font);
+
+        XSSFCellStyle colHeader = (XSSFCellStyle) wb.createCellStyle();
+        colHeader.setAlignment(CellStyle.ALIGN_CENTER_SELECTION);
+        colHeader.setFillForegroundColor(blue);
+        colHeader.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        colHeader.setFont(font);
+
+        XSSFCellStyle notempty = (XSSFCellStyle) wb.createCellStyle();
+        notempty.setBorderBottom(CellStyle.BORDER_THIN);
+        notempty.setBorderTop(CellStyle.BORDER_THIN);
+        notempty.setBorderLeft(CellStyle.BORDER_THIN);
+        notempty.setBorderRight(CellStyle.BORDER_THIN);
+        notempty.setBorderColor(BorderSide.LEFT, blue);
+        notempty.setBorderColor(BorderSide.RIGHT, blue);
+        notempty.setBorderColor(BorderSide.TOP, blue);
+        notempty.setBorderColor(BorderSide.BOTTOM, blue);
+
+        List<Warehouse> warehouses = Warehouse.findAllWarehouses();
+
+        for(Warehouse warehouse: warehouses) {
+            List<WarehouseData> data = WarehouseData.findWarehouseDataByWarehouse(warehouse);
+
+            for(WarehouseData current : data) {
+                WarehouseDataConveyor conveyor = current.getConveyor();
+                WarehouseDataStorage storage = current.getStorage();
+                WarehouseDataVehicles vehicles = current.getVehicles();
+                WarehouseDataOutput output = current.getOutput();
+            }
         }
     }
 }

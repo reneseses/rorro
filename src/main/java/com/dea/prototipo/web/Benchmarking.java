@@ -206,7 +206,7 @@ public class Benchmarking {
     private JSONObject evaluateInputs(DEAProblem tester, int warehouseIndex, String warehouseName) throws Exception {
         JSONObject result = new JSONObject();
 
-        int[] ranks = tester.getRanks(false, RankingType.STANDARD, 5);
+        int[] ranks = tester.getRanks(true, RankingType.STANDARD, 5);
         int rank = ranks[warehouseIndex];
 
         int len = ranks.length;

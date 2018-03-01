@@ -95,7 +95,7 @@
             <hr/>
             <div id="benchmark-result" class="hidden">
                 <p>
-                    <STRONG>ORIENTACION HACIA LAS ENTRADAS</STRONG>
+                    <STRONG>ORIENTACION HACIA LAS ENTRADAS - Periodo <span id="selectedPeriod"><!-- --></span> </STRONG>
                 </p>
                 <div id="benchmark">
                     <!--<ol></ol>-->
@@ -243,6 +243,8 @@
                             $("#benchmark #proyeccion")
                                 .empty()
                                 .html(data.input.performance);
+
+                            $("#selectedPeriod").text(periodSelect.val());
 
                             /*$("#benchmark2 #proyeccionO")
                                 .empty()
