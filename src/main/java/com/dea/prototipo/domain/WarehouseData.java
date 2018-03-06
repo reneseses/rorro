@@ -186,7 +186,7 @@ public class WarehouseData {
 
         double p = brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines);
 
-        double result = p * Math.sqrt(brokenCasePickSlots) + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(squareMeters * floorStacking));
+        double result = p * Math.sqrt(brokenCasePickSlots) + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(floorStacking));
 
         return Math.round(result * 1000) / 1000d;
     }

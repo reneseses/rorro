@@ -799,7 +799,7 @@
 
                 if (linesSum > 0) {
                     var p = brokenCaseLines / (brokenCaseLines + fullCaseLines + palletLines);
-                    var storage = p * Math.sqrt(brokenCasePickSlots) + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(squareMeters * floorStacking));
+                    var storage = p * Math.sqrt(brokenCasePickSlots) + (1 - p) * (1.55 * Math.sqrt(palletRackLocations) + Math.sqrt(floorStacking));
 
                     storage = Math.round(storage * 1000) / 1000;
                     $("#storage-row").text(storage.toLocaleString('es-CL'))
