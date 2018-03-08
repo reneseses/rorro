@@ -32,6 +32,11 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
+                            <a href="/assets/nethouse-modelo.pdf" target="_blank">
+                                Instructivo
+                            </a>
+                        </li>
+                        <li>
                             <spring:url value="/resources/j_spring_security_logout" var="logout"/>
                             <a href="${logout}" title="Logout">
                                 Salir
